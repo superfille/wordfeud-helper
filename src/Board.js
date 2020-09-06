@@ -2,6 +2,8 @@ import React from "react";
 import "./style.css";
 
 import Tile from './Tile.js';
+import { isHorizontalWord, isVerticalWord } from './Solver.js'
+
 
 export default class Board extends React.Component {
   tiles = [
@@ -30,6 +32,27 @@ export default class Board extends React.Component {
     };
   };
 
+  componentDidMount() {
+    this.testBoard();
+  }
+
+  testBoard() {
+    let tiles = this.updateTile(this.state.tiles, this.state.tiles[0][0], 'p')
+    tiles = this.updateTile(tiles, tiles[0][1], 'o')
+    tiles = this.updateTile(tiles, tiles[0][2], 'o')
+    tiles = this.updateTile(tiles, tiles[0][3], 'p')
+
+    tiles = this.updateTile(tiles, tiles[1][0], 'o')
+    tiles = this.updateTile(tiles, tiles[2][0], 'o')
+    tiles = this.updateTile(tiles, tiles[3][0], 'p')
+
+    const row = 0;
+    const column = 1;
+    console.log(isVerticalWord(row, column, tiles))
+    
+    this.setState({tiles});
+  }
+
   letterIsAllowed(letter) {
     const allowed = ['backspace', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -44,8 +67,8 @@ export default class Board extends React.Component {
     return !!this.props.tileSet.find(tile => tile.letter === letter)
   }
 
-  updateTile(tile, letter) {
-    return this.state.tiles.map(row => {
+  updateTile(tiles, tile, letter) {
+    return tiles.map(row => {
       return row.map(rowTile => {
         if (rowTile === tile) {
           return {
@@ -65,7 +88,7 @@ export default class Board extends React.Component {
     const keypress = (event) => {
       if (this.letterIsAllowed(event.key)) {
         this.setState({
-          tiles: this.updateTile(this.state.selectedTile, event.key)
+          tiles: this.updateTile(this.state.tiles, this.state.selectedTile, event.key)
         });
       }
       document.removeEventListener('keyup', keypress, false)
