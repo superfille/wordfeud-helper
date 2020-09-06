@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 
 import Tile from './Tile.js';
-import { isHorizontalWord, isVerticalWord } from './Solver.js'
+import { isStartOfHorizontalWord, isStartOfVerticalWord, getHorizontalWord, getVerticalWord } from './Solver.js'
 
 
 export default class Board extends React.Component {
@@ -43,12 +43,12 @@ export default class Board extends React.Component {
     tiles = this.updateTile(tiles, tiles[0][3], 'p')
 
     tiles = this.updateTile(tiles, tiles[1][0], 'o')
-    tiles = this.updateTile(tiles, tiles[2][0], 'o')
+    tiles = this.updateTile(tiles, tiles[2][0], 'p')
     tiles = this.updateTile(tiles, tiles[3][0], 'p')
 
     const row = 0;
-    const column = 1;
-    console.log(isVerticalWord(row, column, tiles))
+    const column = 0;
+    console.log(getVerticalWord(row, column, tiles))
     
     this.setState({tiles});
   }

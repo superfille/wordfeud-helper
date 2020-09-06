@@ -8,7 +8,7 @@ const goThroughRows = (board) => {
   }
 }
 
-const isHorizontalWord = (row, column, board) => {
+const isStartOfHorizontalWord = (row, column, board) => {
   // No letter in this tile
   if (board[row][column].letter === '') {
     return false;
@@ -35,7 +35,7 @@ const isHorizontalWord = (row, column, board) => {
   return false;
 }
 
-const isVerticalWord = (row, column, board) => {
+const isStartOfVerticalWord = (row, column, board) => {
     // No letter in this tile
     if (board[row][column].letter === '') {
       return false;
@@ -62,11 +62,49 @@ const isVerticalWord = (row, column, board) => {
   return false;
 }
 
+/**
+ * Do this after we know that this tile is the start of horizontal word
+ */
+const getHorizontalWord = (row, column, board) => {
+  let lastColumnOfWord = column;
+  let word = '';
+
+  while(lastColumnOfWord < board[0][0].length || board[row][lastColumnOfWord].letter !== '') {
+    word += board[row][lastColumnOfWord].letter;
+    lastColumnOfWord += 1;
+    if (lastColumnOfWord > 100) {
+      console.log('wtf')
+      break;
+    }
+  }
+
+  return word;
+}
+
+/**
+ * Do this after we know that this tile is the start of vertical word
+ */
+const getVerticalWord = (row, column, board) => {
+  let lastRowOfWord = row;
+  let word = '';
+
+  while(lastRowOfWord < board[0][0].length || board[lastRowOfWord][column].letter !== '') {
+    word += board[lastRowOfWord][column].letter;
+    lastRowOfWord += 1;
+    if (lastRowOfWord > 100) {
+      console.log('wtf')
+      break;
+    }
+  }
+
+  return word;
+}
+
 const boardIsValid = (board) => {
   for(let row = 0; row < board[0].length; row++) {
     for(let column = 0; column < board[0][0].length; column++) {
-      if (board[row][column].letter !== '') {
-
+      if(isStartOfHorizontalWord(row, column, board)) {
+        
       }
     }
   }
@@ -74,6 +112,8 @@ const boardIsValid = (board) => {
 
 
 export {
-  isHorizontalWord,
-  isVerticalWord,
+  isStartOfHorizontalWord,
+  isStartOfVerticalWord,
+  getHorizontalWord,
+  getVerticalWord,
 }
