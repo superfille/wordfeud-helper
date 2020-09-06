@@ -18,13 +18,13 @@ export default class Tile extends React.Component {
 
   renderText() {
     if (this.props.selected) {
-      return this.props.tile.l || ''
+      return this.props.tile.letter || ''
     }
-    return this.props.tile.l || this.props.tile.s;
+    return this.props.tile.letter || this.props.tile.special;
   }
 
   color() {
-    return this.props.tile.s !== '' ? this.props.tile.s : 'black';
+    return this.props.tile.special !== '' ? this.props.tile.special : 'black';
   }
 
   className() {

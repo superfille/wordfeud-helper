@@ -5,21 +5,21 @@ import Tile from './Tile.js';
 
 export default class Board extends React.Component {
   tiles = [
-    [{s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, , {s: 'tw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}],
-    [{s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}],
-    [{s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}],
-    [{s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}],
-    [{s: 'tw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tw', l: ''}],
-    [{s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}],
-    [{s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}],
-    [{s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}],
-    [{s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}],
-    [{s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}],
-    [{s: 'tw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tw', l: ''}],
-    [{s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}],
-    [{s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dw', l: ''}, {s: '', l: ''}, {s: '', l: ''}],
-    [{s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}],
-    [{s: 'tl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'dl', l: ''}, {s: '', l: ''}, {s: '', l: ''}, , {s: 'tw', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: '', l: ''}, {s: 'tl', l: ''}]
+    [{final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, , {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}],
+    [{final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, , {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}]
   ];
 
   constructor(props) {
@@ -36,32 +36,37 @@ export default class Board extends React.Component {
     return allowed.indexOf(letter.toLowerCase()) >= 0;
   }
 
+  hasTileSet(letter) {
+    if (this.props.tileSet.length === 0) {
+      return true;
+    }
+
+    return !!this.props.tileSet.find(tile => tile.letter === letter)
+  }
+
   updateTile(tile, letter) {
     return this.state.tiles.map(row => {
       return row.map(rowTile => {
         if (rowTile === tile) {
           return {
-            l: letter === 'Backspace' ? '' : letter,
-            s: tile.s
+            letter: letter === 'Backspace' ? '' : letter,
+            special: tile.special,
+            final: tile.final,
           }
         }
         return rowTile;
       })
     })
-    
   }
 
   selectTile(tile) {
-    this.setState({
-      selectedTile: tile,
-    });
+    this.setState({ selectedTile: tile });
 
     const keypress = (event) => {
       if (this.letterIsAllowed(event.key)) {
         this.setState({
           tiles: this.updateTile(this.state.selectedTile, event.key)
         });
-        this.props.removeTile(event.key)
       }
       document.removeEventListener('keyup', keypress, false)
     }
