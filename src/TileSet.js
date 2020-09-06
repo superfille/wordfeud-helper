@@ -8,9 +8,9 @@ export default class TileSet extends React.Component {
   }
 
   renderTiles() {
-    return this.props.tiles.map(tile => {
+    return this.props.tiles.map((tile, index) => {
       return (
-        <Tile tile={tile} />
+        <Tile key={`tileset-${index}`} tile={tile} />
       )
     })
   }

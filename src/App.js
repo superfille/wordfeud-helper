@@ -9,17 +9,11 @@ export default class App extends React.Component {
     super(props)
 
     this.state = {
-      tileSet: [
-        { l: 's', s: ''},
-        { l: 'b', s: ''},
-        { l: 'e', s: ''},
-        { l: 'r', s: ''},
-        { l: 's', s: ''},
-        { l: 'a', s: ''},
-      ]
+      tileSet: []
     }
 
     this.addTiles = this.addTiles.bind(this)
+    this.removeTile = this.removeTile.bind(this)
   }
 
   addTiles(tiles) {
@@ -28,10 +22,19 @@ export default class App extends React.Component {
     })
   }
 
+  removeTile(letter) {
+    const tile = this.state.tileSet.find(tile => tile.l == letter);
+    if (tile) {
+      this.setState({
+        tileSet: this.state.tileSet.filter(t => t !== tile)
+      })
+    }
+  }
+
   render() {
     return (
       <div>
-        <Board />
+        <Board removeTile={this.removeTile} />
         <TileSet tiles={this.state.tileSet} addTiles={this.addTiles} />
       </div>
     );

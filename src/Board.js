@@ -61,6 +61,7 @@ export default class Board extends React.Component {
         this.setState({
           tiles: this.updateTile(this.state.selectedTile, event.key)
         });
+        this.props.removeTile(event.key)
       }
       document.removeEventListener('keyup', keypress, false)
     }
