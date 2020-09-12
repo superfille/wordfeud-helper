@@ -139,20 +139,23 @@ const fooHorizontal = (letters, row, rowPosition) => {
   const amountOfLetters = letters.length;
   const list = [];
   let lPos = 0;
-  // Find first letter in row.
-  for (let i = rowPosition; i < row.length || lPos < letters.length; i++) {
-    if (row[i].letter === '') {
-      list.push({
-        letter: letters[lPos],
-        final: false,
-      });
-      lPos += 1;
-    } else {
-      list.push(row[i])
-    }
-  }
 
-  console.log(list)
+  // Find first letter in row.
+  // for (let i = rowPosition; i < row.length && lPos < letters.length; i++) {
+  //   console.log('hello')
+  //   if (row[i].letter === '') {
+  //     list.push({
+  //       letter: letters[lPos],
+  //       final: false,
+  //       special: row[i].special,
+  //     });
+  //     lPos += 1;
+  //   } else {
+  //     list.push(row[i])
+  //   }
+  // }
+
+  console.log('list', list)
 }
 // const amountOfTilesToTheLeft = i;
 //       const amountOfTilesToTheRight = row.length - i;
@@ -163,5 +166,5 @@ export {
   getHorizontalWord,
   getVerticalWord,
   boardIsValid,
-  
+  fooHorizontal,
 }
