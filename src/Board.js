@@ -51,6 +51,19 @@ export default class Board extends React.Component {
     tiles = this.updateTile(tiles, tiles[2][2], 't')
 
 
+    tiles = this.updateTile(tiles, tiles[5][5], 'f')
+    tiles = this.updateTile(tiles, tiles[5][6], 'i')
+    tiles = this.updateTile(tiles, tiles[5][7], 'l')
+    tiles = this.updateTile(tiles, tiles[5][8], 'i')
+    tiles = this.updateTile(tiles, tiles[5][9], 'p')
+
+
+    tiles = this.updateTile(tiles, tiles[3][7], 'f')
+    tiles = this.updateTile(tiles, tiles[4][7], 'i')
+    tiles = this.updateTile(tiles, tiles[6][7], 'i')
+    tiles = this.updateTile(tiles, tiles[7][7], 'p')
+
+
     const row = 0;
     const column = 2;
     // console.log(getHorizontalWord(row, column, tiles))

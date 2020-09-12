@@ -1,3 +1,24 @@
+import { englishWords } from './Words.js';
+
+const bsearch = (value, items) => {
+  let firstIndex  = 0;
+  let lastIndex   = items.length - 1;
+  let middleIndex = Math.floor((lastIndex + firstIndex) / 2);
+
+  while (items[middleIndex] != value && firstIndex < lastIndex) {
+    if (value < items[middleIndex]) {
+      lastIndex = middleIndex - 1;
+    }
+    else if (value > items[middleIndex]) {
+      firstIndex = middleIndex + 1;
+    }
+    middleIndex = Math.floor((lastIndex + firstIndex)/2);
+  }
+
+ return (items[middleIndex] != value) ? -1 : middleIndex;
+}
+
+
 const goThroughRows = (board) => {
   for(let row = 0; row < board[0].length; row++) {
     for(let column = 0; column < board[0][0].length; column++) {
@@ -28,7 +49,7 @@ const isStartOfHorizontalWord = (row, column, board) => {
   }
 
   // Somewhere in the board where there is no letter to the left but one to the right
-  if (board[row][column - 1].letter === '' && board[row][column + 1] !== '') {
+  if (board[row][column - 1].letter === '' && board[row][column + 1].letter !== '') {
     return true;
   }
 
@@ -97,7 +118,7 @@ const getVerticalWord = (row, column, board) => {
 }
 
 const isWord = (word) => {
-  return false;
+  return bsearch(word, englishWords) >= 0;
 }
 
 /**
@@ -109,6 +130,13 @@ const boardIsValid = (board) => {
     for(let column = 0; column < board[0].length; column++) {
       if(isStartOfHorizontalWord(row, column, board)) {
         const word = getHorizontalWord(row, column, board)
+        if (!isWord(word)) {
+          invalidWords.push(word)
+        }
+      }
+
+      if (isStartOfVerticalWord(row, column, board)) {
+        const word = getVerticalWord(row, column, board)
         if (!isWord(word)) {
           invalidWords.push(word)
         }
