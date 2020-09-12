@@ -2,12 +2,12 @@ import React from "react";
 import "./style.css";
 
 import Tile from './Tile.js';
-import { isStartOfHorizontalWord, isStartOfVerticalWord, getHorizontalWord, getVerticalWord } from './Solver.js'
+import { isStartOfHorizontalWord, isStartOfVerticalWord, getHorizontalWord, getVerticalWord, boardIsValid } from './Solver.js'
 
 
 export default class Board extends React.Component {
   tiles = [
-    [{final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, , {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}],
+    [{final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}],
     [{final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}],
     [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
     [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
@@ -21,7 +21,7 @@ export default class Board extends React.Component {
     [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
     [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
     [{final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}],
-    [{final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, , {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}]
+    [{final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}]
   ];
 
   constructor(props) {
@@ -30,6 +30,7 @@ export default class Board extends React.Component {
       tiles: this.tiles,
       selectedTile: null,
     };
+    console.log(this.tiles)
   };
 
   componentDidMount() {
@@ -46,9 +47,15 @@ export default class Board extends React.Component {
     tiles = this.updateTile(tiles, tiles[2][0], 'p')
     tiles = this.updateTile(tiles, tiles[3][0], 'p')
 
+    tiles = this.updateTile(tiles, tiles[1][2], 's')
+    tiles = this.updateTile(tiles, tiles[2][2], 't')
+
+
     const row = 0;
-    const column = 0;
-    console.log(getVerticalWord(row, column, tiles))
+    const column = 2;
+    // console.log(getHorizontalWord(row, column, tiles))
+    // console.log(isStartOfVerticalWord(row, column, tiles))
+    console.log(boardIsValid(tiles))
     
     this.setState({tiles});
   }

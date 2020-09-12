@@ -72,10 +72,6 @@ const getHorizontalWord = (row, column, board) => {
   while(lastColumnOfWord < board[0][0].length || board[row][lastColumnOfWord].letter !== '') {
     word += board[row][lastColumnOfWord].letter;
     lastColumnOfWord += 1;
-    if (lastColumnOfWord > 100) {
-      console.log('wtf')
-      break;
-    }
   }
 
   return word;
@@ -100,14 +96,26 @@ const getVerticalWord = (row, column, board) => {
   return word;
 }
 
+const isWord = (word) => {
+  return false;
+}
+
+/**
+ * Returns list of invalid words
+ */
 const boardIsValid = (board) => {
-  for(let row = 0; row < board[0].length; row++) {
-    for(let column = 0; column < board[0][0].length; column++) {
+  const invalidWords = [];
+  for(let row = 0; row < board.length; row++) {
+    for(let column = 0; column < board[0].length; column++) {
       if(isStartOfHorizontalWord(row, column, board)) {
-        
+        const word = getHorizontalWord(row, column, board)
+        if (!isWord(word)) {
+          invalidWords.push(word)
+        }
       }
     }
   }
+  return invalidWords;
 }
 
 
@@ -116,4 +124,5 @@ export {
   isStartOfVerticalWord,
   getHorizontalWord,
   getVerticalWord,
+  boardIsValid,
 }
