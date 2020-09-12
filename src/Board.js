@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 
 import Tile from './Tile.js';
-import { isStartOfHorizontalWord, isStartOfVerticalWord, getHorizontalWord, getVerticalWord, boardIsValid } from './Solver.js'
+import { fooHorizontal, boardIsValid } from './Solver.js'
 
 
 export default class Board extends React.Component {
@@ -30,7 +30,6 @@ export default class Board extends React.Component {
       tiles: this.tiles,
       selectedTile: null,
     };
-    console.log(this.tiles)
   };
 
   componentDidMount() {
@@ -64,11 +63,9 @@ export default class Board extends React.Component {
     tiles = this.updateTile(tiles, tiles[7][7], 'p')
 
 
-    const row = 0;
-    const column = 2;
-    // console.log(getHorizontalWord(row, column, tiles))
-    // console.log(isStartOfVerticalWord(row, column, tiles))
-    console.log(boardIsValid(tiles))
+    const row = 3;
+    const column = 0;
+    console.log(fooHorizontal('apa', tiles[2], 0))
     
     this.setState({tiles});
   }
