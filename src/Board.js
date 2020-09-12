@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 
 import Tile from './Tile.js';
-import { fooHorizontal, boardIsValid } from './Solver.js'
+import { fooHorizontal, boardIsValid, wordsAreConnected } from './Solver.js'
 
 
 export default class Board extends React.Component {
@@ -52,9 +52,12 @@ export default class Board extends React.Component {
     tiles = this.updateTile(tiles, tiles[5][5], 't')
     tiles = this.updateTile(tiles, tiles[5][6], 'i')
 
+    tiles = this.updateTile(tiles, tiles[13][14], 'i')
+    tiles = this.updateTile(tiles, tiles[14][14], 'i')
+
     const row = 3;
     const column = 0;
-    console.log(fooHorizontal('apa', tiles[5], 0))
+    console.log(wordsAreConnected(tiles))
     
     this.setState({tiles});
   }

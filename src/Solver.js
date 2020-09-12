@@ -106,6 +106,37 @@ const getVerticalWord = (row, column, board) => {
   return word;
 }
 
+const isLeftEmpty = (row, column, board) => {
+  return column - 1 < 0 || board[row][column - 1].letter === '';
+}
+
+const isRightEmpty = (row, column, board) => {
+  return column + 1 >= board.length || board[row][column + 1].letter === '';
+}
+
+const isTopEmpty = (row, column, board) => {
+  return row - 1 < 0 || board[row - 1][column].letter === '';
+}
+
+const isBottomEmpty = (row, column, board) => {
+  return row + 1 >= board.length || board[row + 1][column].letter === '';
+}
+
+const neighbouringTilesAreEmpty = (row, column, board) => {
+  return isLeftEmpty(row, column, board) && isRightEmpty(row, column, board) && isTopEmpty(row, column, board) && isBottomEmpty(row, column, board)
+}
+
+const wordsAreConnected = (board) => {
+  for (let row = 0; row < board.length; row++) {
+    for (let column = 0; column < board[row].length; column++) {
+      if (board[row][column].letter !== '' && neighbouringTilesAreEmpty(row, column, board)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 const isWord = (word) => {
   return bsearch(word, englishWords) >= 0;
 }
@@ -159,4 +190,5 @@ export {
   getVerticalWord,
   boardIsValid,
   fooHorizontal,
+  wordsAreConnected,
 }
