@@ -1,2 +1,5 @@
-* Kolla att brädet är valid
+* Kolla horisontalt efter första bokstaven
+  Kolla sedan hur många bokstäver som kan läggas ut från vänster till höger
+  för att forma ord med bokstaven vi hittat som högraste bokstav.
+  Fortsätt till nästa "Tile" och gör samma sak igen
 * 

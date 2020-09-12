@@ -18,17 +18,6 @@ const bsearch = (value, items) => {
  return (items[middleIndex] != value) ? -1 : middleIndex;
 }
 
-
-const goThroughRows = (board) => {
-  for(let row = 0; row < board[0].length; row++) {
-    for(let column = 0; column < board[0][0].length; column++) {
-      if (board[row][column].letter !== '') {
-
-      }
-    }
-  }
-}
-
 const isStartOfHorizontalWord = (row, column, board) => {
   // No letter in this tile
   if (board[row][column].letter === '') {
@@ -126,9 +115,9 @@ const isWord = (word) => {
  */
 const boardIsValid = (board) => {
   const invalidWords = [];
-  for(let row = 0; row < board.length; row++) {
-    for(let column = 0; column < board[0].length; column++) {
-      if(isStartOfHorizontalWord(row, column, board)) {
+  for (let row = 0; row < board.length; row++) {
+    for (let column = 0; column < board[0].length; column++) {
+      if (isStartOfHorizontalWord(row, column, board)) {
         const word = getHorizontalWord(row, column, board)
         if (!isWord(word)) {
           invalidWords.push(word)
@@ -144,6 +133,10 @@ const boardIsValid = (board) => {
     }
   }
   return invalidWords;
+}
+
+const fooHorizontal = () => {
+  
 }
 
 
