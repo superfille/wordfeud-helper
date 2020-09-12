@@ -135,27 +135,19 @@ const boardIsValid = (board) => {
   return invalidWords;
 }
 
+const makeWords = (letters, row, index) => {
+
+}
+
 const fooHorizontal = (letters, row, rowPosition) => {
-  const amountOfLetters = letters.length;
-  const list = [];
-  let lPos = 0;
-
-  // Find first letter in row.
-  // for (let i = rowPosition; i < row.length && lPos < letters.length; i++) {
-  //   console.log('hello')
-  //   if (row[i].letter === '') {
-  //     list.push({
-  //       letter: letters[lPos],
-  //       final: false,
-  //       special: row[i].special,
-  //     });
-  //     lPos += 1;
-  //   } else {
-  //     list.push(row[i])
-  //   }
-  // }
-
-  console.log('list', list)
+  let list = []
+  for (let i = 0; i < row.length; i++) {
+    if (row[i].letter !== '') {
+      list.push()
+      
+      makeWords(letters, row, i)
+    }
+  }
 }
 // const amountOfTilesToTheLeft = i;
 //       const amountOfTilesToTheRight = row.length - i;
