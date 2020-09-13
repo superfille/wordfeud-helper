@@ -37,16 +37,12 @@ export default class Board extends React.Component {
   }
 
   testBoard() {
-    let tiles = this.updateTile(this.state.tiles, this.state.tiles[1][0], 'p')
+    let tiles = this.updateTile(this.state.tiles, this.state.tiles[0][0], 'p')
  
-    tiles = this.updateTile(tiles, tiles[1][0], 'o')
-    tiles = this.updateTile(tiles, tiles[2][0], 'p')
-    tiles = this.updateTile(tiles, tiles[3][0], 'p')
-
-    tiles = this.updateTile(tiles, tiles[1][2], 's')
-    tiles = this.updateTile(tiles, tiles[2][2], 't')
-    tiles = this.updateTile(tiles, tiles[2][1], 'a')
-    tiles = this.updateTile(tiles, tiles[1][1], 'a')
+    tiles = this.updateTile(tiles, tiles[5][1], 'a')
+    tiles = this.updateTile(tiles, tiles[5][3], 'b')
+    tiles = this.updateTile(tiles, tiles[5][7], 'c')
+    tiles = this.updateTile(tiles, tiles[5][14], 'd')
 
     // tiles = this.updateTile(tiles, tiles[0][5], 'a')
 
@@ -59,7 +55,7 @@ export default class Board extends React.Component {
     const row = 3;
     const column = 0;
 
-    console.log(solveRow(tiles[1], 'hejsan'))
+    console.log(solveRow(tiles[5], 'hejsan'))
     
     this.setState({tiles});
   }
