@@ -106,34 +106,71 @@ const getVerticalWord = (row, column, board) => {
   return word;
 }
 
-const isLeftEmpty = (row, column, board) => {
-  return column - 1 < 0 || board[row][column - 1].letter === '';
+const canGoLeft = (row, column, board) => {
+  return column - 1 > 0 && board[row][column - 1].letter !== '';
 }
 
-const isRightEmpty = (row, column, board) => {
-  return column + 1 >= board.length || board[row][column + 1].letter === '';
+const canGoRight = (row, column, board) => {
+  return column + 1 < board.length && board[row][column + 1].letter !== '';
 }
 
-const isTopEmpty = (row, column, board) => {
-  return row - 1 < 0 || board[row - 1][column].letter === '';
+const canGoUp = (row, column, board) => {
+  return row - 1 > 0 && board[row - 1][column].letter !== '';
 }
 
-const isBottomEmpty = (row, column, board) => {
-  return row + 1 >= board.length || board[row + 1][column].letter === '';
+const canGoDown = (row, column, board) => {
+  return row + 1 < board.length && board[row + 1][column].letter !== '';
 }
 
-const neighbouringTilesAreEmpty = (row, column, board) => {
-  return isLeftEmpty(row, column, board) && isRightEmpty(row, column, board) && isTopEmpty(row, column, board) && isBottomEmpty(row, column, board)
+const totalNumberOfLettersInBoard = (board) => {
+  let count = 0;
+  for (let row = 0; row < board.length; row++) {
+    for (let column = 0; column < board[row].length; column++) {
+      if (board[row][column].letter !== '') {
+        count += 1;
+      }
+    }
+  }
+  return count;
+}
+
+const hasVisited = (row, column, visited) => {
+  return visited.some(visit => visit.row === row && visit.column === column)
+}
+
+const searchLabyrint = (row, column, board, visited, count) => {
+  if (canGoRight(row, column, board) && !hasVisited(row, column + 1, visited)) {
+    visited.push({ row: row, column: column + 1 })
+    count = searchLabyrint(row, column + 1, board, visited, count + 1)
+  }
+
+  if (canGoUp(row, column, board) && !hasVisited(row - 1, column, visited)) {
+    visited.push({ row: row - 1, column: column })
+    count = searchLabyrint(row - 1, column, board, visited, count + 1)
+  }
+
+  if (canGoDown(row, column, board) && !hasVisited(row + 1, column, visited)) {
+    visited.push({ row: row + 1, column: column })
+    count = searchLabyrint(row + 1, column, board, visited, count + 1)
+  }
+
+  if (canGoLeft(row, column, board) && !hasVisited(row, column - 1, visited)) {
+    visited.push({ row: row, column: column - 1 })
+    count = searchLabyrint(row, column - 1, board, visited, count + 1)
+  }
+
+  return count
 }
 
 const wordsAreConnected = (board) => {
   for (let row = 0; row < board.length; row++) {
     for (let column = 0; column < board[row].length; column++) {
-      if (board[row][column].letter !== '' && neighbouringTilesAreEmpty(row, column, board)) {
-        return false;
+      if (board[row][column].letter !== '') {
+        return searchLabyrint(row, column, board, [{row, column}], 1) === totalNumberOfLettersInBoard(board)
       }
     }
   }
+  console.warn('Words are connected returned true here')
   return true;
 }
 
@@ -180,8 +217,6 @@ const fooHorizontal = (letters, row, rowPosition) => {
     }
   }
 }
-// const amountOfTilesToTheLeft = i;
-//       const amountOfTilesToTheRight = row.length - i;
 
 export {
   isStartOfHorizontalWord,

@@ -37,23 +37,24 @@ export default class Board extends React.Component {
   }
 
   testBoard() {
-    let tiles = this.updateTile(this.state.tiles, this.state.tiles[0][0], 'p')
-    tiles = this.updateTile(tiles, tiles[0][1], 'o')
-    tiles = this.updateTile(tiles, tiles[0][2], 'o')
-    tiles = this.updateTile(tiles, tiles[0][3], 'p')
-
+    let tiles = this.updateTile(this.state.tiles, this.state.tiles[1][0], 'p')
+ 
     tiles = this.updateTile(tiles, tiles[1][0], 'o')
     tiles = this.updateTile(tiles, tiles[2][0], 'p')
     tiles = this.updateTile(tiles, tiles[3][0], 'p')
 
     tiles = this.updateTile(tiles, tiles[1][2], 's')
     tiles = this.updateTile(tiles, tiles[2][2], 't')
+    tiles = this.updateTile(tiles, tiles[2][1], 'a')
+    tiles = this.updateTile(tiles, tiles[1][1], 'a')
 
-    tiles = this.updateTile(tiles, tiles[5][5], 't')
-    tiles = this.updateTile(tiles, tiles[5][6], 'i')
+    // tiles = this.updateTile(tiles, tiles[0][5], 'a')
 
-    tiles = this.updateTile(tiles, tiles[13][14], 'i')
-    tiles = this.updateTile(tiles, tiles[14][14], 'i')
+    // tiles = this.updateTile(tiles, tiles[5][5], 't')
+    // tiles = this.updateTile(tiles, tiles[5][6], 'i')
+
+    // tiles = this.updateTile(tiles, tiles[13][14], 'i')
+    // tiles = this.updateTile(tiles, tiles[14][14], 'i')
 
     const row = 3;
     const column = 0;
