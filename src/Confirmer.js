@@ -98,7 +98,6 @@ const getVerticalWord = (row, column, board) => {
     word += board[lastRowOfWord][column].letter;
     lastRowOfWord += 1;
     if (lastRowOfWord > 100) {
-      console.log('wtf')
       break;
     }
   }
@@ -206,21 +205,6 @@ const boardIsValid = (board) => {
   }
   console.log(invalidWords)
   return invalidWords.length > 0;
-}
-
-const makeWords = (letters, row, index) => {
-
-}
-
-const fooHorizontal = (letters, row, rowPosition) => {
-  let list = []
-  for (let i = 0; i < row.length; i++) {
-    if (row[i].letter !== '') {
-      list.push()
-      
-      makeWords(letters, row, i)
-    }
-  }
 }
 
 export {
