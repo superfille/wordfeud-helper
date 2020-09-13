@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 
 import Tile from './Tile.js';
-import { fooHorizontal, boardIsValid, wordsAreConnected } from './Solver.js'
+import { fooHorizontal, boardIsValid, wordsAreConnected } from './Confirmer.js'
 
 
 export default class Board extends React.Component {
