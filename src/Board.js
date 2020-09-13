@@ -2,8 +2,8 @@ import React from "react";
 import "./style.css";
 
 import Tile from './Tile.js';
-import { fooHorizontal, boardIsValid, wordsAreConnected } from './Confirmer.js'
-
+import { boardIsValid, wordsAreConnected } from './Confirmer.js'
+import { solveRow } from './Solver.js'
 
 export default class Board extends React.Component {
   tiles = [
@@ -58,7 +58,8 @@ export default class Board extends React.Component {
 
     const row = 3;
     const column = 0;
-    console.log(wordsAreConnected(tiles))
+
+    console.log(solveRow(tiles[1], 'hejsan'))
     
     this.setState({tiles});
   }
