@@ -38,12 +38,12 @@ export default class Board extends React.Component {
   testBoard() {
     let tiles = this.updateTile(this.state.tiles, this.state.tiles[0][0], 'p')
  
-    tiles = this.updateTile(tiles, tiles[5][1], 'a')
-    tiles = this.updateTile(tiles, tiles[5][3], 'b')
+    tiles = this.updateTile(tiles, tiles[5][0], 'a')
+    tiles = this.updateTile(tiles, tiles[5][2], 'b')
     tiles = this.updateTile(tiles, tiles[5][7], 'c')
     tiles = this.updateTile(tiles, tiles[5][14], 'd')
 
-    console.log(solveRow(tiles[5], 'hejsan'))
+    console.log(solveRow(tiles[5], 'unt'))
     
     this.setState({ tiles });
   }

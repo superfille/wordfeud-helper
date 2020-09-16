@@ -3,10 +3,6 @@ import Tile from './Tile.js';
 import "./style.css";
 
 export default class TileSet extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   renderTiles() {
     return this.props.tiles.map((tile, index) => {
       return (
