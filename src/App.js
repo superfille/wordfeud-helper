@@ -23,7 +23,7 @@ export default class App extends React.Component {
   }
 
   removeTile(letter) {
-    const tile = this.state.tileSet.find(tile => tile.letter == letter);
+    const tile = this.state.tileSet.find(tile => tile.letter === letter);
     if (tile) {
       this.setState({
         tileSet: this.state.tileSet.filter(t => t !== tile)
@@ -39,4 +39,5 @@ export default class App extends React.Component {
       </div>
     );
   }
+
 }

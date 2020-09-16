@@ -1,4 +1,4 @@
-import { englishWords } from './Words.js';
+import englishWords from './Words.json';
 // Max 7 length word?
 
 const maxWordLength = (tileRow, column) => {
@@ -40,10 +40,6 @@ const maxWordLength = (tileRow, column) => {
 
 const canMake = (maxLength, tileRow, column) => {
   return maxWordLength(tileRow, column).length <= maxLength;
-}
-
-const getWordsWithMaxLength = (maxLength, letters) => {
-  return console.log(maxLength, letters)
 }
 
 const combineLettersWithTile = (letters, tileRow, columns) => {

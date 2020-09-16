@@ -1,4 +1,4 @@
-import { englishWords } from './Words.js';
+import englishWords from './Words.json';
 
 const bsearch = (value, items) => {
   let firstIndex  = 0;
@@ -203,7 +203,6 @@ const boardIsValid = (board) => {
       }
     }
   }
-  console.log(invalidWords)
   return invalidWords.length > 0;
 }
 
@@ -213,6 +212,5 @@ export {
   getHorizontalWord,
   getVerticalWord,
   boardIsValid,
-  fooHorizontal,
   wordsAreConnected,
 }

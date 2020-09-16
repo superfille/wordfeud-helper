@@ -32,7 +32,6 @@ export default class Tile extends React.Component {
   }
 
   render() {
-    let className = `tile tile--color__${this.color()}`;
     return (
       <button onClick={this.handleOnSelect} className={this.className()}>
         { this.renderText() }
