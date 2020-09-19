@@ -1,12 +1,20 @@
+import { wordIsValidInBoard } from './Confirmer';
 import englishWords from './Words.json';
-
-
-const boardLetterSequence = (tileRow, column) => {
+const testWords = [
+  'cunt'
+]
+/**
+ * 
+ * @param {*} tileRow 
+ * @param {*} column 
+ * Returns: { start: number, length: number, end: 0 }
+ */
+const getWordRowRestrictions = (tileRow, column) => {
   let length = 1;
   let start = 0;
   let end = 0;
   for (let index = column + 1; index < tileRow.length; index++) {
-    if (tileRow[index].letter !== '') {
+    if (tileRow[index].char !== '') {
       if (index - 1 === column) {
         // If it is just to the right break
         break
@@ -22,7 +30,7 @@ const boardLetterSequence = (tileRow, column) => {
   }
 
   for (let index = column - 1; index >= 0; index--) {
-    if (tileRow[index].letter !== '') {
+    if (tileRow[index].char !== '') {
       if (index + 1 === column) {
         break;
       }
@@ -38,27 +46,38 @@ const boardLetterSequence = (tileRow, column) => {
   return { length, start, end };
 }
 
-const combineLettersWithTile = (letters, tileRow, columns) => {
-  return letters.concat(columns.map(column => tileRow[column].letter))
+const combineCharsWithTile = (chars, tileRow, columns) => {
+  return chars.concat(columns.map(column => tileRow[column].char))
 }
 
 const createArray = (total) => {
   return [...Array(total).keys()]
 }
 
-const wordsMatchesStartAndLength = (word, letter, start, length) => {
-  return word[start] === letter && word.length <= length;
+const wordMatchesStartAndLength = (currentWord, char, start, length) => {
+  return currentWord[start] === char && currentWord.length <= length;
+}
+
+const wordCanBePutInRow = (currentWord, tile) => {
+  const index = createArray(tile.start + 1)
+    .findIndex((_, index) => wordMatchesStartAndLength(currentWord, tile.char, tile.start - index, tile.length - index))
+  return index >= 0 ? (tile.start) - index : -1;
 }
 
 /**
  * 
  * @param {Array<string>} words 
- * @param {letter: string, start: number, length: number} boardLetter 
+ * @param {char: string, start: number, length: number} tile 
  */
-const matchFoo = (words, boardLetter) => {
+const wordsThatMatchTileRow = (words, tile) => {
   return words.reduce((accumulated, currentWord) => {
-    if (createArray(boardLetter.start + 1).some((start, index) => wordsMatchesStartAndLength(currentWord, boardLetter.letter, start, boardLetter.length - index))) {
-      return [...accumulated, currentWord];
+    const index = wordCanBePutInRow(currentWord, tile);
+    if (index >= 0) {
+      accumulated.push({
+        word: currentWord,
+        column: tile.column - index,
+        row: tile.row
+      })
     }
     return accumulated
   }, []);
@@ -73,10 +92,10 @@ const hasJokerAndRemoveJoker = (chars) => {
   return false
 }
 
-const getAllWordsThatMatchLetters = (letters, words) => {
-  return words.filter((word) => {
-    let copiedChars = [...letters]
-    return [...word].every((charInWord) => {
+const getAllWordsThatMatchChars = (chars, wordsModel) => {
+  return wordsModel.filter((word) => {
+    let copiedChars = [...chars]
+    return [...word.word].every((charInWord) => {
       const index = copiedChars.indexOf(charInWord)
       if (index >= 0) {
         copiedChars.splice(index, 1)
@@ -88,30 +107,43 @@ const getAllWordsThatMatchLetters = (letters, words) => {
   });
 }
 
+
+const testRowWordsInBoard = (rowWords, board) => {
+  rowWords.filter(rowWord => {
+    return wordIsValidInBoard(rowWord, board)
+  })
+}
 /**
  * Ord kan börja från toLeft till column
  * [1][2][B3][4][][C][]
  * B:s ord kan börja från 1,2,3 och gå ända till 4
  * @param {*} tileRow 
- * @param {*} letters 
+ * @param {*} chars 
  */
-const solveRow = (tileRow, letters) => {
-  //const words = getAllWordsWithinWithMaxLength(englishWords, maxLength)
+const solveRow = (tileRow, chars, board, row) => {
+  // console.time('hej')
   for (let column = 0; column < tileRow.length; column++) {
-    if (tileRow[column].letter !== '') {
-      const sequence = boardLetterSequence(tileRow, column)
-      const boardLetter = {
+    if (tileRow[column].char === 'c') {
+      const sequence = getWordRowRestrictions(tileRow, column)
+      const tile = {
         start: sequence.start,
         length: sequence.length,
-        letter: tileRow[column].letter
+        char: tileRow[column].char,
+        column,
+        row
       }
+      console.log('tile',tile)
 
-      const wordsThatMatchTileRow = matchFoo(englishWords, boardLetter)
-      const combinedLetters = combineLettersWithTile(letters, tileRow, [column])
-      const wordsThatMatch = getAllWordsThatMatchLetters(combinedLetters, wordsThatMatchTileRow) 
-      console.log(sequence, wordsThatMatch)
+      // const wordsThatMatchTile = wordsThatMatchTileRow(englishWords, tile)
+      const wordsThatMatchTile = wordsThatMatchTileRow(testWords, tile)
+      const combinedChars = combineCharsWithTile(chars, tileRow, [column])
+      const rowWords = getAllWordsThatMatchChars(combinedChars, wordsThatMatchTile) 
+      console.log('matched', rowWords)
+
+      return testRowWordsInBoard(rowWords, board)
     }
   }
+  // console.timeEnd('hej')
 }
 
 export {

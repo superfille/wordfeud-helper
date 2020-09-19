@@ -18,9 +18,9 @@ export default class Tile extends React.Component {
 
   renderText() {
     if (this.props.selected) {
-      return this.props.tile.letter || ''
+      return this.props.tile.char || ''
     }
-    return this.props.tile.letter || this.props.tile.special;
+    return this.props.tile.char || this.props.tile.special;
   }
 
   color() {

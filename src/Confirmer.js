@@ -5,7 +5,7 @@ const bsearch = (value, items) => {
   let lastIndex   = items.length - 1;
   let middleIndex = Math.floor((lastIndex + firstIndex) / 2);
 
-  while (items[middleIndex] != value && firstIndex < lastIndex) {
+  while (items[middleIndex] !== value && firstIndex < lastIndex) {
     if (value < items[middleIndex]) {
       lastIndex = middleIndex - 1;
     }
@@ -15,18 +15,18 @@ const bsearch = (value, items) => {
     middleIndex = Math.floor((lastIndex + firstIndex)/2);
   }
 
- return (items[middleIndex] != value) ? -1 : middleIndex;
+ return (items[middleIndex] !== value) ? -1 : middleIndex;
 }
 
 const isStartOfHorizontalWord = (row, column, board) => {
-  // No letter in this tile
-  if (board[row][column].letter === '') {
+  // No char in this tile
+  if (board[row][column].char === '') {
     return false;
   }
 
-  // At the start of the board and tile to right is a letter
+  // At the start of the board and tile to right is a char
   if (column === 0) {
-    if (board[row][column + 1].letter !== '') {
+    if (board[row][column + 1].char !== '') {
       return true;
     }
     return false;
@@ -37,8 +37,8 @@ const isStartOfHorizontalWord = (row, column, board) => {
     return false;
   }
 
-  // Somewhere in the board where there is no letter to the left but one to the right
-  if (board[row][column - 1].letter === '' && board[row][column + 1].letter !== '') {
+  // Somewhere in the board where there is no char to the left but one to the right
+  if (board[row][column - 1].char === '' && board[row][column + 1].char !== '') {
     return true;
   }
 
@@ -46,14 +46,14 @@ const isStartOfHorizontalWord = (row, column, board) => {
 }
 
 const isStartOfVerticalWord = (row, column, board) => {
-    // No letter in this tile
-    if (board[row][column].letter === '') {
+    // No char in this tile
+    if (board[row][column].char === '') {
       return false;
     }
 
-  // At the start of the board and a letter is beneath this tile
+  // At the start of the board and a char is beneath this tile
   if (row === 0) {
-    if (board[row + 1][column].letter !== '') {
+    if (board[row + 1][column].char !== '') {
       return true
     }
     return false;
@@ -64,8 +64,8 @@ const isStartOfVerticalWord = (row, column, board) => {
     return false;
   }
 
-  // Somewhere in the board where there is no letter above but there is one beneath
-  if (board[row - 1][column].letter === '' && board[row + 1][column].letter !== '') {
+  // Somewhere in the board where there is no char above but there is one beneath
+  if (board[row - 1][column].char === '' && board[row + 1][column].char !== '') {
     return true;
   }
 
@@ -79,8 +79,8 @@ const getHorizontalWord = (row, column, board) => {
   let lastColumnOfWord = column;
   let word = '';
 
-  while(lastColumnOfWord < board[0][0].length || board[row][lastColumnOfWord].letter !== '') {
-    word += board[row][lastColumnOfWord].letter;
+  while(lastColumnOfWord < board[0][0].length || board[row][lastColumnOfWord].char !== '') {
+    word += board[row][lastColumnOfWord].char;
     lastColumnOfWord += 1;
   }
 
@@ -94,8 +94,8 @@ const getVerticalWord = (row, column, board) => {
   let lastRowOfWord = row;
   let word = '';
 
-  while(lastRowOfWord < board[0][0].length || board[lastRowOfWord][column].letter !== '') {
-    word += board[lastRowOfWord][column].letter;
+  while(lastRowOfWord < board[0][0].length || board[lastRowOfWord][column].char !== '') {
+    word += board[lastRowOfWord][column].char;
     lastRowOfWord += 1;
     if (lastRowOfWord > 100) {
       break;
@@ -106,26 +106,26 @@ const getVerticalWord = (row, column, board) => {
 }
 
 const canGoLeft = (row, column, board) => {
-  return column - 1 > 0 && board[row][column - 1].letter !== '';
+  return column - 1 > 0 && board[row][column - 1].char !== '';
 }
 
 const canGoRight = (row, column, board) => {
-  return column + 1 < board.length && board[row][column + 1].letter !== '';
+  return column + 1 < board.length && board[row][column + 1].char !== '';
 }
 
 const canGoUp = (row, column, board) => {
-  return row - 1 > 0 && board[row - 1][column].letter !== '';
+  return row - 1 > 0 && board[row - 1][column].char !== '';
 }
 
 const canGoDown = (row, column, board) => {
-  return row + 1 < board.length && board[row + 1][column].letter !== '';
+  return row + 1 < board.length && board[row + 1][column].char !== '';
 }
 
-const totalNumberOfLettersInBoard = (board) => {
+const totalNumberOfCharsInBoard = (board) => {
   let count = 0;
   for (let row = 0; row < board.length; row++) {
     for (let column = 0; column < board[row].length; column++) {
-      if (board[row][column].letter !== '') {
+      if (board[row][column].char !== '') {
         count += 1;
       }
     }
@@ -164,8 +164,8 @@ const searchLabyrint = (row, column, board, visited, count) => {
 const wordsAreConnected = (board) => {
   for (let row = 0; row < board.length; row++) {
     for (let column = 0; column < board[row].length; column++) {
-      if (board[row][column].letter !== '') {
-        return searchLabyrint(row, column, board, [{row, column}], 1) === totalNumberOfLettersInBoard(board)
+      if (board[row][column].char !== '') {
+        return searchLabyrint(row, column, board, [{row, column}], 1) === totalNumberOfCharsInBoard(board)
       }
     }
   }
@@ -203,8 +203,19 @@ const boardIsValid = (board) => {
       }
     }
   }
-  return invalidWords.length > 0;
+  console.error('invalidWords', invalidWords)
+  return invalidWords.length === 0;
 }
+
+const wordIsValidInBoard = (rowWord, board) => {
+  for (let i = 0; i < rowWord.word.length; i++) {
+    if (board[rowWord.row][rowWord.column + i].final === false) {
+      board[rowWord.row][rowWord.column + i].char = rowWord.word[i]
+    }
+  }
+  console.log(boardIsValid(board))
+}
+
 
 export {
   isStartOfHorizontalWord,
@@ -213,4 +224,5 @@ export {
   getVerticalWord,
   boardIsValid,
   wordsAreConnected,
+  wordIsValidInBoard
 }

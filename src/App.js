@@ -18,12 +18,12 @@ export default class App extends React.Component {
 
   addTiles(tiles) {
     this.setState({
-      tileSet: tiles.map(letter => { return { letter, special: ''} })
+      tileSet: tiles.map(char => { return { char, special: ''} })
     })
   }
 
-  removeTile(letter) {
-    const tile = this.state.tileSet.find(tile => tile.letter === letter);
+  removeTile(char) {
+    const tile = this.state.tileSet.find(tile => tile.char === char);
     if (tile) {
       this.setState({
         tileSet: this.state.tileSet.filter(t => t !== tile)

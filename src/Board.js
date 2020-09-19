@@ -8,21 +8,21 @@ export default class Board extends React.Component {
   constructor(props) {
     super(props);
     const tiles = [
-      [{final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}],
-      [{final: false, special: 'tl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'dl',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tw',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: '',letter: ''}, {final: false, special: 'tl',letter: ''}]
+      [{final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: 'tw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tw', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: 'tw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tw', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}],
+      [{final: false, special: 'tl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'dl', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tw', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: '', char: ''}, {final: false, special: 'tl', char: ''}]
     ];
 
     this.state = {
@@ -36,40 +36,59 @@ export default class Board extends React.Component {
   }
 
   testBoard() {
-    let tiles = this.updateTile(this.state.tiles, this.state.tiles[0][0], 'p')
+    let tiles = this.setTile(this.state.tiles, this.state.tiles[5][7], 'c')
  
-    tiles = this.updateTile(tiles, tiles[5][0], 'a')
-    tiles = this.updateTile(tiles, tiles[5][2], 'b')
-    tiles = this.updateTile(tiles, tiles[5][7], 'c')
-    tiles = this.updateTile(tiles, tiles[5][14], 'd')
+    tiles = this.setTile(tiles, tiles[3][7], 'b')
+    tiles = this.setTile(tiles, tiles[4][7], 'a')
+    tiles = this.setTile(tiles, tiles[6][7], 'k')
 
-    console.log(solveRow(tiles[5], 'unt'))
+    tiles = this.setTile(tiles, tiles[4][8], 'n')
+    tiles = this.setTile(tiles, tiles[4][9], 't')
+
+    tiles = this.setTile(tiles, tiles[5][7], 'c')
+
+    const newTiles = solveRow(tiles[5], 'unt', tiles, 5)
     
     this.setState({ tiles });
   }
 
-  letterIsAllowed(letter) {
+  charIsAllowed(char) {
     const allowed = ['backspace', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-    return allowed.indexOf(letter.toLowerCase()) >= 0;
+    return allowed.indexOf(char.toLowerCase()) >= 0;
   }
 
-  hasTileSet(letter) {
+  hasTileSet(char) {
     if (this.props.tileSet.length === 0) {
       return true;
     }
 
-    return !!this.props.tileSet.find(tile => tile.letter === letter)
+    return !!this.props.tileSet.find(tile => tile.char === char)
   }
 
-  updateTile(tiles, tile, letter) {
+  updateTile(tiles, tile, char) {
     return tiles.map(row => {
       return row.map(rowTile => {
         if (rowTile === tile) {
           return {
-            letter: letter === 'Backspace' ? '' : letter,
+            char: char === 'Backspace' ? '' : char,
             special: tile.special,
             final: tile.final,
+          }
+        }
+        return rowTile;
+      })
+    })
+  }
+
+  setTile(tiles, tile, char) {
+    return tiles.map(row => {
+      return row.map(rowTile => {
+        if (rowTile === tile) {
+          return {
+            char: char === 'Backspace' ? '' : char,
+            special: tile.special,
+            final: true,
           }
         }
         return rowTile;
@@ -81,7 +100,7 @@ export default class Board extends React.Component {
     this.setState({ selectedTile: tile });
 
     const keypress = (event) => {
-      if (this.letterIsAllowed(event.key)) {
+      if (this.charIsAllowed(event.key)) {
         this.setState({
           tiles: this.updateTile(this.state.tiles, this.state.selectedTile, event.key)
         });
