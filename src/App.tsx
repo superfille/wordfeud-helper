@@ -1,11 +1,20 @@
 import React from "react";
 import "./style.css";
 
-import Board from './Board.js';
-import TileSet from './TileSet.js';
+import Board from './Board';
+import TileSet from './TileSet';
+import { Tile } from "./Models/Tile";
 
-export default class App extends React.Component {
-  constructor(props) {
+type Props = {
+
+}
+
+type State = {
+  tileSet: Array<Tile>
+}
+
+export default class App extends React.Component<Props, State> {
+  constructor(props: any) {
     super(props)
 
     this.state = {
@@ -16,13 +25,13 @@ export default class App extends React.Component {
     this.removeTile = this.removeTile.bind(this)
   }
 
-  addTiles(tiles) {
+  addTiles(tiles: Array<string>) {
     this.setState({
-      tileSet: tiles.map(char => { return { char, special: ''} })
+      tileSet: tiles.map(char => { return { char, special: null, final: false } })
     })
   }
 
-  removeTile(char) {
+  removeTile(char: string) {
     const tile = this.state.tileSet.find(tile => tile.char === char);
     if (tile) {
       this.setState({
@@ -34,7 +43,8 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Board removeTile={this.removeTile} tileSet={this.state.tileSet} />
+        {/* <Board removeTile={this.removeTile} tileSet={this.state.tileSet} /> */}
+        <Board />
         <TileSet tiles={this.state.tileSet} addTiles={this.addTiles} />
       </div>
     );

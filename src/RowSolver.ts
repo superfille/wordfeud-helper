@@ -1,6 +1,8 @@
 import { wordIsValidInBoard } from './Confirmer';
+import { CharacterPoints, MatchedWord, SolveTile, Tile } from './Models/Tile';
 import englishWords from './Words.json';
-const testWords = [
+
+const testWords: Array<string> = [
   'cunt'
 ]
 /**
@@ -9,7 +11,7 @@ const testWords = [
  * @param {*} column 
  * Returns: { start: number, length: number, end: 0 }
  */
-const getWordRowRestrictions = (tileRow, column) => {
+const getWordRowRestrictions = (tileRow: Array<Tile>, column: number) => {
   let length = 1;
   let start = 0;
   let end = 0;
@@ -46,19 +48,22 @@ const getWordRowRestrictions = (tileRow, column) => {
   return { length, start, end };
 }
 
-const combineCharsWithTile = (chars, tileRow, columns) => {
-  return chars.concat(columns.map(column => tileRow[column].char))
+const combineCharsWithTile = (chars: string, tileRow: Array<Tile>, columns: Array<number>): string => {
+  return columns
+    .map(column => tileRow[column].char)
+    .join()
+    .concat(chars)
 }
 
-const createArray = (total) => {
-  return [...Array(total).keys()]
+const createArray = (total: number): Array<number> => {
+  return Array.from(Array(total).keys())
 }
 
-const wordMatchesStartAndLength = (currentWord, char, start, length) => {
+const wordMatchesStartAndLength = (currentWord: string, char: string, start: number, length: number) => {
   return currentWord[start] === char && currentWord.length <= length;
 }
 
-const wordCanBePutInRow = (currentWord, tile) => {
+const wordCanBePutInRow = (currentWord: string, tile: SolveTile) => {
   const index = createArray(tile.start + 1)
     .findIndex((_, index) => wordMatchesStartAndLength(currentWord, tile.char, tile.start - index, tile.length - index))
   return index >= 0 ? (tile.start) - index : -1;
@@ -69,21 +74,22 @@ const wordCanBePutInRow = (currentWord, tile) => {
  * @param {Array<string>} words 
  * @param {char: string, start: number, length: number} tile 
  */
-const wordsThatMatchTileRow = (words, tile) => {
+const wordsThatMatchTileRow = (words: Array<string>, tile: SolveTile): Array<MatchedWord> => {
   return words.reduce((accumulated, currentWord) => {
     const index = wordCanBePutInRow(currentWord, tile);
     if (index >= 0) {
       accumulated.push({
         word: currentWord,
         column: tile.column - index,
-        row: tile.row
+        row: tile.row,
+        points: 0
       })
     }
     return accumulated
-  }, []);
+  }, [] as Array<MatchedWord>);
 }
 
-const hasJokerAndRemoveJoker = (chars) => {
+const hasJokerAndRemoveJoker = (chars: Array<string>) => {
   const index = chars.indexOf('*')
   if (index >= 0) {
     chars.splice(index, 1)
@@ -92,10 +98,10 @@ const hasJokerAndRemoveJoker = (chars) => {
   return false
 }
 
-const getAllWordsThatMatchChars = (chars, wordsModel) => {
-  return wordsModel.filter((word) => {
-    let copiedChars = [...chars]
-    return [...word.word].every((charInWord) => {
+const getAllWordsThatMatchChars = (chars: string, matchedWords: Array<MatchedWord>) => {
+  return matchedWords.filter((matchedWord) => {
+    let copiedChars = chars.split('')
+    return matchedWord.word.split('').every((charInWord) => {
       const index = copiedChars.indexOf(charInWord)
       if (index >= 0) {
         copiedChars.splice(index, 1)
@@ -107,32 +113,11 @@ const getAllWordsThatMatchChars = (chars, wordsModel) => {
   });
 }
 
-
-const testRowWordsInBoard = (rowWords, board) => {
-  rowWords.filter(rowWord => {
-    return wordIsValidInBoard(rowWord, board)
-  })
+const getCharPoint = (char: string) => {
+  return CharacterPoints.findIndex(cList => cList.includes(char))
 }
 
-const characterPoints = [
-  [],
-  ['a', 'e', 'i', 'l', 'n', 'o', 'r', 's', 't'],
-  ['d', 'u'],
-  ['g', 'm'],
-  ['b', 'c', 'f', 'h', 'p', 'v', 'w', 'y'],
-  ['k'],
-  [],
-  [],
-  ['x'],
-  [],
-  ['j', 'q', 'z']
-];
-
-const getCharPoint = (char) => {
-  return characterPoints.findIndex(cList => cList.includes(char))
-}
-
-const countCharPoint = (tile, char) => {
+const countCharPoint = (tile: Tile, char: string) => {
   if ('dl' === tile.special) {
     return getCharPoint(char) * 2
   }
@@ -143,7 +128,7 @@ const countCharPoint = (tile, char) => {
   return getCharPoint(char)
 }
 
-const countAllWordSpecials = (currentPoints, rowWord, board) => {
+const countAllWordSpecials = (currentPoints: number, rowWord: MatchedWord, board: Array<Array<Tile>>) => {
   let points = currentPoints;
   for (let i = 0; i < rowWord.word.length; i++) {
     if (board[rowWord.row][rowWord.column + i].special === 'tw') {
@@ -157,7 +142,7 @@ const countAllWordSpecials = (currentPoints, rowWord, board) => {
   return points
 }
 
-const countPoints = (rowWord, board) => {
+const countPoints = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
   let points = 0;
   for (let i = 0; i < rowWord.word.length; i++) {
     points += countCharPoint(board[rowWord.row][rowWord.column + i], rowWord.word[i])
@@ -167,8 +152,8 @@ const countPoints = (rowWord, board) => {
   return { ...rowWord, points }
 }
 
-const sortByPoints = (wordsWithPoints) => {
-  return wordsWithPoints.sort((a, b) => b.points - a.points)
+const sortByPoints = (matchedWords: Array<MatchedWord>): Array<MatchedWord> => {
+  return matchedWords.sort((a, b) => b.points - a.points)
 }
 
 /**
@@ -176,14 +161,14 @@ const sortByPoints = (wordsWithPoints) => {
  * [1][2][B3][4][][C][]
  * B:s ord kan börja från 1,2,3 och gå ända till 4
  * @param {*} tileRow 
- * @param {*} chars 
+ * @param {*} chars
  */
-const solveRow = (tileRow, chars, board, row) => {
+const solveRow = (tileRow: Array<Tile>, chars: string, board: Array<Array<Tile>>, row: number) => {
   let solved = []
   for (let column = 0; column < tileRow.length; column++) {
     if (tileRow[column].char !== '') {
       const sequence = getWordRowRestrictions(tileRow, column)
-      const tile = {
+      const solveTile: SolveTile = {
         start: sequence.start,
         length: sequence.length,
         char: tileRow[column].char,
@@ -191,10 +176,10 @@ const solveRow = (tileRow, chars, board, row) => {
         row
       }
 
-      const wordsThatMatchTile = wordsThatMatchTileRow(englishWords, tile)
+      const wordsThatMatchTile: Array<MatchedWord> = wordsThatMatchTileRow(englishWords as Array<string>, solveTile)
       //const wordsThatMatchTile = wordsThatMatchTileRow(testWords, tile)
-      const combinedChars = combineCharsWithTile(chars, tileRow, [column])
-      const rowWords = getAllWordsThatMatchChars(combinedChars, wordsThatMatchTile) 
+      const combinedChars: string = combineCharsWithTile(chars, tileRow, [column])
+      const rowWords: Array<MatchedWord> = getAllWordsThatMatchChars(combinedChars, wordsThatMatchTile) 
 
       solved.push(...rowWords
         .filter(rowWord => wordIsValidInBoard(rowWord, board))
