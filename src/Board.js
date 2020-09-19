@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 
 import Tile from './Tile.js';
-import { solveRow } from './Solver.js'
+import { solveRow } from './RowSolver.js'
 
 export default class Board extends React.Component {
   constructor(props) {
@@ -38,14 +38,14 @@ export default class Board extends React.Component {
   testBoard() {
     let tiles = this.setTile(this.state.tiles, this.state.tiles[5][7], 'c')
  
-    tiles = this.setTile(tiles, tiles[3][7], 'b')
-    tiles = this.setTile(tiles, tiles[4][7], 'a')
-    tiles = this.setTile(tiles, tiles[6][7], 'k')
+    // tiles = this.setTile(tiles, tiles[3][7], 'b')
+    // tiles = this.setTile(tiles, tiles[4][7], 'a')
+    // tiles = this.setTile(tiles, tiles[6][7], 'k')
 
-    tiles = this.setTile(tiles, tiles[4][8], 'n')
-    tiles = this.setTile(tiles, tiles[4][9], 't')
+    // tiles = this.setTile(tiles, tiles[4][8], 'n')
+    // tiles = this.setTile(tiles, tiles[4][9], 't')
 
-    tiles = this.setTile(tiles, tiles[5][7], 'c')
+    // tiles = this.setTile(tiles, tiles[5][7], 'c')
 
     const newTiles = solveRow(tiles[5], 'unt', tiles, 5)
     

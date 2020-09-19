@@ -203,7 +203,9 @@ const boardIsValid = (board) => {
       }
     }
   }
-  console.error('invalidWords', invalidWords)
+  if (invalidWords.length > 0) {
+    console.error('invalidWords', invalidWords)
+  }
   return invalidWords.length === 0;
 }
 
@@ -213,7 +215,15 @@ const wordIsValidInBoard = (rowWord, board) => {
       board[rowWord.row][rowWord.column + i].char = rowWord.word[i]
     }
   }
-  console.log(boardIsValid(board))
+
+  const isValid = boardIsValid(board)
+
+  for (let i = 0; i < rowWord.word.length; i++) {
+    if (board[rowWord.row][rowWord.column + i].final === false) {
+      board[rowWord.row][rowWord.column + i].char = ''
+    }
+  }
+  return isValid
 }
 
 
