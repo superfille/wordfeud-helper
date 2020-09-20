@@ -8,7 +8,7 @@ type Props = {
   addTiles: (s: Array<string>) => void
 }
 
-export default class TileSet extends React.Component<Props> {
+export default class PlayerTiles extends React.Component<Props> {
   renderTiles() {
     return this.props.tiles.map((tile, index) => {
       return (

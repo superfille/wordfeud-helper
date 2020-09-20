@@ -212,22 +212,7 @@ const boardIsValid = (board: Array<Array<Tile>>) => {
   return invalidWords.length === 0;
 }
 
-const wordIsValidInBoard = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
-  for (let i = 0; i < rowWord.word.length; i++) {
-    if (board[rowWord.row][rowWord.column + i].final === false) {
-      board[rowWord.row][rowWord.column + i].char = rowWord.word[i]
-    }
-  }
 
-  const isValid = boardIsValid(board)
-
-  for (let i = 0; i < rowWord.word.length; i++) {
-    if (board[rowWord.row][rowWord.column + i].final === false) {
-      board[rowWord.row][rowWord.column + i].char = ''
-    }
-  }
-  return isValid
-}
 
 
 export {
@@ -237,5 +222,4 @@ export {
   getVerticalWord,
   boardIsValid,
   wordsAreConnected,
-  wordIsValidInBoard
 }

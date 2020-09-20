@@ -2,9 +2,10 @@ import React from "react";
 import "./style.css";
 
 import Board from './Components/Board';
-import TileSet from './Components/TileSet';
+import PlayerTiles from './Components/PlayerTiles';
 import WordTable from './Components/WordTable';
 import { MatchedWord, StartBoard, Tile } from "./Models/Tile";
+import { solveColumn } from "./Solvers/ColumnSolver";
 
 type Props = {
 
@@ -14,6 +15,7 @@ type State = {
   tileSet: Array<Tile>
   board: Array<Array<Tile>>,
   matchedWords: Array<MatchedWord>,
+  playerChars: string,
 }
 
 export default class App extends React.Component<Props, State> {
@@ -23,6 +25,7 @@ export default class App extends React.Component<Props, State> {
     this.state = {
       tileSet: [],
       board: StartBoard,
+      playerChars: '',
       matchedWords: [
         { word: 'cunt', points: 10, row: 5, column: 7, direction: 'row' }
       ],
@@ -41,12 +44,17 @@ export default class App extends React.Component<Props, State> {
   testBoard() {
     this.setMultipleTiles([
       { tile: this.state.board[5][7], char: 'c'},
-      { tile: this.state.board[6][7], char: 'a'},
-      { tile: this.state.board[7][7], char: 'n'},
-    ], true)
+      { tile: this.state.board[5][8], char: 'a'},
+      { tile: this.state.board[5][9], char: 'n'},
+    ],
+    true,
+    () => {
+      const newTiles = solveColumn(this.state.board, 'ight', 9)
+      console.log(newTiles)
+      }
+    )
 
-    // const newTiles = solveRows(board, 'unt')
-    // console.log(newTiles)
+    
     // this.setState({ board });
   }
 
@@ -65,7 +73,7 @@ export default class App extends React.Component<Props, State> {
     }
   }
 
-  setMultipleTiles(tilesWithChar: Array<{ tile: Tile, char: string }>, setFinal: boolean = false) {
+  setMultipleTiles(tilesWithChar: Array<{ tile: Tile, char: string }>, setFinal: boolean = false, func = () => {}) {
     this.setState({
       board: this.state.board.map(row => {
         return row.map(rowTile => {
@@ -80,7 +88,7 @@ export default class App extends React.Component<Props, State> {
           return rowTile;
         })
       })
-    })
+    }, func)
   }
 
   setTile(tile: Tile | null, char: string) {
@@ -130,9 +138,11 @@ export default class App extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        {/* <Board removeTile={this.removeTile} tileSet={this.state.tileSet} /> */}
-        <Board board={ this.state.board } setTile={this.setTile} />
-        {/* <TileSet tiles={this.state.tileSet} addTiles={this.addTiles} /> */}
+        <Board board={ this.state.board } setTile={ this.setTile } />
+        <PlayerTiles
+          tiles={ this.state.tileSet }
+          addTiles={ this.addTiles }
+        />
         <WordTable
           matchedWords={ this.state.matchedWords }
           displayWord={ (matchedWord: MatchedWord) => this.displayWord(matchedWord) }
