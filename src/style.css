@@ -52,3 +52,19 @@ background: linear-gradient(180deg, rgba(66,66,66,1) 19%, rgba(97,97,97,1) 72%);
 .tile-input {
   display: none;
 }
+
+.word-table {
+  border: none;
+  border-collapse: collapse;
+}
+
+.word-table tr:hover, .word-table-row-selected {
+  background-color: #E0E0E0;
+  cursor: pointer;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}

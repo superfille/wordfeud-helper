@@ -25,6 +25,7 @@ export interface SolveTile extends Position {
 export interface MatchedWord extends Position {
   word: string,
   points: number,
+  direction: 'row' | 'column',
 }
 
 export const AllowedChars: Array<string> = ['backspace', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']

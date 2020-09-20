@@ -82,7 +82,8 @@ const wordsThatMatchTileRow = (words: Array<string>, tile: SolveTile): Array<Mat
         word: currentWord,
         column: tile.column - index,
         row: tile.row,
-        points: 0
+        points: 0,
+        direction: 'row'
       })
     }
     return accumulated
