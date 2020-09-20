@@ -1,8 +1,8 @@
 import React from "react";
 import "./style.css";
 
-import Board from './Board';
-import TileSet from './TileSet';
+import Board from './Components/Board';
+import TileSet from './Components/TileSet';
 import { Tile } from "./Models/Tile";
 
 type Props = {

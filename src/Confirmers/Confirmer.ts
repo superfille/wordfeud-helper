@@ -1,5 +1,5 @@
-import { MatchedWord, Tile, Position } from './Models/Tile';
-import englishWords from './Words.json';
+import { MatchedWord, Tile, Position } from '../Models/Tile';
+import englishWords from '../Words.json';
 
 const bsearch = (value: string, items: Array<string>) => {
   let firstIndex  = 0;
@@ -98,7 +98,7 @@ const getVerticalWord = (row: number, column: number, board: Array<Array<Tile>>)
   let lastRowOfWord = row;
   let word = '';
 
-  while(lastRowOfWord < board[0].length || board[lastRowOfWord][column].char !== '') {
+  while (lastRowOfWord < board[0].length && board[lastRowOfWord][column].char !== '') {
     word += board[lastRowOfWord][column].char;
     lastRowOfWord += 1;
     if (lastRowOfWord > 100) {

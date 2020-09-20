@@ -1,8 +1,7 @@
 import React from "react";
 import BoardTile from "./BoardTile";
-import { Tile } from "./Models/Tile";
+import { Tile } from "../Models/Tile";
 
-import "./style.css";
 
 type Props = {
   tiles: Array<Tile>,

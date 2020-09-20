@@ -1,6 +1,6 @@
-import { wordIsValidInBoard } from './Confirmer';
-import { CharacterPoints, MatchedWord, SolveTile, Tile } from './Models/Tile';
-import englishWords from './Words.json';
+import { wordIsValidInBoard } from '../Confirmers/Confirmer';
+import { CharacterPoints, MatchedWord, SolveTile, Tile } from '../Models/Tile';
+import englishWords from '../Words.json';
 
 const testWords: Array<string> = [
   'cunt'
@@ -142,7 +142,7 @@ const countAllWordSpecials = (currentPoints: number, rowWord: MatchedWord, board
   return points
 }
 
-const countPoints = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
+const countPoints = (rowWord: MatchedWord, board: Array<Array<Tile>>): MatchedWord => {
   let points = 0;
   for (let i = 0; i < rowWord.word.length; i++) {
     points += countCharPoint(board[rowWord.row][rowWord.column + i], rowWord.word[i])
@@ -163,8 +163,9 @@ const sortByPoints = (matchedWords: Array<MatchedWord>): Array<MatchedWord> => {
  * @param {*} tileRow 
  * @param {*} chars
  */
-const solveRow = (tileRow: Array<Tile>, chars: string, board: Array<Array<Tile>>, row: number) => {
-  let solved = []
+const solveRow = (board: Array<Array<Tile>>, chars: string, row: number): Array<MatchedWord> => {
+  let solved: Array<MatchedWord> = []
+  const tileRow = board[row];
   for (let column = 0; column < tileRow.length; column++) {
     if (tileRow[column].char !== '') {
       const sequence = getWordRowRestrictions(tileRow, column)
@@ -186,10 +187,20 @@ const solveRow = (tileRow: Array<Tile>, chars: string, board: Array<Array<Tile>>
         .map(rowWord => countPoints(rowWord, board)))
     }
   }
-  solved = sortByPoints(solved)
-  console.log(solved)
+  return solved
+}
+
+const solveRows = (board: Array<Array<Tile>>, chars: string): Array<MatchedWord> => {
+  const list: Array<MatchedWord> = []
+
+  for (let row = 0; row < board.length; row++) {
+    list.push(...solveRow(board, chars, row))
+  }
+
+  return sortByPoints(list);
 }
 
 export {
-  solveRow
+  solveRow,
+  solveRows
 }

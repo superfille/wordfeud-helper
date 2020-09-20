@@ -1,7 +1,6 @@
 import React from "react";
-import "./style.css";
 
-import { Tile } from "./Models/Tile";
+import { Tile } from "../Models/Tile";
 
 type Props = {
   tile: Tile,
