@@ -4,9 +4,6 @@ import englishWords from '../Words.json';
 import { countAllWordSpecials, countCharPoint } from './CountPoints';
 import { wordCanMatchedWithTile, getAllWordsThatMatchChars, sortByPoints } from './SolverUtil';
 
-const testWords: Array<string> = [
-  'cunt'
-]
 /**
  * 
  * @param {*} tileRow 
@@ -102,6 +99,7 @@ const wordIsValidInBoard = (rowWord: MatchedWord, board: Array<Array<Tile>>) => 
       board[rowWord.row][rowWord.column + i].char = ''
     }
   }
+
   return isValid
 }
 
@@ -127,7 +125,6 @@ const solveRow = (board: Array<Array<Tile>>, chars: string, row: number): Array<
       }
 
       const wordsThatMatchTile: Array<MatchedWord> = wordsThatMatchTileRow(englishWords as Array<string>, solveTile)
-      //const wordsThatMatchTile = wordsThatMatchTileRow(testWords, tile)
       const combinedChars: string = combineCharsWithTile(chars, tileRow, [column])
       const rowWords: Array<MatchedWord> = getAllWordsThatMatchChars(combinedChars, wordsThatMatchTile) 
 

@@ -104,7 +104,6 @@ const solveColumn = (board: Array<Array<Tile>>, chars: string, column: number): 
   for (let row = 0; row < board.length; row++) {
     if (board[row][column].char !== '') {
       const sequence = getWordColumnRestrictions(board, row, column)
-      console.log('sequence', sequence)
       const solveTile: SolveTile = {
         start: sequence.start,
         length: sequence.length,
@@ -112,15 +111,11 @@ const solveColumn = (board: Array<Array<Tile>>, chars: string, column: number): 
         column,
         row
       }
-      console.log('solveTile', solveTile)
 
-      // const wordsThatMatchTile: Array<MatchedWord> = wordsThatMatchTileColumn(englishWords as Array<string>, solveTile)
-      const wordsThatMatchTile = wordsThatMatchTileColumn(['night'], solveTile)
-      console.log('wordsThatMatchTile', wordsThatMatchTile)
+      const wordsThatMatchTile = wordsThatMatchTileColumn(englishWords as Array<string> , solveTile)
       const combinedChars: string = combineCharsWithTile(chars, board, [row], column)
-      console.log('combinedChars', combinedChars)
       const columnWords: Array<MatchedWord> = getAllWordsThatMatchChars(combinedChars, wordsThatMatchTile) 
-      console.log('columnWords', columnWords)
+
       solved.push(...columnWords
         .filter(columnWord => wordIsValidInBoard(columnWord, board))
         .map(columnWord => countPoints(columnWord, board)))

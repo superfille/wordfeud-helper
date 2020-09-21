@@ -1,30 +1,27 @@
 import React from "react";
-import BoardTile from "./BoardTile";
-import { Tile } from "../Models/Tile";
-
 
 type Props = {
-  tiles: Array<Tile>,
-  addTiles: (s: Array<string>) => void
+  tiles: string,
+  addTiles: (s: string) => void
 }
 
 export default class PlayerTiles extends React.Component<Props> {
   renderTiles() {
-    return this.props.tiles.map((tile, index) => {
+    return this.props.tiles.split('').map((tile, index) => {
       return (
-        <BoardTile onSelect={() => {}} selected={false} key={`tileset-${index}`} tile={tile} />
+        <div key={index}>{tile}</div>
       )
     })
   }
 
   addTiles() {
-    this.props.addTiles((document.getElementById('tiles_input') as HTMLInputElement).value.split(''))
+    this.props.addTiles((document.getElementById('tiles_input') as HTMLInputElement).value)
   }
 
   render() {
     return (
       <section>
-        <div>
+        <div style={{display: 'flex'}}>
           { this.renderTiles() }
         </div>
         <div>

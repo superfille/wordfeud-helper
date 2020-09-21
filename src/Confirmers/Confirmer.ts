@@ -1,4 +1,4 @@
-import { MatchedWord, Tile, Position } from '../Models/Tile';
+import { Tile, Position } from '../Models/Tile';
 import englishWords from '../Words.json';
 
 const bsearch = (value: string, items: Array<string>) => {

@@ -27,6 +27,12 @@ export default class WordTable extends React.Component<Props, State> {
         selectedMatchedWord: null,
       })  
     } else {
+      if (this.state.selectedMatchedWord !== null) {
+        this.props.hideWord(this.state.selectedMatchedWord)
+        console.log('hiding');
+        
+      }
+
       this.props.displayWord(matchedWord)
       this.setState({
         selectedMatchedWord: matchedWord,

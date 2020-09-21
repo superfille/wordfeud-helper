@@ -5,14 +5,14 @@ import Board from './Components/Board';
 import PlayerTiles from './Components/PlayerTiles';
 import WordTable from './Components/WordTable';
 import { MatchedWord, StartBoard, Tile } from "./Models/Tile";
-import { solveColumn } from "./Solvers/ColumnSolver";
+import { solveColumns } from "./Solvers/ColumnSolver";
+import { solveRows } from "./Solvers/RowSolver";
 
 type Props = {
 
 }
 
 type State = {
-  tileSet: Array<Tile>
   board: Array<Array<Tile>>,
   matchedWords: Array<MatchedWord>,
   playerChars: string,
@@ -23,54 +23,19 @@ export default class App extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      tileSet: [],
       board: StartBoard,
       playerChars: '',
-      matchedWords: [
-        { word: 'cunt', points: 10, row: 5, column: 7, direction: 'row' }
-      ],
+      matchedWords: [],
     }
 
     this.addTiles = this.addTiles.bind(this)
-    this.removeTile = this.removeTile.bind(this)
     this.setTile = this.setTile.bind(this)
   }
 
-  componentDidMount() {
-    this.testBoard();
-  }
-
-
-  testBoard() {
-    this.setMultipleTiles([
-      { tile: this.state.board[5][7], char: 'c'},
-      { tile: this.state.board[5][8], char: 'a'},
-      { tile: this.state.board[5][9], char: 'n'},
-    ],
-    true,
-    () => {
-      const newTiles = solveColumn(this.state.board, 'ight', 9)
-      console.log(newTiles)
-      }
-    )
-
-    
-    // this.setState({ board });
-  }
-
-  addTiles(tiles: Array<string>) {
+  addTiles(tiles: string) {
     this.setState({
-      tileSet: tiles.map(char => { return { char, special: null, final: false } })
+      playerChars: tiles
     })
-  }
-
-  removeTile(char: string) {
-    const tile = this.state.tileSet.find(tile => tile.char === char);
-    if (tile) {
-      this.setState({
-        tileSet: this.state.tileSet.filter(t => t !== tile)
-      })
-    }
   }
 
   setMultipleTiles(tilesWithChar: Array<{ tile: Tile, char: string }>, setFinal: boolean = false, func = () => {}) {
@@ -123,16 +88,48 @@ export default class App extends React.Component<Props, State> {
     this.setMultipleTiles(list)
   }
 
+  displayColumn(matchedWord: MatchedWord, display: boolean) {
+    const list: Array<{ tile: Tile, char: string }> = []
+    let index = 0;
+    const wordLengthInBoard = (matchedWord.word.length + matchedWord.row)
+    for (let row = matchedWord.row; row < wordLengthInBoard; row++, index++) {
+      if (!this.state.board[row][matchedWord.column].final) {
+        list.push({
+          tile: this.state.board[row][matchedWord.column],
+          char: display ? matchedWord.word[index] : ''
+        })
+      }
+    }
+    this.setMultipleTiles(list)
+  }
+
   displayWord(matchedWord: MatchedWord) {
     if (matchedWord.direction === 'row') {
      this.displayRow(matchedWord, true)
+    } else {
+      this.displayColumn(matchedWord, true)
     }
   }
 
   hideWord(matchedWord: MatchedWord) {
     if (matchedWord.direction === 'row') {
       this.displayRow(matchedWord, false)
+    } else {
+      this.displayColumn(matchedWord, false)
     }
+  }
+
+  copiedBoard() {
+
+  }
+
+  solve() {
+    this.setState({
+      matchedWords: [
+        ...solveColumns(this.state.board, this.state.playerChars),
+        ...solveRows(this.state.board, this.state.playerChars)
+      ]
+    })
   }
 
   render() {
@@ -140,9 +137,10 @@ export default class App extends React.Component<Props, State> {
       <div>
         <Board board={ this.state.board } setTile={ this.setTile } />
         <PlayerTiles
-          tiles={ this.state.tileSet }
+          tiles={ this.state.playerChars }
           addTiles={ this.addTiles }
         />
+        <button onClick={() => this.solve()}>Solve</button>
         <WordTable
           matchedWords={ this.state.matchedWords }
           displayWord={ (matchedWord: MatchedWord) => this.displayWord(matchedWord) }
