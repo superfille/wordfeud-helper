@@ -52,6 +52,7 @@ export default class WordTable extends React.Component<Props, State> {
           >
           <td>{ matchedWord.points }</td>
           <td>{ matchedWord.word }</td>
+          <td><button>Use</button></td>
         </tr>
       )
     })
@@ -64,6 +65,7 @@ export default class WordTable extends React.Component<Props, State> {
           <tr>
             <th>Points</th>
             <th>Word</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

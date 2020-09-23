@@ -1,6 +1,6 @@
 import { MatchedWord, SolveTile, Tile } from "../Models/Tile";
 import { countAllWordSpecials, countCharPoint } from "./CountPoints";
-import { getAllWordsThatMatchChars, sortByPoints, wordCanMatchedWithTile } from "./SolverUtil";
+import { getAllWordsThatMatchChars, wordCanMatchedWithTile } from "./SolverUtil";
 import englishWords from '../Words.json';
 import { boardIsValid } from "../Confirmers/Confirmer";
 
@@ -14,7 +14,7 @@ const getWordColumnRestrictions = (board: Array<Array<Tile>>, row: number, colum
       if (index - 1 === row) {
         // If the next tile from the start tile is not empty
         // we break
-        break
+        return { length: 0, start, end };
       }
 
       length += (index - row) - 2
@@ -32,7 +32,7 @@ const getWordColumnRestrictions = (board: Array<Array<Tile>>, row: number, colum
   for (let index = row - 1; index >= 0; index--) {
     if (board[index][column].char !== '') {
       if (index + 1 === row) {
-        break
+        return { length: 0, start, end };
       }
 
       length += (row - index) - 2
@@ -104,6 +104,10 @@ const solveColumn = (board: Array<Array<Tile>>, chars: string, column: number): 
   for (let row = 0; row < board.length; row++) {
     if (board[row][column].char !== '') {
       const sequence = getWordColumnRestrictions(board, row, column)
+      if (sequence.length === 0) {
+        continue;
+      }
+
       const solveTile: SolveTile = {
         start: sequence.start,
         length: sequence.length,
@@ -115,7 +119,7 @@ const solveColumn = (board: Array<Array<Tile>>, chars: string, column: number): 
       const wordsThatMatchTile = wordsThatMatchTileColumn(englishWords as Array<string> , solveTile)
       const combinedChars: string = combineCharsWithTile(chars, board, [row], column)
       const columnWords: Array<MatchedWord> = getAllWordsThatMatchChars(combinedChars, wordsThatMatchTile) 
-
+      
       solved.push(...columnWords
         .filter(columnWord => wordIsValidInBoard(columnWord, board))
         .map(columnWord => countPoints(columnWord, board)))
@@ -131,7 +135,7 @@ const solveColumns = (board: Array<Array<Tile>>, chars: string): Array<MatchedWo
     list.push(...solveColumn(board, chars, column))
   }
 
-  return sortByPoints(list);
+  return list;
 }
 
 

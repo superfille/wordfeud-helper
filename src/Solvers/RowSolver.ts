@@ -2,7 +2,7 @@ import { boardIsValid } from '../Confirmers/Confirmer';
 import { MatchedWord, SolveTile, Tile } from '../Models/Tile';
 import englishWords from '../Words.json';
 import { countAllWordSpecials, countCharPoint } from './CountPoints';
-import { wordCanMatchedWithTile, getAllWordsThatMatchChars, sortByPoints } from './SolverUtil';
+import { wordCanMatchedWithTile, getAllWordsThatMatchChars } from './SolverUtil';
 
 /**
  * 
@@ -18,7 +18,7 @@ const getWordRowRestrictions = (tileRow: Array<Tile>, column: number) => {
     if (tileRow[index].char !== '') {
       if (index - 1 === column) {
         // If it is just to the right break
-        break
+        return { length: 0, start: 0, end: 0 };
       }
       length += (index - column) - 2
       end = (index - column) - 2
@@ -33,7 +33,7 @@ const getWordRowRestrictions = (tileRow: Array<Tile>, column: number) => {
   for (let index = column - 1; index >= 0; index--) {
     if (tileRow[index].char !== '') {
       if (index + 1 === column) {
-        break;
+        return { length: 0, start: 0, end: 0 };
       }
       length += (column - index) - 2
       start = (column - index) - 2
@@ -116,6 +116,9 @@ const solveRow = (board: Array<Array<Tile>>, chars: string, row: number): Array<
   for (let column = 0; column < tileRow.length; column++) {
     if (tileRow[column].char !== '') {
       const sequence = getWordRowRestrictions(tileRow, column)
+      if (sequence.length === 0) {
+        continue;
+      }
       const solveTile: SolveTile = {
         start: sequence.start,
         length: sequence.length,
@@ -143,7 +146,7 @@ const solveRows = (board: Array<Array<Tile>>, chars: string): Array<MatchedWord>
     list.push(...solveRow(board, chars, row))
   }
 
-  return sortByPoints(list);
+  return list;
 }
 
 export {
