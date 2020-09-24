@@ -8,6 +8,7 @@ import { MatchedWord, StartBoard, Tile } from "./Models/Tile";
 import { solveColumns } from "./Solvers/ColumnSolver";
 import { solveRows } from "./Solvers/RowSolver";
 import { sortByPoints } from './Solvers/SolverUtil';
+import { boardIsValid } from './Confirmers/Confirmer';
 
 type Props = {
 
@@ -17,6 +18,8 @@ type State = {
   board: Array<Array<Tile>>,
   matchedWords: Array<MatchedWord>,
   playerChars: string,
+  boardIsValid: boolean,
+  loading: boolean,
 }
 
 export default class App extends React.Component<Props, State> {
@@ -27,10 +30,10 @@ export default class App extends React.Component<Props, State> {
       board: StartBoard,
       playerChars: '',
       matchedWords: [],
+      boardIsValid: true,
+      loading: false,
     }
 
-    this.addTiles = this.addTiles.bind(this)
-    this.setTile = this.setTile.bind(this)
     setTimeout(() => {
       this.testBoard()
     }, 100)
@@ -131,32 +134,69 @@ export default class App extends React.Component<Props, State> {
     }
   }
 
-  solve() {
-    const result = [
-      ...solveColumns(this.state.board, this.state.playerChars),
-      ...solveRows(this.state.board, this.state.playerChars)
-    ]
+  componentDidUpdate() {
+    
+  }
 
+  solve() {
     this.setState({
-      matchedWords: sortByPoints(result)
+      loading: true,
+    }, () => {
+      const result = [
+        ...solveColumns(this.state.board, this.state.playerChars),
+        ...solveRows(this.state.board, this.state.playerChars)
+      ]
+  
+      this.setState({
+        matchedWords: sortByPoints(result),
+        loading: false
+      });
+    });
+  }
+
+  saveBoard() {
+    this.setState({
+      board: this.state.board.map(row => {
+        return row.map(rowTile => {
+            return { ...rowTile, final: rowTile.char !== '' }
+        })
+      }),
+      boardIsValid: boardIsValid(this.state.board)
     })
+  }
+
+  boardIs() {
+    if (this.state.boardIsValid) {
+      return (
+       <span className="text-success">Valid</span>
+      )
+    }
+    return (
+      <span className="text-danger">InValid</span>
+    )
   }
 
   render() {
     return (
       <div className="container mt-3">
+        <h5>Board is: { this.boardIs() }</h5>
         <div className="row">
-          <section className="col-7">
+          <section className="col">
             <div className="mb-3">
-              <Board board={ this.state.board } setTile={ this.setTile } />
+              <Board board={ this.state.board } setTile={ (tile: Tile | null, char: string) => this.setTile(tile, char) } />
             </div>
-            <PlayerTiles
-              tiles={ this.state.playerChars }
-              addTiles={ this.addTiles }
-            />
+
+            <div>
+              <PlayerTiles
+                tiles={ this.state.playerChars }
+                isLoading={ this.state.loading }
+                addTiles={ (tiles: string) => this.addTiles(tiles) }
+                save={ () => this.saveBoard() }
+              />
+            </div>
           </section>
 
-          <section className="col-4">
+          <section className="col">
             <WordTable
               matchedWords={ this.state.matchedWords }
               displayWord={ (matchedWord: MatchedWord) => this.displayWord(matchedWord) }
