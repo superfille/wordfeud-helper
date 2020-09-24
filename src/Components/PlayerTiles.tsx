@@ -24,9 +24,14 @@ export default class PlayerTiles extends React.Component<Props> {
         <div style={{display: 'flex'}}>
           { this.renderTiles() }
         </div>
-        <div>
-          <input id="tiles_input" type="text" />
-          <button id="tiles_input_submit" onClick={() => this.addTiles()}>Submit</button>
+        <div className="form-row align-items-center">
+          <div className="col-10">
+            <input id="tiles_input" className="form-control" type="text" placeholder="Your letters" />
+          </div>
+          <div className="col-auto">
+          <button className="btn btn-success" onClick={() => this.addTiles()}>Solve</button>
+
+          </div>
         </div>
       </section>
     );

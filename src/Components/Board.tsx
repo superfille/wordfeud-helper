@@ -64,7 +64,7 @@ export default class Board extends React.Component<Props, States> {
 
   renderBoard() {
     return this.props.board.map((row, index) => {
-      return <div key={`row-${index}`} className="row">{this.renderTiles(row)}</div>
+      return <div key={`row-${index}`} className="my-row">{this.renderTiles(row)}</div>
     });
   };
 

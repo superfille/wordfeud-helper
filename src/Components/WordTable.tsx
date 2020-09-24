@@ -29,8 +29,6 @@ export default class WordTable extends React.Component<Props, State> {
     } else {
       if (this.state.selectedMatchedWord !== null) {
         this.props.hideWord(this.state.selectedMatchedWord)
-        console.log('hiding');
-        
       }
 
       this.props.displayWord(matchedWord)
@@ -52,7 +50,6 @@ export default class WordTable extends React.Component<Props, State> {
           >
           <td>{ matchedWord.points }</td>
           <td>{ matchedWord.word }</td>
-          <td><button>Use</button></td>
         </tr>
       )
     })
@@ -60,18 +57,19 @@ export default class WordTable extends React.Component<Props, State> {
 
   render() {
     return (
-      <table className="word-table">
-        <thead>
-          <tr>
-            <th>Points</th>
-            <th>Word</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          { this.renderRows() }
-        </tbody>
-      </table>
+      <div className="">
+        <table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Points</th>
+              <th>Word</th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.renderRows() }
+          </tbody>
+        </table>
+      </div>
     );
   };
 }

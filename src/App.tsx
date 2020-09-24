@@ -39,7 +39,7 @@ export default class App extends React.Component<Props, State> {
   addTiles(tiles: string) {
     this.setState({
       playerChars: tiles
-    })
+    }, this.solve)
   }
 
   testBoard() {
@@ -131,10 +131,6 @@ export default class App extends React.Component<Props, State> {
     }
   }
 
-  copiedBoard() {
-
-  }
-
   solve() {
     const result = [
       ...solveColumns(this.state.board, this.state.playerChars),
@@ -148,18 +144,27 @@ export default class App extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <Board board={ this.state.board } setTile={ this.setTile } />
-        <PlayerTiles
-          tiles={ this.state.playerChars }
-          addTiles={ this.addTiles }
-        />
-        <button onClick={() => this.solve()}>Solve</button>
-        <WordTable
-          matchedWords={ this.state.matchedWords }
-          displayWord={ (matchedWord: MatchedWord) => this.displayWord(matchedWord) }
-          hideWord={ (matchedWord: MatchedWord) => this.hideWord(matchedWord) }
-        />
+      <div className="container mt-3">
+        <div className="row">
+          <section className="col-7">
+            <div className="mb-3">
+              <Board board={ this.state.board } setTile={ this.setTile } />
+            </div>
+            <PlayerTiles
+              tiles={ this.state.playerChars }
+              addTiles={ this.addTiles }
+            />
+          </section>
+
+          <section className="col-4">
+            <WordTable
+              matchedWords={ this.state.matchedWords }
+              displayWord={ (matchedWord: MatchedWord) => this.displayWord(matchedWord) }
+              hideWord={ (matchedWord: MatchedWord) => this.hideWord(matchedWord) }
+            />
+          </section>
+        </div>
+
       </div>
     );
   }

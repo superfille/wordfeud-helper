@@ -5,8 +5,7 @@ h1, h4, h5, button, p {
 }
 
 .board {
-  
-  width: auto;
+  width: 600px;
 }
 
 button {
@@ -15,7 +14,7 @@ button {
   border: none;
 }
 
-.row {
+.my-row {
   display: flex;
   width: fit-content;
   background-color: rgba(33,33,33, 0.9);
