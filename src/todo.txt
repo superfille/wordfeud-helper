@@ -5,3 +5,15 @@ letas genom hela 450k ord varje gång
 // Poängen räknas in rätt. Testa med att skriva in oonfdgdrhfgthrtr
 
 // Spinner på knappar funkar inte medan uträckningen håller på
+
+// När man väljer ett annat ord i listan så ska det förra ordet raderas
+
+// När man trycker på Save så ska listan raderas och karaktärerna i inputen
+
+// Spara brädet i localStore
+  // Radera brädet
+  // Spara flera bräden
+  // Välj bland bräden
+
+// Bättre Solve algoritm
+  // Kolla alla bokstäver i rad
