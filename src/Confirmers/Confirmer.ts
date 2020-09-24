@@ -206,9 +206,7 @@ const boardIsValid = (board: Array<Array<Tile>>) => {
       }
     }
   }
-  if (invalidWords.length > 0) {
-    console.error('invalidWords', invalidWords)
-  }
+  
   return invalidWords.length === 0;
 }
 

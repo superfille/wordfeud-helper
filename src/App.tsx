@@ -7,6 +7,7 @@ import WordTable from './Components/WordTable';
 import { MatchedWord, StartBoard, Tile } from "./Models/Tile";
 import { solveColumns } from "./Solvers/ColumnSolver";
 import { solveRows } from "./Solvers/RowSolver";
+import { sortByPoints } from './Solvers/SolverUtil';
 
 type Props = {
 
@@ -30,12 +31,23 @@ export default class App extends React.Component<Props, State> {
 
     this.addTiles = this.addTiles.bind(this)
     this.setTile = this.setTile.bind(this)
+    setTimeout(() => {
+      this.testBoard()
+    }, 100)
   }
 
   addTiles(tiles: string) {
     this.setState({
       playerChars: tiles
     })
+  }
+
+  testBoard() {
+    this.setMultipleTiles([
+      { tile: this.state.board[5][5], char: 'm' },
+      { tile: this.state.board[5][6], char: 'a' },
+      { tile: this.state.board[5][7], char: 'n' },
+    ], true)
   }
 
   setMultipleTiles(tilesWithChar: Array<{ tile: Tile, char: string }>, setFinal: boolean = false, func = () => {}) {
@@ -47,7 +59,7 @@ export default class App extends React.Component<Props, State> {
             return {
               char: tileWithChar.char === 'Backspace' ? '' : tileWithChar.char,
               special: rowTile.special,
-              final: setFinal,
+              final: tileWithChar.char === 'Backspace' ? false : setFinal,
             }
           }
           return rowTile;
@@ -124,11 +136,13 @@ export default class App extends React.Component<Props, State> {
   }
 
   solve() {
+    const result = [
+      ...solveColumns(this.state.board, this.state.playerChars),
+      ...solveRows(this.state.board, this.state.playerChars)
+    ]
+
     this.setState({
-      matchedWords: [
-        ...solveColumns(this.state.board, this.state.playerChars),
-        ...solveRows(this.state.board, this.state.playerChars)
-      ]
+      matchedWords: sortByPoints(result)
     })
   }
 
