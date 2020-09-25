@@ -4,8 +4,6 @@ letas genom hela 450k ord varje gång
 
 // Spinner på knappar funkar inte medan uträckningen håller på
 
-// När man väljer ett annat ord i listan så ska det förra ordet raderas
-
 // När man trycker på Save så ska listan raderas och karaktärerna i inputen
 
 // Spara brädet i localStore

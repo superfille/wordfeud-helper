@@ -88,6 +88,16 @@ export default class App extends React.Component<Props, State> {
     })
   }
 
+  cleanBoard(func = () => {}) {
+    this.setState({
+      board: this.state.board.map(row => {
+        return row.map(tile => {
+            return { ...tile, char: tile.final ? tile.char : '' }
+        })
+      }),
+    }, func)
+  }
+
   displayRow(matchedWord: MatchedWord, display: boolean) {
     const list: Array<{ tile: Tile, char: string }> = []
     let index = 0;
@@ -119,11 +129,13 @@ export default class App extends React.Component<Props, State> {
   }
 
   displayWord(matchedWord: MatchedWord) {
-    if (matchedWord.direction === 'row') {
-     this.displayRow(matchedWord, true)
-    } else {
-      this.displayColumn(matchedWord, true)
-    }
+    this.cleanBoard(() => {
+      if (matchedWord.direction === 'row') {
+       this.displayRow(matchedWord, true)
+      } else {
+        this.displayColumn(matchedWord, true)
+      }
+    })
   }
 
   hideWord(matchedWord: MatchedWord) {
@@ -132,10 +144,6 @@ export default class App extends React.Component<Props, State> {
     } else {
       this.displayColumn(matchedWord, false)
     }
-  }
-
-  componentDidUpdate() {
-    
   }
 
   solve() {
