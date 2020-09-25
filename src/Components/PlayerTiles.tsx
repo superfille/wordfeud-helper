@@ -9,6 +9,11 @@ type Props = {
 
 export default class PlayerTiles extends React.Component<Props> {
   renderTiles() {
+    const element = (document.getElementById('tiles_input') as HTMLInputElement)
+    if (element) {
+      element.value = this.props.tiles
+    }
+  
     return this.props.tiles.split('').map((tile, index) => {
       return (
         <div key={index}>{tile}</div>

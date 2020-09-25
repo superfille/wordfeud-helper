@@ -4,8 +4,6 @@ letas genom hela 450k ord varje gång
 
 // Spinner på knappar funkar inte medan uträckningen håller på
 
-// När man trycker på Save så ska listan raderas och karaktärerna i inputen
-
 // Spara brädet i localStore
   // Radera brädet
   // Spara flera bräden
@@ -13,3 +11,5 @@ letas genom hela 450k ord varje gång
 
 // Bättre Solve algoritm
   // Kolla alla bokstäver i rad
+
+// Räkna poäng på ord som skapas bredvid huvudordet

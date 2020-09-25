@@ -169,7 +169,9 @@ export default class App extends React.Component<Props, State> {
             return { ...rowTile, final: rowTile.char !== '' }
         })
       }),
-      boardIsValid: boardIsValid(this.state.board)
+      boardIsValid: boardIsValid(this.state.board),
+      matchedWords: [],
+      playerChars: '',
     })
   }
 
