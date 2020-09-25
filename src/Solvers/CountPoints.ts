@@ -15,15 +15,31 @@ const countCharPoint = (tile: Tile, char: string) => {
   return getCharPoint(char)
 }
 
-const countAllWordSpecials = (currentPoints: number, rowWord: MatchedWord, board: Array<Array<Tile>>) => {
+const countWordPoint = (currentPoints: number, tile: Tile): number => {
+  if (tile.special === 'dw') {
+    return currentPoints *= 2;
+  }
+
+  if (tile.special === 'tw') {
+    return currentPoints *= 3;
+  }
+
+  return currentPoints
+}
+
+const countAllWordSpecialsForRow = (currentPoints: number, rowWord: MatchedWord, board: Array<Array<Tile>>) => {
   let points = currentPoints;
   for (let i = 0; i < rowWord.word.length; i++) {
-    if (board[rowWord.row][rowWord.column + i].special === 'tw') {
-      points *= 2;
-    }
-    if (board[rowWord.row][rowWord.column + i].special === 'tw') {
-      points *= 3;
-    }
+    points = countWordPoint(currentPoints, board[rowWord.row][rowWord.column + i])
+  }
+
+  return points
+}
+
+const countAllWordSpecialsForColumn = (currentPoints: number, columnWord: MatchedWord, board: Array<Array<Tile>>) => {
+  let points = currentPoints;
+  for (let i = 0; i < columnWord.word.length; i++) {
+    points = countWordPoint(currentPoints, board[columnWord.row + i][columnWord.column])
   }
 
   return points
@@ -32,5 +48,6 @@ const countAllWordSpecials = (currentPoints: number, rowWord: MatchedWord, board
 export {
   getCharPoint,
   countCharPoint,
-  countAllWordSpecials
+  countAllWordSpecialsForRow,
+  countAllWordSpecialsForColumn
 }

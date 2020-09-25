@@ -1,5 +1,5 @@
 import { MatchedWord, SolveTile, Tile } from "../Models/Tile";
-import { countAllWordSpecials, countCharPoint } from "./CountPoints";
+import { countAllWordSpecialsForColumn, countCharPoint } from "./CountPoints";
 import { getAllWordsThatMatchChars, wordCanMatchedWithTile } from "./SolverUtil";
 import englishWords from '../Words.json';
 import { boardIsValid } from "../Confirmers/Confirmer";
@@ -76,7 +76,8 @@ const countPoints = (matchedWord: MatchedWord, board: Array<Array<Tile>>): Match
   for (let i = 0; i < matchedWord.word.length; i++) {
     points += countCharPoint(board[matchedWord.row + 1][matchedWord.column], matchedWord.word[i])
   }
-  points = countAllWordSpecials(points, matchedWord, board)
+
+  points = countAllWordSpecialsForColumn(points, matchedWord, board)
 
   return { ...matchedWord, points }
 }

@@ -2,8 +2,6 @@
 Detta kommer göra att man hittar ord mycket snabbare eftersom det då inte behövs
 letas genom hela 450k ord varje gång
 
-// Poängen räknas in rätt. Testa med att skriva in oonfdgdrhfgthrtr
-
 // Spinner på knappar funkar inte medan uträckningen håller på
 
 // När man väljer ett annat ord i listan så ska det förra ordet raderas
