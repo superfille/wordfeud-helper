@@ -70,7 +70,26 @@ export default class Board extends React.Component<Props, States> {
 
   render() {
     return (
-      <div className="board">{this.renderBoard()}</div>
+      <div>
+        <div>
+          <span className="tile_heading">0</span>
+          <span className="tile_heading">1</span>
+          <span className="tile_heading">2</span>
+          <span className="tile_heading">3</span>
+          <span className="tile_heading">4</span>
+          <span className="tile_heading">5</span>
+          <span className="tile_heading">6</span>
+          <span className="tile_heading">7</span>
+          <span className="tile_heading">8</span>
+          <span className="tile_heading">9</span>
+          <span className="tile_heading">10</span>
+          <span className="tile_heading">11</span>
+          <span className="tile_heading">12</span>
+          <span className="tile_heading">13</span>
+          <span className="tile_heading">14</span>
+        </div>
+        <div className="board">{this.renderBoard()}</div>
+      </div>
     );
   };
 }

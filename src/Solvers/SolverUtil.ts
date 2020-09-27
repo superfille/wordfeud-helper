@@ -23,19 +23,21 @@ const hasJokerAndRemoveJoker = (chars: Array<string>) => {
   return false
 }
 
-const getAllWordsThatMatchChars = (chars: string, matchedWords: Array<MatchedWord>) => {
-  return matchedWords.filter((matchedWord) => {
-    let copiedChars = chars.split('')
-    return matchedWord.word.split('').every((charInWord) => {
-      const index = copiedChars.indexOf(charInWord)
-      if (index >= 0) {
-        copiedChars.splice(index, 1)
-        return true
-      } else {
-        return hasJokerAndRemoveJoker(copiedChars)
-      }
-    });
+const matchedWordMatchesWord = (chars: string, word: string) => {
+  let copiedChars = chars.split('')
+  return word.split('').every((charInWord) => {
+    const index = copiedChars.indexOf(charInWord)
+    if (index >= 0) {
+      copiedChars.splice(index, 1)
+      return true
+    } else {
+      return hasJokerAndRemoveJoker(copiedChars)
+    }
   });
+}
+
+const getAllWordsThatMatchChars = (chars: string, matchedWords: Array<MatchedWord>) => {
+  return matchedWords.filter(matchedWord => matchedWordMatchesWord(chars, matchedWord.word))
 }
 
 const sortByPoints = (matchedWords: Array<MatchedWord>): Array<MatchedWord> => {
@@ -48,5 +50,6 @@ export {
   wordCanMatchedWithTile,
   hasJokerAndRemoveJoker,
   getAllWordsThatMatchChars,
-  sortByPoints
+  sortByPoints,
+  matchedWordMatchesWord
 }

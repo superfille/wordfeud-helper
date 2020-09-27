@@ -1,74 +1,127 @@
-import { MatchedWord, SolveTile, Tile } from "../Models/Tile";
+import { MatchedWord, Tile } from "../Models/Tile";
 import { countAllWordSpecialsForColumn, countCharPoint } from "./CountPoints";
-import { getAllWordsThatMatchChars, wordCanMatchedWithTile } from "./SolverUtil";
 import englishWords from '../Words.json';
 import { boardIsValid } from "../Confirmers/Confirmer";
+import { matchedWordMatchesWord } from './SolverUtil';
 
-const getWordColumnRestrictions = (board: Array<Array<Tile>>, row: number, column: number) => {
-  let length = 1;
-  let start = 0;
-  let end = 0;
+interface WordCharPositions {
+  maxLength: number; // The max length of the word
+  boardTilePositions: Array<number>; // Chars position in the board
+  wordPositions: Array<number>; // Chars actual position in word
+}
 
-  for (let index = row + 1; index < board.length; index++) {
-    if (board[index][column].char !== '') {
-      if (index - 1 === row) {
-        // If the next tile from the start tile is not empty
-        // we break
-        return { length: 0, start, end };
-      }
+interface ColumnMatch {
+  words: Array<string>;
+  maxPos: WordCharPositions;
+  combinedChars: string;
+  board: Array<Array<Tile>>;
+  row: number;
+  column: number;
+}
 
-      length += (index - row) - 2
-      end = (index - row) - 2
+const findWordCharPositions = (board: Array<Array<Tile>>, start: number, charsLength: number, column: number): WordCharPositions => {
+  let charsUsed = 0;
+  let row = start;
+  let boardTilePositions: Array<number> = []
+  let wordPositions: Array<number> = []
+  let index = 0;
+  for (; row < board.length; row++, index++) {
+    if (board[row][column].char !== '') {
+      boardTilePositions.push(row)
+      wordPositions.push(index)
+      continue
     }
+    charsUsed += 1
 
-    // End of board
-    if (index + 1 === board.length) {
-      length += (board.length - row) - 1
-      end = (board.length - row) - 1
+    if (charsUsed >= charsLength) {
+      if (charsUsed > charsLength) {
+        break
+      }
+      if (row + 1 < board.length && board[row + 1][column].char !== '') {
+        continue
+      }
+      break
     }
   }
 
+  return { maxLength: row - start, boardTilePositions, wordPositions };
+}
 
-  for (let index = row - 1; index >= 0; index--) {
-    if (board[index][column].char !== '') {
-      if (index + 1 === row) {
-        return { length: 0, start, end };
+const wordMatchesPositions = (word: string, maxPos: WordCharPositions, board: Array<Array<Tile>>, column: number) => {
+  let atLeastOneBoardTileChar = false;
+  let atLeastOneWordChar = false;
+  const result = word.split('').every((char, index) => {
+    const i = maxPos.wordPositions.indexOf(index)
+    if (i >= 0) {
+      if (char === board[maxPos.boardTilePositions[i]][column].char) {
+        atLeastOneBoardTileChar = true;
+        return true
       }
+      return false
+    }
+    atLeastOneWordChar = true
+    return true
+  })
 
-      length += (row - index) - 2
-      start = (row - index) - 2
+  return atLeastOneBoardTileChar && atLeastOneWordChar && result
+}
+
+const wordsThatMatchPositions = (payload: ColumnMatch): Array<MatchedWord> => {
+  return payload.words.reduce((accumulated, currentWord) => {
+    if (currentWord.length > payload.maxPos.maxLength) {
+      return accumulated;
     }
 
-    if (index - 1 < 0) {
-      length += row
-      start = row
+    const wordMatchesPos = wordMatchesPositions(currentWord, payload.maxPos, payload.board, payload.column)
+    const matchedWordMatches = matchedWordMatchesWord(payload.combinedChars, currentWord)
+    if (wordMatchesPos && matchedWordMatches) {
+       accumulated.push({
+        word: currentWord,
+        direction: 'column',
+        row: payload.row,
+        column: payload.column,
+        points: 0,
+      })
+    }
+
+    return accumulated
+  }, [] as Array<MatchedWord>);
+}
+
+const solve = (chars: string, board: Array<Array<Tile>>, column: number) => {
+  const result: Array<MatchedWord> = [];
+  
+  for (let row = 0; row < board.length; row++) {
+    if (row > 0 && board[row - 1][column].char !== '') {
+      // We start words when there is nothing to the left
+      continue
+    }
+
+    const wordCharPositions: WordCharPositions = findWordCharPositions(board, row,  chars.length, column)
+    if (wordCharPositions.wordPositions.length > 0) {
+      const combinedChars = combineCharsWithTile(chars, board, wordCharPositions.boardTilePositions, column)
+      const matches = wordsThatMatchPositions({
+        words: englishWords as Array<string>,
+        maxPos: wordCharPositions,
+        combinedChars,
+        board: board,
+        row,
+        column
+      })
+      result.push(...matches
+        .filter(rowWord => wordIsValidInBoard(rowWord, board))
+        .map(rowWord => countPoints(rowWord, board)))
     }
   }
 
-  return { length, start, end };
+  return result
 }
 
 const combineCharsWithTile = (chars: string, board: Array<Array<Tile>>, rows: Array<number>, column: number): string => {
   return rows
     .map(row => board[row][column].char)
-    .join()
+    .join('')
     .concat(chars)
-}
-
-const wordsThatMatchTileColumn = (words: Array<string>, tile: SolveTile): Array<MatchedWord> => {
-  return words.reduce((accumulated, currentWord) => {
-    const index = wordCanMatchedWithTile(currentWord, tile);
-    if (index >= 0) {
-      accumulated.push({
-        word: currentWord,
-        column: tile.column,
-        row: tile.row - index,
-        points: 0,
-        direction: 'column'
-      })
-    }
-    return accumulated
-  }, [] as Array<MatchedWord>);
 }
 
 const countPoints = (matchedWord: MatchedWord, board: Array<Array<Tile>>): MatchedWord => {
@@ -99,41 +152,11 @@ const wordIsValidInBoard = (columnWord: MatchedWord, board: Array<Array<Tile>>) 
   return isValid
 }
 
-
-const solveColumn = (board: Array<Array<Tile>>, chars: string, column: number): Array<MatchedWord> => {
-  let solved: Array<MatchedWord> = []
-  for (let row = 0; row < board.length; row++) {
-    if (board[row][column].char !== '') {
-      const sequence = getWordColumnRestrictions(board, row, column)
-      if (sequence.length === 0) {
-        continue;
-      }
-
-      const solveTile: SolveTile = {
-        start: sequence.start,
-        length: sequence.length,
-        char: board[row][column].char,
-        column,
-        row
-      }
-
-      const wordsThatMatchTile = wordsThatMatchTileColumn(englishWords as Array<string> , solveTile)
-      const combinedChars: string = combineCharsWithTile(chars, board, [row], column)
-      const columnWords: Array<MatchedWord> = getAllWordsThatMatchChars(combinedChars, wordsThatMatchTile) 
-      
-      solved.push(...columnWords
-        .filter(columnWord => wordIsValidInBoard(columnWord, board))
-        .map(columnWord => countPoints(columnWord, board)))
-    }
-  }
-  return solved
-}
-
 const solveColumns = (board: Array<Array<Tile>>, chars: string): Array<MatchedWord> => {
   const list: Array<MatchedWord> = []
 
   for (let column = 0; column < board.length; column++) {
-    list.push(...solveColumn(board, chars, column))
+    list.push(...solve(chars, board, column))
   }
 
   return list;
@@ -141,6 +164,5 @@ const solveColumns = (board: Array<Array<Tile>>, chars: string): Array<MatchedWo
 
 
 export {
-  solveColumn,
   solveColumns
 }

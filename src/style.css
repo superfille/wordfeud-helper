@@ -20,6 +20,11 @@ button {
   background-color: rgba(33,33,33, 0.9);
 }
 
+.tile_heading {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
 .tile {
   width: 35px;
   height: 35px;

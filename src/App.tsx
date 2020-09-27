@@ -28,7 +28,7 @@ export default class App extends React.Component<Props, State> {
 
     this.state = {
       board: StartBoard,
-      playerChars: '',
+      playerChars: 'geoc',
       matchedWords: [],
       boardIsValid: true,
       loading: false,
@@ -50,6 +50,19 @@ export default class App extends React.Component<Props, State> {
       { tile: this.state.board[5][5], char: 'm' },
       { tile: this.state.board[5][6], char: 'a' },
       { tile: this.state.board[5][7], char: 'n' },
+
+      { tile: this.state.board[6][7], char: 'o' },
+      { tile: this.state.board[7][7], char: 't' },
+
+      { tile: this.state.board[7][4], char: 'o' },
+      { tile: this.state.board[7][5], char: 'u' },
+      { tile: this.state.board[7][6], char: 't' },
+      { tile: this.state.board[7][8], char: 'o' },
+      { tile: this.state.board[7][9], char: 'r' },
+      { tile: this.state.board[7][10], char: 'n' },
+
+      { tile: this.state.board[5][9], char: 'e' },
+      { tile: this.state.board[6][9], char: 'a' },
     ], true)
   }
 
@@ -152,7 +165,7 @@ export default class App extends React.Component<Props, State> {
     }, () => {
       const result = [
         ...solveColumns(this.state.board, this.state.playerChars),
-        ...solveRows(this.state.board, this.state.playerChars)
+         ...solveRows(this.state.board, this.state.playerChars)
       ]
   
       this.setState({

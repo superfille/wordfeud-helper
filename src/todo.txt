@@ -9,7 +9,8 @@ letas genom hela 450k ord varje gång
   // Spara flera bräden
   // Välj bland bräden
 
-// Bättre Solve algoritm
-  // Kolla alla bokstäver i rad
-
 // Räkna poäng på ord som skapas bredvid huvudordet
+
+// Markera bokstäverna när man valt ord
+
+// När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
