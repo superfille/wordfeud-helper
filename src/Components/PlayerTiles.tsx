@@ -8,17 +8,11 @@ type Props = {
 }
 
 export default class PlayerTiles extends React.Component<Props> {
-  renderTiles() {
+  componentDidMount() {
     const element = (document.getElementById('tiles_input') as HTMLInputElement)
     if (element) {
       element.value = this.props.tiles
     }
-  
-    return this.props.tiles.split('').map((tile, index) => {
-      return (
-        <div key={index}>{tile}</div>
-      )
-    })
   }
 
   addTiles() {
@@ -55,9 +49,6 @@ export default class PlayerTiles extends React.Component<Props> {
   render() {
     return (
       <section>
-        <div style={{display: 'flex'}}>
-          { this.renderTiles() }
-        </div>
         <div className="form-row align-items-center">
           <div className="col-9">
             <input id="tiles_input" className="form-control" type="text" placeholder="Your letters" />
