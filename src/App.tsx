@@ -10,9 +10,7 @@ import { solveRows } from "./Solvers/RowSolver";
 import { sortByPoints } from './Solvers/SolverUtil';
 import { boardIsValid } from './Confirmers/Confirmer';
 
-type Props = {
-
-}
+type Props = {}
 
 type State = {
   board: Array<Array<Tile>>,
@@ -92,7 +90,7 @@ export default class App extends React.Component<Props, State> {
             return {
               char: char === 'Backspace' ? '' : char,
               special: tile.special,
-              final: true,
+              final: char !== 'Backspace',
             }
           }
           return rowTile;
@@ -163,15 +161,17 @@ export default class App extends React.Component<Props, State> {
     this.setState({
       loading: true,
     }, () => {
-      const result = [
-        ...solveColumns(this.state.board, this.state.playerChars),
-         ...solveRows(this.state.board, this.state.playerChars)
-      ]
-  
-      this.setState({
-        matchedWords: sortByPoints(result),
-        loading: false
-      });
+      setTimeout(() => {
+        const result = [
+          ...solveColumns(this.state.board, this.state.playerChars),
+          ...solveRows(this.state.board, this.state.playerChars)
+        ]
+    
+        this.setState({
+          matchedWords: sortByPoints(result),
+          loading: false
+        });
+      }, 0)
     });
   }
 
