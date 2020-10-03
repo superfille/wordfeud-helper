@@ -5,23 +5,27 @@ const getCharPoint = (char: string) => {
 }
 
 const countCharPoint = (tile: Tile, char: string) => {
-  if ('dl' === tile.special) {
-    return getCharPoint(char) * 2
-  }
-  if ('tl' === tile.special) {
-    return getCharPoint(char) * 3
+  if (!tile.final) {
+    if ('dl' === tile.special) {
+      return getCharPoint(char) * 2
+    }
+    if ('tl' === tile.special) {
+      return getCharPoint(char) * 3
+    }
   }
 
   return getCharPoint(char)
 }
 
 const countWordPoint = (currentPoints: number, tile: Tile): number => {
-  if (tile.special === 'dw') {
-    return currentPoints *= 2;
-  }
-
-  if (tile.special === 'tw') {
-    return currentPoints *= 3;
+  if (!tile.final) {
+    if (tile.special === 'dw') {
+      return currentPoints *= 2;
+    }
+  
+    if (tile.special === 'tw') {
+      return currentPoints *= 3;
+    } 
   }
 
   return currentPoints

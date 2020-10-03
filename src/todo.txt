@@ -16,3 +16,7 @@ letas genom hela 450k ord varje gång
 // Visa vilka bokstäver som används i tabellen
 
 // När man sparar brädet visa vilka bokstäver som är kvar av spelarens bokstäver
+
+// Räkna inte med special rutorna om de redan har räknats DONE
+
+// visa bara 15 resultat DONE

@@ -168,7 +168,7 @@ export default class App extends React.Component<Props, State> {
         ]
     
         this.setState({
-          matchedWords: sortByPoints(result),
+          matchedWords: sortByPoints(result).slice(0,15),
           loading: false
         });
       }, 0)
