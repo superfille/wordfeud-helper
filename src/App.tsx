@@ -18,6 +18,7 @@ type State = {
   playerChars: string,
   boardIsValid: boolean,
   loading: boolean,
+  selectedWord: MatchedWord | null,
 }
 
 export default class App extends React.Component<Props, State> {
@@ -30,6 +31,7 @@ export default class App extends React.Component<Props, State> {
       matchedWords: [],
       boardIsValid: true,
       loading: false,
+      selectedWord: null,
     }
 
     setTimeout(() => {
@@ -141,6 +143,9 @@ export default class App extends React.Component<Props, State> {
 
   displayWord(matchedWord: MatchedWord) {
     this.cleanBoard(() => {
+      this.setState({
+        selectedWord: matchedWord
+      })
       if (matchedWord.direction === 'row') {
        this.displayRow(matchedWord, true)
       } else {
@@ -176,15 +181,22 @@ export default class App extends React.Component<Props, State> {
   }
 
   saveBoard() {
+    let charsLeft = this.state.playerChars;
+    const newBoard = this.state.board.map(row => {
+      return row.map(rowTile => {
+        if (rowTile.char !== '' && !rowTile.final) {
+          charsLeft = charsLeft.replace(rowTile.char, '');
+        }
+        return { ...rowTile, final: rowTile.char !== '' }
+      })
+    })
+    
     this.setState({
-      board: this.state.board.map(row => {
-        return row.map(rowTile => {
-            return { ...rowTile, final: rowTile.char !== '' }
-        })
-      }),
+      board: newBoard,
       boardIsValid: boardIsValid(this.state.board),
       matchedWords: [],
-      playerChars: '',
+      playerChars: charsLeft,
+      selectedWord: null,
     })
   }
 
