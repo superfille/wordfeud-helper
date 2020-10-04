@@ -1,4 +1,6 @@
-import { CharacterPoints, MatchedWord, Tile } from "../Models/Tile"
+import { CharacterPoints, Tile } from "../Models/Tile"
+import { countColumnPoints } from "./ColumnPoints"
+import { countRowPoints } from "./RowPoints"
 
 const getCharPoint = (char: string) => {
   return CharacterPoints.findIndex(cList => cList.includes(char))
@@ -31,27 +33,15 @@ const countWordPoint = (currentPoints: number, tile: Tile): number => {
   return currentPoints
 }
 
-const countAllWordSpecialsForRow = (currentPoints: number, rowWord: MatchedWord, board: Array<Array<Tile>>) => {
-  let points = currentPoints;
-  for (let i = 0; i < rowWord.word.length; i++) {
-    points = countWordPoint(currentPoints, board[rowWord.row][rowWord.column + i])
-  }
-
-  return points
-}
-
-const countAllWordSpecialsForColumn = (currentPoints: number, columnWord: MatchedWord, board: Array<Array<Tile>>) => {
-  let points = currentPoints;
-  for (let i = 0; i < columnWord.word.length; i++) {
-    points = countWordPoint(currentPoints, board[columnWord.row + i][columnWord.column])
-  }
-
-  return points
+const countPoints = (board: Array<Array<Tile>>): number => {
+  const column = countColumnPoints(board)
+  const row = countRowPoints(board)
+  console.log(column, row)
+  return column + row
 }
 
 export {
-  getCharPoint,
   countCharPoint,
-  countAllWordSpecialsForRow,
-  countAllWordSpecialsForColumn
+  countWordPoint,
+  countPoints
 }

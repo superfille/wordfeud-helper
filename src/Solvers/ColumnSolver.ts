@@ -1,9 +1,10 @@
 import { MatchedWord, Tile } from "../Models/Tile";
-import { countAllWordSpecialsForColumn, countCharPoint } from "./CountPoints";
-import englishWords from '../Words.json';
+// import englishWords from '../Words.json';
 import { boardIsValid } from "../Confirmers/Confirmer";
 import { matchedWordMatchesWord } from './SolverUtil';
+import { countPoints } from "./CountPoints";
 
+const englishWords = ['eo']
 interface WordCharPositions {
   maxLength: number; // The max length of the word
   boardTilePositions: Array<number>; // Chars position in the board
@@ -110,11 +111,33 @@ const solve = (chars: string, board: Array<Array<Tile>>, column: number) => {
       })
       result.push(...matches
         .filter(rowWord => wordIsValidInBoard(rowWord, board))
-        .map(rowWord => countPoints(rowWord, board)))
+        .map(matchedWord => {
+          return {
+            ...matchedWord,
+            points: countPointsHelper(matchedWord, board)
+          }
+        }))
     }
   }
 
   return result
+}
+
+const countPointsHelper = (columnWord: MatchedWord, board: Array<Array<Tile>>): number => {
+  for (let i = 0; i < columnWord.word.length; i++) {
+    if (board[columnWord.row + i][columnWord.column].final === false) {
+      board[columnWord.row + i][columnWord.column].char = columnWord.word[i]
+    }
+  }
+
+  let points = countPoints(board)
+
+  for (let i = 0; i < columnWord.word.length; i++) {
+    if (board[columnWord.row + i][columnWord.column].final === false) {
+      board[columnWord.row + i][columnWord.column].char = ''
+    }
+  }
+  return points
 }
 
 const combineCharsWithTile = (chars: string, board: Array<Array<Tile>>, rows: Array<number>, column: number): string => {
@@ -122,17 +145,6 @@ const combineCharsWithTile = (chars: string, board: Array<Array<Tile>>, rows: Ar
     .map(row => board[row][column].char)
     .join('')
     .concat(chars)
-}
-
-const countPoints = (matchedWord: MatchedWord, board: Array<Array<Tile>>): MatchedWord => {
-  let points = 0;
-  for (let i = 0; i < matchedWord.word.length; i++) {
-    points += countCharPoint(board[matchedWord.row + 1][matchedWord.column], matchedWord.word[i])
-  }
-
-  points = countAllWordSpecialsForColumn(points, matchedWord, board)
-
-  return { ...matchedWord, points }
 }
 
 const wordIsValidInBoard = (columnWord: MatchedWord, board: Array<Array<Tile>>) => {

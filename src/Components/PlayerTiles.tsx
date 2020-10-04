@@ -8,7 +8,7 @@ type Props = {
 }
 
 export default class PlayerTiles extends React.Component<Props> {
-  componentDidUpdate() {
+    componentDidUpdate() {
     const element = (document.getElementById('tiles_input') as HTMLInputElement)
     if (element) {
       element.value = this.props.tiles

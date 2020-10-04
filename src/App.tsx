@@ -9,6 +9,7 @@ import { solveColumns } from "./Solvers/ColumnSolver";
 import { solveRows } from "./Solvers/RowSolver";
 import { sortByPoints } from './Solvers/SolverUtil';
 import { boardIsValid } from './Confirmers/Confirmer';
+import { countRowPoints } from "./Solvers/RowPoints";
 
 type Props = {}
 
@@ -47,22 +48,22 @@ export default class App extends React.Component<Props, State> {
 
   testBoard() {
     this.setMultipleTiles([
-      { tile: this.state.board[5][5], char: 'm' },
-      { tile: this.state.board[5][6], char: 'a' },
-      { tile: this.state.board[5][7], char: 'n' },
+      { tile: this.state.board[5][9], char: 'm' },
+      { tile: this.state.board[5][10], char: 'a' },
+      { tile: this.state.board[5][11], char: 'n' },
 
-      { tile: this.state.board[6][7], char: 'o' },
-      { tile: this.state.board[7][7], char: 't' },
+      { tile: this.state.board[6][11], char: 'o' },
+      { tile: this.state.board[7][11], char: 't' },
 
-      { tile: this.state.board[7][4], char: 'o' },
-      { tile: this.state.board[7][5], char: 'u' },
-      { tile: this.state.board[7][6], char: 't' },
       { tile: this.state.board[7][8], char: 'o' },
-      { tile: this.state.board[7][9], char: 'r' },
-      { tile: this.state.board[7][10], char: 'n' },
+      { tile: this.state.board[7][9], char: 'u' },
+      { tile: this.state.board[7][10], char: 't' },
+      { tile: this.state.board[7][12], char: 'o' },
+      { tile: this.state.board[7][13], char: 'r' },
+      { tile: this.state.board[7][14], char: 'n' },
 
-      { tile: this.state.board[5][9], char: 'e' },
-      { tile: this.state.board[6][9], char: 'a' },
+      { tile: this.state.board[5][13], char: 'e' },
+      { tile: this.state.board[6][13], char: 'a' },
     ], true)
   }
 
@@ -111,7 +112,7 @@ export default class App extends React.Component<Props, State> {
     }, func)
   }
 
-  displayRow(matchedWord: MatchedWord, display: boolean) {
+  displayRow(matchedWord: MatchedWord, display: boolean, func: () => void) {
     const list: Array<{ tile: Tile, char: string }> = []
     let index = 0;
     const wordLengthInBoard = (matchedWord.word.length + matchedWord.column)
@@ -123,10 +124,10 @@ export default class App extends React.Component<Props, State> {
         })
       }
     }
-    this.setMultipleTiles(list)
+    this.setMultipleTiles(list, false, func)
   }
 
-  displayColumn(matchedWord: MatchedWord, display: boolean) {
+  displayColumn(matchedWord: MatchedWord, display: boolean, func: () => void) {
     const list: Array<{ tile: Tile, char: string }> = []
     let index = 0;
     const wordLengthInBoard = (matchedWord.word.length + matchedWord.row)
@@ -138,7 +139,7 @@ export default class App extends React.Component<Props, State> {
         })
       }
     }
-    this.setMultipleTiles(list)
+    this.setMultipleTiles(list, false, func)
   }
 
   displayWord(matchedWord: MatchedWord) {
@@ -147,18 +148,18 @@ export default class App extends React.Component<Props, State> {
         selectedWord: matchedWord
       })
       if (matchedWord.direction === 'row') {
-       this.displayRow(matchedWord, true)
+       this.displayRow(matchedWord, true, () => countRowPoints(this.state.board))
       } else {
-        this.displayColumn(matchedWord, true)
+        this.displayColumn(matchedWord, true, () => countRowPoints(this.state.board))
       }
     })
   }
 
   hideWord(matchedWord: MatchedWord) {
     if (matchedWord.direction === 'row') {
-      this.displayRow(matchedWord, false)
+      this.displayRow(matchedWord, false, () => {})
     } else {
-      this.displayColumn(matchedWord, false)
+      this.displayColumn(matchedWord, false, () => {})
     }
   }
 
@@ -173,7 +174,7 @@ export default class App extends React.Component<Props, State> {
         ]
     
         this.setState({
-          matchedWords: sortByPoints(result).slice(0,15),
+          matchedWords: sortByPoints(result).slice(0,100),
           loading: false
         });
       }, 0)
