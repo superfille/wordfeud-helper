@@ -36,7 +36,7 @@ const countWordPoint = (currentPoints: number, tile: Tile): number => {
 const countPoints = (board: Array<Array<Tile>>): number => {
   const column = countColumnPoints(board)
   const row = countRowPoints(board)
-  console.log(column, row)
+
   return column + row
 }
 

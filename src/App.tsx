@@ -28,7 +28,7 @@ export default class App extends React.Component<Props, State> {
 
     this.state = {
       board: StartBoard,
-      playerChars: 'geoc',
+      playerChars: 'e',
       matchedWords: [],
       boardIsValid: true,
       loading: false,

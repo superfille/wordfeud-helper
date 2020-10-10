@@ -19,7 +19,11 @@ const columnPoints = (matchedWord: MatchedWord, board: Array<Array<Tile>>): numb
   return specials(points, matchedWord, board);
 }
 
-const countColumnPoints = (board: Array<Array<Tile>>): number => {
+/**
+ * Will find words that are not yet final in columns
+ * @param board The board
+ */
+const findColumnWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
   const wordsFound: Array<MatchedWord> = []
 
   for (let column = 0; column < board.length; column++) {
@@ -54,11 +58,18 @@ const countColumnPoints = (board: Array<Array<Tile>>): number => {
     }
   }
 
+  return wordsFound
+}
+
+const countColumnPoints = (board: Array<Array<Tile>>): number => {
+  const wordsFound: Array<MatchedWord> = findColumnWords(board)
+
   return wordsFound.reduce((previous, current) => {
     return previous + columnPoints(current, board)
   }, 0);
 }
 
 export {
-  countColumnPoints
+  countColumnPoints,
+  findColumnWords
 }

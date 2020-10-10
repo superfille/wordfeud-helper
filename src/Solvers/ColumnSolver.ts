@@ -1,10 +1,10 @@
 import { MatchedWord, Tile } from "../Models/Tile";
-// import englishWords from '../Words.json';
+import englishWords from '../Words.json';
 import { boardIsValid } from "../Confirmers/Confirmer";
 import { matchedWordMatchesWord } from './SolverUtil';
 import { countPoints } from "./CountPoints";
 
-const englishWords = ['eo']
+// const englishWords = ['mang', 'mange']
 interface WordCharPositions {
   maxLength: number; // The max length of the word
   boardTilePositions: Array<number>; // Chars position in the board
@@ -51,6 +51,7 @@ const findWordCharPositions = (board: Array<Array<Tile>>, start: number, charsLe
 const wordMatchesPositions = (word: string, maxPos: WordCharPositions, board: Array<Array<Tile>>, column: number) => {
   let atLeastOneBoardTileChar = false;
   let atLeastOneWordChar = false;
+
   const result = word.split('').every((char, index) => {
     const i = maxPos.wordPositions.indexOf(index)
     if (i >= 0) {
@@ -67,10 +68,27 @@ const wordMatchesPositions = (word: string, maxPos: WordCharPositions, board: Ar
   return atLeastOneBoardTileChar && atLeastOneWordChar && result
 }
 
+const positionAfterCurrentWordIsNotEmpty = (word: string, columnMatch: ColumnMatch): boolean => {
+  if (columnMatch.row + word.length + 1 < columnMatch.board.length) {
+    if (columnMatch.board[columnMatch.row + word.length + 1][columnMatch.column].char === '') {
+      return true;
+    }
+  }
+  return false;
+}
+
 const wordsThatMatchPositions = (payload: ColumnMatch): Array<MatchedWord> => {
   return payload.words.reduce((accumulated, currentWord) => {
     if (currentWord.length > payload.maxPos.maxLength) {
-      return accumulated;
+      return accumulated
+    }
+
+    if (payload.column == 13 && currentWord === 're') {
+      console.log('re')
+    }
+
+    if (positionAfterCurrentWordIsNotEmpty(currentWord, payload)) {
+      return accumulated
     }
 
     const wordMatchesPos = wordMatchesPositions(currentWord, payload.maxPos, payload.board, payload.column)

@@ -16,6 +16,14 @@ export interface Tile {
   char: string,
 }
 
+export const finalTile = (char: string = ''): Tile => {
+  return { char, special: null, final: char !== '' }
+}
+
+export const notFinalTile = (char: string = ''): Tile => {
+  return { char, special: null, final: false }
+}
+
 export interface SolveTile extends Position {
   start: number;
   length: number,

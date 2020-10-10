@@ -7,19 +7,27 @@ letas genom hela 450k ord varje gång
   // Spara flera bräden
   // Välj bland bräden
 
-// Räkna poäng på ord som skapas bredvid huvudordet DONE
-
 // Markera bokstäverna när man valt ord
 
 // När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
 
 // Visa vilka bokstäver som används i tabellen
 
-// När man sparar brädet visa vilka bokstäver som är kvar av spelarens bokstäver DONE
+// Gör tester
+  // column points
+    // Gör så att två ord i en column räknas om de inte är final
+  // column solver
+  // count points
+  // row points
+  // row solver
+  // solver util
 
-// Räkna inte med special rutorna om de redan har räknats DONE
-
-// visa bara 15 resultat DONE
+/////////////////////////////
+//////// DONE ///////////////
+/////////////////////////////
 
 // Resultat för mang och mange. mang ska inte finnas för bokstaven efteråt är e
-
+// Räkna poäng på ord som skapas bredvid huvudordet DONE
+// När man sparar brädet visa vilka bokstäver som är kvar av spelarens bokstäver DONE
+// Räkna inte med special rutorna om de redan har räknats DONE
+// visa bara 15 resultat DONE

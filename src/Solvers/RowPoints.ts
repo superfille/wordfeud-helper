@@ -19,7 +19,11 @@ const rowPoints = (rowWord: MatchedWord, board: Array<Array<Tile>>): number => {
   return specials(points, rowWord, board)
 }
 
-const countRowPoints = (board: Array<Array<Tile>>) => {
+/**
+ * Will find words that are not yet final for rows
+ * @param board The board
+ */
+const findRowWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
   const wordsFound: Array<MatchedWord> = []
   for (let row = 0; row < board.length; row++) {
     const matchedWord: MatchedWord = {
@@ -53,11 +57,18 @@ const countRowPoints = (board: Array<Array<Tile>>) => {
     }
   }
 
+  return wordsFound;
+}
+
+const countRowPoints = (board: Array<Array<Tile>>) => {
+  const wordsFound: Array<MatchedWord> = findRowWords(board)
+
   return wordsFound.reduce((previous, current) => {
     return previous + rowPoints(current, board)
   }, 0)
 }
 
 export {
-  countRowPoints
+  countRowPoints,
+  findRowWords
 }
