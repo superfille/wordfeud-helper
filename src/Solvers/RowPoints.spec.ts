@@ -54,17 +54,31 @@ describe('RowPoint findRowWords function', () => {
     expect(result[0].word).toBe('apa')
   })
 
-  // it('should find word two words in a row', () => {
-  //   const board: Array<Array<Tile>> = [
-  //     [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
-  //     [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
-  //     [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
-  //     [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
-  //     [notFinalTile('a'), finalTile('p'), finalTile(), finalTile('p'), notFinalTile('a')],
-  //   ];
+  it('should find word two words in a row', () => {
+    const board: Array<Array<Tile>> = [
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [notFinalTile('a'), finalTile('p'), finalTile(), finalTile('p'), notFinalTile('a')],
+    ];
 
-  //   const result = findRowWords(board);
+    const result = findRowWords(board);
 
-  //   expect(result.length).toBe(2)
-  // })
+    expect(result.length).toBe(2)
+  })
+
+  it('should find word one word that is not final in a row with two words', () => {
+    const board: Array<Array<Tile>> = [
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [finalTile('a'), finalTile('p'), finalTile(), finalTile('p'), notFinalTile('a')],
+    ];
+
+    const result = findRowWords(board);
+
+    expect(result.length).toBe(1)
+  })
 })

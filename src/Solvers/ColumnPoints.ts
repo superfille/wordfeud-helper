@@ -42,6 +42,7 @@ const findColumnWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
           matchedWords[matchedWords.length - 1].hasNotFinalCharacter || !board[row][column].final;
       }
     }
+    // Word has to be at least 2 characters and contain one character that is not final
     wordsFound.push(...matchedWords.filter(matchedWord => matchedWord.word.length > 1 && matchedWord.hasNotFinalCharacter))
   }
 
