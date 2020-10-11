@@ -82,4 +82,18 @@ describe('ColumnPoints findColumnWords function', () => {
 
     expect(result.length).toEqual(2)
   })
+
+  it('should find one word in column even though there are more words in column ', () => {
+    const board: Array<Array<Tile>> = [
+      [finalTile(), finalTile(), finalTile('a'), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile('b'), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+      [finalTile(), finalTile(), finalTile('q'), finalTile(), finalTile()],
+      [finalTile(), finalTile(), notFinalTile('e'), finalTile(), finalTile()],
+    ];
+
+    const result = findColumnWords(board)
+
+    expect(result.length).toEqual(1)
+  })
 })

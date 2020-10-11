@@ -19,46 +19,33 @@ const columnPoints = (matchedWord: MatchedWord, board: Array<Array<Tile>>): numb
   return specials(points, matchedWord, board);
 }
 
-/**
- * Will find words that are not yet final in columns
- * @param board The board
- */
 const findColumnWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
   const wordsFound: Array<MatchedWord> = []
 
   for (let column = 0; column < board.length; column++) {
-    const matchedWord: MatchedWord = {
-      word: '', points: 0, direction: 'column', column, row: 0
-    };
-
-    let startOfWord = -1;
+    const matchedWords: Array<MatchedWord> = [
+      { word: '', points: 0, direction: 'column', column, row: -1, hasNotFinalCharacter: false }
+    ]
+    
     for (let row = 0; row < board.length; row++) {
-      if (board[row][column].char !== '' && startOfWord === -1) {
-        startOfWord = row
-      } else if (board[row][column].char === '') {
-        startOfWord = -1
-      }
-
-      if (board[row][column].char !== '' && !board[row][column].final) {
-        row = startOfWord
-        matchedWord.row = startOfWord;
-        while (row < board.length) {
-          if (board[row][column].char === '') {
-            break;
-          }
-
-          matchedWord.word += board[row][column].char;
-          row++;
+      if (board[row][column].char === '') {
+        if (matchedWords[matchedWords.length - 1].word.length > 0) {
+          matchedWords.push({ word: '', points: 0, direction: 'column', column, row: -1, hasNotFinalCharacter: false })
         }
-        break;
+      } else {
+        if (matchedWords[matchedWords.length - 1].row === -1) {
+          matchedWords[matchedWords.length - 1].row = row
+        }
+
+        matchedWords[matchedWords.length - 1].word += board[row][column].char;
+        matchedWords[matchedWords.length - 1].hasNotFinalCharacter =
+          matchedWords[matchedWords.length - 1].hasNotFinalCharacter || !board[row][column].final;
       }
     }
-    if (matchedWord.word !== '' && matchedWord.word.length > 1) {
-      wordsFound.push(matchedWord)
-    }
+    wordsFound.push(...matchedWords.filter(matchedWord => matchedWord.word.length > 1 && matchedWord.hasNotFinalCharacter))
   }
 
-  return wordsFound
+  return wordsFound.filter(matchedWord => matchedWord.row >= 0)
 }
 
 const countColumnPoints = (board: Array<Array<Tile>>): number => {
@@ -71,5 +58,5 @@ const countColumnPoints = (board: Array<Array<Tile>>): number => {
 
 export {
   countColumnPoints,
-  findColumnWords
+  findColumnWords,
 }
