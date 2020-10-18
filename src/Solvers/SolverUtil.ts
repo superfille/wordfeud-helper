@@ -23,8 +23,8 @@ const hasJokerAndRemoveJoker = (chars: Array<string>) => {
   return false
 }
 
-const matchedWordMatchesWord = (chars: string, word: string) => {
-  let copiedChars = chars.split('')
+const matchedWordMatchesWord = (playerChars: string, word: string) => {
+  let copiedChars = playerChars.split('')
   return word.split('').every((charInWord) => {
     const index = copiedChars.indexOf(charInWord)
     if (index >= 0) {
