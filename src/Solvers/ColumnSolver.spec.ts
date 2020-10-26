@@ -7,14 +7,8 @@
     [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
  */
 
-import { finalTile, notFinalTile, Tile } from "../Models/Tile"
-import {
-    getConstructedWordFromBoard,
-    ColumnMatch,
-    wordMatchesPositions,
-    combineCharsWithTile,
-    positionAfterCurrentWordIsEmpty
-  } from "./ColumnSolver"
+import { finalTile, Tile } from "../Models/Tile"
+import { getConstructedWordFromBoard, ColumnMatch, positionAfterCurrentWordIsEmpty } from "./ColumnSolver"
 
 // @ts-ignore
 describe('ColumnSolver', () => {
@@ -70,36 +64,6 @@ describe('ColumnSolver', () => {
       expect(result).toEqual('');
     })
   })
-
-  describe('wordMatchesPositions', () => {
-    it('should match because all characters of the word are in a sequence in the constructed word', () => {
-      const word = 'bc';
-      const constructedWord = 'a*bca';
-      const result = wordMatchesPositions(word, constructedWord);
-      
-      expect(result).toBeTruthy();
-    })
-
-    it('should not match because not all the characters in the word are in a sequence in the constructed word', () => {
-      const word = 'bc';
-      const constructedWord = 'a*cb';
-      const result = wordMatchesPositions(word, constructedWord);
-      
-      expect(result).toBeFalsy();
-    })
-
-  })
-
-  describe('combineCharsWithTile', () => {
-    it('should put the players chars together with constructedWord we get from board but without *', () => {
-      const playerChars = 'abc';
-      const constructedWord = '*de*f'
-  
-      const result = combineCharsWithTile(playerChars, constructedWord)
-  
-      expect(result).toBe('defabc')
-    });
-  });
 
   describe('positionAfterCurrentWordIsEmpty', () => {
     it('should return false because the word has another char after last char', () => {
@@ -159,5 +123,6 @@ describe('ColumnSolver', () => {
       expect(result).toBeTruthy();
     });
   })
+
 
 })
