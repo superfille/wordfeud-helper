@@ -16,11 +16,11 @@ letas genom hela 450k ord varje gång
 // Gör tester
   // column points
     // Gör så att två ord i en column räknas om de inte är final
-  // column solver
+  // column solver Done
   // count points
   // row points
   // row solver
-  // solver util
+  // solver util Done
 
 /////////////////////////////
 //////// DONE ///////////////

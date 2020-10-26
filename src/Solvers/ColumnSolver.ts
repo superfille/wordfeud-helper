@@ -102,7 +102,6 @@ const wordsThatMatchPositions = (payload: ColumnMatch): Array<MatchedWord> => {
   }, [] as Array<MatchedWord>);
 }
 
-
 /**
  * @param playerChars 
  * @param board 
