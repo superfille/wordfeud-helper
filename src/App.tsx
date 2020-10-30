@@ -168,10 +168,12 @@ export default class App extends React.Component<Props, State> {
       loading: true,
     }, () => {
       setTimeout(() => {
+        console.time('start')
         const result = [
           ...solveColumns(this.state.board, this.state.playerChars),
           ...solveRows(this.state.board, this.state.playerChars)
         ]
+        console.timeEnd('start')
     
         this.setState({
           matchedWords: sortByPoints(result).slice(0,100),

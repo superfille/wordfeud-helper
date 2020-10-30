@@ -1,10 +1,8 @@
 import { boardIsValid } from '../Confirmers/Confirmer';
 import { MatchedWord, Tile } from '../Models/Tile';
 import { countPoints } from './CountPoints';
-import englishWords from '../Words.json';
+import { WordHandler } from '../Library/wordHandler';
 import { isWordFine } from './SolverUtil';
-
-// const englishWords = ['tap']
 
 interface RowMatch {
   words: Array<string>;
@@ -67,7 +65,7 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, row: number) => {
 
     if (constructedWord.length > 0) {
       const matches = wordsThatMatchPositions({
-        words: englishWords as Array<string>,
+        words: WordHandler.Instance.getWordsWithAtLeastLength(constructedWord.length),
         constructedWord: constructedWord,
         playerChars,
         tileRow: board[row],
