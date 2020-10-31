@@ -4,6 +4,8 @@
   // Radera brädet
   // Spara flera bräden
   // Välj bland bräden
+  // Spara brädet i localstorage DONE
+  // Läs brädet från localstorage DONE
 
 // Markera bokstäverna när man valt ord
 
