@@ -47,6 +47,7 @@ export default class App extends React.Component<Props, State> {
   }
 
   testBoard() {
+    this.readSavedLocal();
     this.setMultipleTiles([
       { tile: this.state.board[5][9], char: 'm' },
       { tile: this.state.board[5][10], char: 'a' },
@@ -183,8 +184,39 @@ export default class App extends React.Component<Props, State> {
     });
   }
 
+  readSavedLocal(name: string = 'mysave') {
+    const save = window.localStorage.getItem(name);
+    if (!save) {
+      return;
+    }
+
+    const savedBoard = save
+      .split(';')
+      .map(item => {
+        const foo: Array<string> = item.split(',');
+        return {
+          tile: this.state.board[Number(foo[0])][Number(foo[1])],
+          char: foo[2]
+        };
+      });
+    this.setMultipleTiles(savedBoard, true);
+  }
+
+  saveToLocal() {
+    let save = '';
+    for(let row = 0; row < this.state.board.length; row++) {
+      for(let column = 0; column < this.state.board.length; column++) {
+        if (this.state.board[row][column].final) {
+          save += `${row},${column},${this.state.board[row][column].char};`
+        }
+      }
+    }
+    window.localStorage.setItem('mysave', save);
+  }
+
   saveBoard() {
     let charsLeft = this.state.playerChars;
+    
     const newBoard = this.state.board.map(row => {
       return row.map(rowTile => {
         if (rowTile.char !== '' && !rowTile.final) {
@@ -200,6 +232,8 @@ export default class App extends React.Component<Props, State> {
       matchedWords: [],
       playerChars: charsLeft,
       selectedWord: null,
+    }, () => {
+      this.saveToLocal();
     })
   }
 

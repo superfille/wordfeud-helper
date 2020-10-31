@@ -1,8 +1,6 @@
-// Gör fler Word.json filer där varje fil innehåller ord med enbart x längd.
-Detta kommer göra att man hittar ord mycket snabbare eftersom det då inte behövs
-letas genom hela 450k ord varje gång
 
-// Spara brädet i localStore
+
+// Spara brädet i cookies
   // Radera brädet
   // Spara flera bräden
   // Välj bland bräden
@@ -26,6 +24,9 @@ letas genom hela 450k ord varje gång
 //////// DONE ///////////////
 /////////////////////////////
 
+// Gör fler Word.json filer där varje fil innehåller ord med enbart x längd.
+/ Detta kommer göra att man hittar ord mycket snabbare eftersom det då inte behövs
+/ letas genom hela 450k ord varje gång
 // Resultat för mang och mange. mang ska inte finnas för bokstaven efteråt är e
 // Räkna poäng på ord som skapas bredvid huvudordet DONE
 // När man sparar brädet visa vilka bokstäver som är kvar av spelarens bokstäver DONE

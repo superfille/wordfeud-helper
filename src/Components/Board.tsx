@@ -4,7 +4,6 @@ import BoardTile from './BoardTile';
 import { AllowedChars, Tile } from "../Models/Tile";
 
 type Props = {
-  // tileSet: Array<any>,
   board: Array<Array<Tile>>,
   setTile: (tile: Tile |null, char: string) => void
 }
@@ -26,14 +25,6 @@ export default class Board extends React.Component<Props, States> {
   charIsAllowed(char: string) {
     return AllowedChars.indexOf(char.toLowerCase()) >= 0;
   }
-
-  // hasTileSet(char: string) {
-  //   if (this.props.tileSet.length === 0) {
-  //     return true;
-  //   }
-
-  //   return !!this.props.tileSet.find(tile => tile.char === char)
-  // }
 
   selectTile(tile: Tile) {
     this.setState({ selectedTile: tile });
