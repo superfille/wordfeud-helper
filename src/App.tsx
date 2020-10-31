@@ -4,6 +4,7 @@ import "./style.css";
 import Board from './Components/Board';
 import PlayerTiles from './Components/PlayerTiles';
 import WordTable from './Components/WordTable';
+import BoardActions from './Components/BoardActions';
 import { MatchedWord, StartBoard, Tile } from "./Models/Tile";
 import { solveColumns } from "./Solvers/ColumnSolver";
 import { solveRows } from "./Solvers/RowSolver";
@@ -28,44 +29,18 @@ export default class App extends React.Component<Props, State> {
 
     this.state = {
       board: StartBoard,
-      playerChars: 'tp',
+      playerChars: '',
       matchedWords: [],
       boardIsValid: true,
       loading: false,
       selectedWord: null,
     }
-
-    setTimeout(() => {
-      this.testBoard()
-    }, 100)
   }
 
   addTiles(tiles: string) {
     this.setState({
       playerChars: tiles
     }, this.solve)
-  }
-
-  testBoard() {
-    this.readSavedLocal();
-    this.setMultipleTiles([
-      { tile: this.state.board[5][9], char: 'm' },
-      { tile: this.state.board[5][10], char: 'a' },
-      { tile: this.state.board[5][11], char: 'n' },
-
-      { tile: this.state.board[6][11], char: 'o' },
-      { tile: this.state.board[7][11], char: 't' },
-
-      { tile: this.state.board[7][8], char: 'o' },
-      { tile: this.state.board[7][9], char: 'u' },
-      { tile: this.state.board[7][10], char: 't' },
-      { tile: this.state.board[7][12], char: 'o' },
-      { tile: this.state.board[7][13], char: 'r' },
-      { tile: this.state.board[7][14], char: 'n' },
-
-      { tile: this.state.board[5][13], char: 'e' },
-      { tile: this.state.board[6][13], char: 'a' },
-    ], true)
   }
 
   setMultipleTiles(tilesWithChar: Array<{ tile: Tile, char: string }>, setFinal: boolean = false, func = () => {}) {
@@ -184,36 +159,6 @@ export default class App extends React.Component<Props, State> {
     });
   }
 
-  readSavedLocal(name: string = 'mysave') {
-    const save = window.localStorage.getItem(name);
-    if (!save) {
-      return;
-    }
-
-    const savedBoard = save
-      .split(';')
-      .map(item => {
-        const foo: Array<string> = item.split(',');
-        return {
-          tile: this.state.board[Number(foo[0])][Number(foo[1])],
-          char: foo[2]
-        };
-      });
-    this.setMultipleTiles(savedBoard, true);
-  }
-
-  saveToLocal() {
-    let save = '';
-    for(let row = 0; row < this.state.board.length; row++) {
-      for(let column = 0; column < this.state.board.length; column++) {
-        if (this.state.board[row][column].final) {
-          save += `${row},${column},${this.state.board[row][column].char};`
-        }
-      }
-    }
-    window.localStorage.setItem('mysave', save);
-  }
-
   saveBoard() {
     let charsLeft = this.state.playerChars;
     
@@ -232,26 +177,18 @@ export default class App extends React.Component<Props, State> {
       matchedWords: [],
       playerChars: charsLeft,
       selectedWord: null,
-    }, () => {
-      this.saveToLocal();
     })
-  }
-
-  boardIs() {
-    if (this.state.boardIsValid) {
-      return (
-       <span className="text-success">Valid</span>
-      )
-    }
-    return (
-      <span className="text-danger">InValid</span>
-    )
   }
 
   render() {
     return (
       <div className="container mt-3">
-        <h5>Board is: { this.boardIs() }</h5>
+        <div className="mb-2">
+        <BoardActions
+          board={ this.state.board }
+          setMultipleTiles={ this.setMultipleTiles }
+        />
+        </div>
         <div className="row">
           <section className="col">
             <div className="mb-3">

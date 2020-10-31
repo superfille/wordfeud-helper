@@ -21,7 +21,6 @@ export default class Board extends React.Component<Props, States> {
     };
   };
 
-
   charIsAllowed(char: string) {
     return AllowedChars.indexOf(char.toLowerCase()) >= 0;
   }
