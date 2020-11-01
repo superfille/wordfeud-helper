@@ -19,47 +19,6 @@ const rowPoints = (rowWord: MatchedWord, board: Array<Array<Tile>>): number => {
   return specials(points, rowWord, board)
 }
 
-/**
- * Will find words that are not yet final for rows
- * @param board The board
- */
-const findRowWordsv2 = (board: Array<Array<Tile>>): Array<MatchedWord> => {
-  const wordsFound: Array<MatchedWord> = []
-  for (let row = 0; row < board.length; row++) {
-    const matchedWord: MatchedWord = {
-      word: '', points: 0, direction: 'row', row, column: 0
-    };
-
-    let startOfWord = -1;
-    for (let column = 0; column < board.length; column++) {
-      if (board[row][column].char !== '' && startOfWord === -1) {
-        startOfWord = column
-      } else if (board[row][column].char === '') {
-        startOfWord = -1
-      }
-
-      if (board[row][column].char !== '' && !board[row][column].final) {
-        column = startOfWord
-        matchedWord.column = startOfWord;
-        while (column < board.length) {
-          if (board[row][column].char === '') {
-            break;
-          }
-
-          matchedWord.word += board[row][column].char;
-          column++;
-        }
-        break;
-      }
-    }
-    if (matchedWord.word !== '' && matchedWord.word.length > 1) {
-      wordsFound.push(matchedWord)
-    }
-  }
-
-  return wordsFound;
-}
-
 const findRowWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
   const wordsFound: Array<MatchedWord> = []
   for (let row = 0; row < board.length; row++) {

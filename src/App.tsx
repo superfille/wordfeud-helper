@@ -21,11 +21,12 @@ type State = {
   boardIsValid: boolean,
   loading: boolean,
   selectedWord: MatchedWord | null,
+  localStorageBoards: Array<{ name: string, board: string }>,
 }
 
 export default class App extends React.Component<Props, State> {
   constructor(props: any) {
-    super(props)
+    super(props);
 
     this.state = {
       board: StartBoard,
@@ -34,7 +35,23 @@ export default class App extends React.Component<Props, State> {
       boardIsValid: true,
       loading: false,
       selectedWord: null,
+      localStorageBoards: this.readLocalStorageBoards(),
     }
+  }
+
+  readLocalStorageBoards() {
+    const boards: Array<{ name: string, board: string }> = [];
+
+    for(let i = 0; i < window.localStorage.length; i++) {
+      if (window.localStorage.key(i)) {
+        boards.push({
+          name: window.localStorage.key(i)!,
+          board: window.localStorage.getItem(window.localStorage.key(i)!)!,
+        });
+      }
+    }
+
+    return boards;
   }
 
   addTiles(tiles: string) {
@@ -180,19 +197,34 @@ export default class App extends React.Component<Props, State> {
     })
   }
 
+  createNewBoard(name: string) {
+    this.setState({
+      localStorageBoards: (this.state.localStorageBoards || [])
+        .filter(localStorageBoard => localStorageBoard.name !== name)
+        .concat({ name, board: '' }),
+    })
+    // window.localStorage.setItem(name, '');
+  }
+
   render() {
     return (
-      <div className="container mt-3">
+      <div className="container m-3">
         <div className="mb-2">
-        <BoardActions
-          board={ this.state.board }
-          setMultipleTiles={ this.setMultipleTiles }
-        />
+          <BoardActions
+            board={ this.state.board }
+            localStorageBoards={ this.state.localStorageBoards }
+            setMultipleTiles={ this.setMultipleTiles }
+            createNewBoard={ this.createNewBoard }
+          />
         </div>
+        <hr />
         <div className="columns">
           <section className="column">
             <div className="mb-3">
-              <Board board={ this.state.board } setTile={ (tile: Tile | null, char: string) => this.setTile(tile, char) } />
+              <Board
+                board={ this.state.board }
+                setTile={ (tile: Tile | null, char: string) => this.setTile(tile, char) }
+              />
             </div>
 
             <div>
