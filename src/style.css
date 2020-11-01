@@ -26,46 +26,32 @@ button {
   margin-right: 16px;
 }
 
-.tile {
+.board-tile {
   width: 35px;
   height: 35px;
   margin: 3px;
   color: white;
 }
 
-.tile--color__tl {
+.board-tile--color__tl {
   background-color:#1565C0;
 }
 
-.tile--color__dl {
+.board-tile--color__dl {
   background-color:#2E7D32;
 }
 
-.tile--color__dw {
+.board-tile--color__dw {
   background-color:#EF6C00;
 }
 
-.tile--color__tw {
+.board-tile--color__tw {
   background-color:#C62828;
 }
 
-.tile--color__black {
-background: rgb(66,66,66);
-background: linear-gradient(180deg, rgba(66,66,66,1) 19%, rgba(97,97,97,1) 72%);
-}
-
-.tile-input {
-  display: none;
-}
-
-.word-table {
-  border: none;
-  border-collapse: collapse;
-}
-
-.word-table tr:hover, .word-table-row-selected {
-  background-color: #E0E0E0;
-  cursor: pointer;
+.board-tile--color__black {
+  background: rgb(66,66,66);
+  background: linear-gradient(180deg, rgba(66,66,66,1) 19%, rgba(97,97,97,1) 72%);
 }
 
 th, td {

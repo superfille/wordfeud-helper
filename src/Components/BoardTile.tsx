@@ -26,17 +26,12 @@ export default class BoardTile extends React.Component<Props> {
     return this.props.tile.char || this.props.tile.special;
   }
 
-  color() {
-    return this.props.tile.special !== null ? this.props.tile.special : 'black';
-  }
-
-  className() {
-    return `tile tile--color__${this.color()}`;
-  }
-
   render() {
+    const color = this.props.tile.special !== null ? this.props.tile.special : 'black';
+    const className = `board-tile board-tile--color__${ color }`;
+
     return (
-      <button onClick={this.handleOnSelect} className={this.className()}>
+      <button onClick={this.handleOnSelect} className={ className }>
         { this.renderText() }
       </button>
     );

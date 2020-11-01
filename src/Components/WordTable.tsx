@@ -39,26 +39,28 @@ export default class WordTable extends React.Component<Props, State> {
   }
 
   renderRows() {
-    return this.props.matchedWords.map((matchedWord, index) => {
-      const isSelected = matchedWord === this.state.selectedMatchedWord
-      const className = isSelected ? 'word-table-row-selected' : ''
-      return (
-        <tr
-          key={`${matchedWord.word}-${index}`}
-          className={ className }
-          onClick={() => this.onClick(matchedWord)}
-          >
-          <td>{ matchedWord.points }</td>
-          <td>{ matchedWord.word }</td>
-        </tr>
-      )
-    })
+    return this.props.matchedWords
+      .filter((_, index) => index < 15)
+      .map((matchedWord, index) => {
+        const isSelected = matchedWord === this.state.selectedMatchedWord
+        const className = isSelected ? 'is-selected' : ''
+        return (
+          <tr
+            key={`${matchedWord.word}-${index}`}
+            className={ className }
+            onClick={() => this.onClick(matchedWord)}
+            >
+            <td>{ matchedWord.points }</td>
+            <td>{ matchedWord.word }</td>
+          </tr>
+        )
+      })
   }
 
   render() {
     return (
       <div className="">
-        <table className="table table-striped table-hover">
+        <table className="table is-striped is-fullwidth is-hoverable">
           <thead>
             <tr>
               <th>Points</th>

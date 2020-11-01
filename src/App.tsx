@@ -189,8 +189,8 @@ export default class App extends React.Component<Props, State> {
           setMultipleTiles={ this.setMultipleTiles }
         />
         </div>
-        <div className="row">
-          <section className="col">
+        <div className="columns">
+          <section className="column">
             <div className="mb-3">
               <Board board={ this.state.board } setTile={ (tile: Tile | null, char: string) => this.setTile(tile, char) } />
             </div>
@@ -200,12 +200,11 @@ export default class App extends React.Component<Props, State> {
                 tiles={ this.state.playerChars }
                 isLoading={ this.state.loading }
                 addTiles={ (tiles: string) => this.addTiles(tiles) }
-                save={ () => this.saveBoard() }
               />
             </div>
           </section>
 
-          <section className="col">
+          <section className="column">
             <WordTable
               matchedWords={ this.state.matchedWords }
               displayWord={ (matchedWord: MatchedWord) => this.displayWord(matchedWord) }
