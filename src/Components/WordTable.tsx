@@ -5,6 +5,7 @@ type Props = {
   matchedWords: Array<MatchedWord>
   displayWord: (matchedWord: MatchedWord) => void,
   hideWord: (matchedWord: MatchedWord) => void,
+  useWord: (matchedWord: MatchedWord) => void
 }
 
 type State = {
@@ -20,7 +21,7 @@ export default class WordTable extends React.Component<Props, State> {
     }
   }
 
-  onClick(matchedWord: MatchedWord) {
+  onSelectWord(matchedWord: MatchedWord) {
     if (this.state.selectedMatchedWord === matchedWord) {
       this.props.hideWord(matchedWord)
       this.setState({
@@ -48,13 +49,19 @@ export default class WordTable extends React.Component<Props, State> {
           <tr
             key={`${matchedWord.word}-${index}`}
             className={ className }
-            onClick={() => this.onClick(matchedWord)}
+            onClick={() => this.onSelectWord(matchedWord)}
             >
             <td>{ matchedWord.points }</td>
-            <td>{ matchedWord.word }</td>
+            <td colSpan={2}>{ matchedWord.word }</td>
           </tr>
         )
       })
+  }
+
+  onUseWord() {
+    if (this.state.selectedMatchedWord) {
+      this.props.useWord(this.state.selectedMatchedWord);
+    }
   }
 
   render() {
@@ -65,6 +72,7 @@ export default class WordTable extends React.Component<Props, State> {
             <tr>
               <th>Points</th>
               <th>Word</th>
+              <th><button className="button is-secondary" onClick={() => this.onUseWord()}>Use word</button></th>
             </tr>
           </thead>
           <tbody>

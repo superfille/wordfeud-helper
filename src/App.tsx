@@ -4,13 +4,13 @@ import "./style.css";
 import Board from './Components/Board';
 import PlayerTiles from './Components/PlayerTiles';
 import WordTable from './Components/WordTable';
-import BoardActions from './Components/BoardActions';
-import { MatchedWord, StartBoard, Tile } from "./Models/Tile";
+import BoardReadSave from './Components/BoardReadSave';
+import { MatchedWord, NewTile, StartBoard, Tile } from "./Models/Tile";
 import { solveColumns } from "./Solvers/ColumnSolver";
 import { solveRows } from "./Solvers/RowSolver";
 import { sortByPoints } from './Solvers/SolverUtil';
-import { boardIsValid } from './Confirmers/Confirmer';
 import { countRowPoints } from "./Solvers/RowPoints";
+import * as BoardActions from "./Utils/BoardActions";
 
 type Props = {}
 
@@ -28,53 +28,35 @@ export default class App extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
 
+    const localStorageBoards = BoardActions.readLocalStorageBoards();
+    let board = localStorageBoards.length === 0
+      ? StartBoard
+      : BoardActions.read(localStorageBoards[0].name)
+
+    if (localStorageBoards.length === 0) {
+      BoardActions.save('board1', board);
+    }
+
     this.state = {
-      board: StartBoard,
+      board: board,
       playerChars: '',
       matchedWords: [],
       boardIsValid: true,
       loading: false,
       selectedWord: null,
-      localStorageBoards: this.readLocalStorageBoards(),
+      localStorageBoards: localStorageBoards,
     }
   }
 
-  readLocalStorageBoards() {
-    const boards: Array<{ name: string, board: string }> = [];
-
-    for(let i = 0; i < window.localStorage.length; i++) {
-      if (window.localStorage.key(i)) {
-        boards.push({
-          name: window.localStorage.key(i)!,
-          board: window.localStorage.getItem(window.localStorage.key(i)!)!,
-        });
-      }
-    }
-
-    return boards;
-  }
-
-  addTiles(tiles: string) {
+  setPlayerChars(tiles: string) {
     this.setState({
       playerChars: tiles
     }, this.solve)
   }
 
-  setMultipleTiles(tilesWithChar: Array<{ tile: Tile, char: string }>, setFinal: boolean = false, func = () => {}) {
+  setMultipleTiles(newTiles: Array<NewTile>, func = () => {}) {
     this.setState({
-      board: this.state.board.map(row => {
-        return row.map(rowTile => {
-          const tileWithChar = tilesWithChar.find(tile => rowTile === tile.tile)
-          if (tileWithChar) {
-            return {
-              char: tileWithChar.char === 'Backspace' ? '' : tileWithChar.char,
-              special: rowTile.special,
-              final: tileWithChar.char === 'Backspace' ? false : setFinal,
-            }
-          }
-          return rowTile;
-        })
-      })
+      board: BoardActions.setNewTilesToBoard(newTiles, this.state.board)
     }, func)
   }
 
@@ -97,42 +79,40 @@ export default class App extends React.Component<Props, State> {
 
   cleanBoard(func = () => {}) {
     this.setState({
-      board: this.state.board.map(row => {
-        return row.map(tile => {
-            return { ...tile, char: tile.final ? tile.char : '' }
-        })
-      }),
+      board: BoardActions.cleanBoard(this.state.board)
     }, func)
   }
 
   displayRow(matchedWord: MatchedWord, display: boolean, func: () => void) {
-    const list: Array<{ tile: Tile, char: string }> = []
+    const list: Array<{ row: number; column: number; char: string }> = []
     let index = 0;
     const wordLengthInBoard = (matchedWord.word.length + matchedWord.column)
     for (let column = matchedWord.column; column < wordLengthInBoard; column++, index++) {
       if (!this.state.board[matchedWord.row][column].final) {
         list.push({
-          tile: this.state.board[matchedWord.row][column],
+          row: matchedWord.row,
+          column: column,
           char: display ? matchedWord.word[index] : ''
         })
       }
     }
-    this.setMultipleTiles(list, false, func)
+    this.setMultipleTiles(list, func)
   }
 
   displayColumn(matchedWord: MatchedWord, display: boolean, func: () => void) {
-    const list: Array<{ tile: Tile, char: string }> = []
+    const list: Array<{ row: number; column: number; char: string }> = []
     let index = 0;
     const wordLengthInBoard = (matchedWord.word.length + matchedWord.row)
     for (let row = matchedWord.row; row < wordLengthInBoard; row++, index++) {
       if (!this.state.board[row][matchedWord.column].final) {
         list.push({
-          tile: this.state.board[row][matchedWord.column],
+          row: row,
+          column: matchedWord.column,
           char: display ? matchedWord.word[index] : ''
         })
       }
     }
-    this.setMultipleTiles(list, false, func)
+    this.setMultipleTiles(list, func)
   }
 
   displayWord(matchedWord: MatchedWord) {
@@ -161,13 +141,14 @@ export default class App extends React.Component<Props, State> {
       loading: true,
     }, () => {
       setTimeout(() => {
-        console.time('start')
+        console.time('Time it took to solve')
         const result = [
           ...solveColumns(this.state.board, this.state.playerChars),
           ...solveRows(this.state.board, this.state.playerChars)
         ]
-        console.timeEnd('start')
-    
+        console.timeEnd('Time it took to solve')
+        console.log(this.state.board);
+        
         this.setState({
           matchedWords: sortByPoints(result).slice(0,100),
           loading: false
@@ -176,45 +157,26 @@ export default class App extends React.Component<Props, State> {
     });
   }
 
-  saveBoard() {
-    let charsLeft = this.state.playerChars;
-    
-    const newBoard = this.state.board.map(row => {
-      return row.map(rowTile => {
-        if (rowTile.char !== '' && !rowTile.final) {
-          charsLeft = charsLeft.replace(rowTile.char, '');
-        }
-        return { ...rowTile, final: rowTile.char !== '' }
-      })
-    })
-    
-    this.setState({
-      board: newBoard,
-      boardIsValid: boardIsValid(this.state.board),
-      matchedWords: [],
-      playerChars: charsLeft,
-      selectedWord: null,
-    })
-  }
-
   createNewBoard(name: string) {
     this.setState({
       localStorageBoards: (this.state.localStorageBoards || [])
         .filter(localStorageBoard => localStorageBoard.name !== name)
         .concat({ name, board: '' }),
     })
-    // window.localStorage.setItem(name, '');
+  }
+
+  useWord(matchedWord: MatchedWord) {
+    console.log('here', matchedWord);
   }
 
   render() {
     return (
       <div className="container m-3">
         <div className="mb-2">
-          <BoardActions
+          <BoardReadSave
             board={ this.state.board }
             localStorageBoards={ this.state.localStorageBoards }
-            setMultipleTiles={ this.setMultipleTiles }
-            createNewBoard={ this.createNewBoard }
+            createNewBoard={ (name: string) => this.createNewBoard(name) }
           />
         </div>
         <hr />
@@ -231,7 +193,7 @@ export default class App extends React.Component<Props, State> {
               <PlayerTiles
                 tiles={ this.state.playerChars }
                 isLoading={ this.state.loading }
-                addTiles={ (tiles: string) => this.addTiles(tiles) }
+                setPlayerChars={ (chars: string) => this.setPlayerChars(chars) }
               />
             </div>
           </section>
@@ -241,12 +203,11 @@ export default class App extends React.Component<Props, State> {
               matchedWords={ this.state.matchedWords }
               displayWord={ (matchedWord: MatchedWord) => this.displayWord(matchedWord) }
               hideWord={ (matchedWord: MatchedWord) => this.hideWord(matchedWord) }
+              useWord={ (matchedWord: MatchedWord) => this.useWord(matchedWord) }
             />
           </section>
         </div>
-
       </div>
     );
   }
-
 }

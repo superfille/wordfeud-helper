@@ -3,7 +3,7 @@ import React from "react";
 type Props = {
   tiles: string,
   isLoading: boolean,
-  addTiles: (s: string) => void,
+  setPlayerChars: (s: string) => void,
 }
 
 export default class PlayerTiles extends React.Component<Props> {
@@ -14,8 +14,8 @@ export default class PlayerTiles extends React.Component<Props> {
     }
   }
 
-  addTiles() {
-    this.props.addTiles((document.getElementById('player_tiles') as HTMLInputElement).value)
+  setPlayerChars() {
+    this.props.setPlayerChars((document.getElementById('player_tiles') as HTMLInputElement).value)
   }
 
   solveButton() {
@@ -23,10 +23,10 @@ export default class PlayerTiles extends React.Component<Props> {
     return (
       <button
         className={ className }
-        onClick={() => this.props.isLoading ? '' : this.addTiles()}>
+        onClick={() => this.props.isLoading ? '' : this.setPlayerChars()}>
         Solve
       </button>
-    )
+    )   
   }
 
   playerCharactersInput() {

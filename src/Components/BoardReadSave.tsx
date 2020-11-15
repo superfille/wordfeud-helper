@@ -1,12 +1,10 @@
 import React from "react";
 
 import { Tile } from "../Models/Tile";
-import * as BoardAction from "../Utils/SavingBoard";
 
 type Props = {
   board: Array<Array<Tile>>,
   localStorageBoards: Array<{ name: string, board: string } >,
-  setMultipleTiles: (savedBoard: Array<{ tile: Tile, char: string }>, setFinal: boolean, func: () => void) => void
   createNewBoard: (name: string) => void
 }
 
@@ -14,18 +12,13 @@ type States = {
   currentBoardName: string,
 }
 
-export default class Board extends React.Component<Props, States> {
+export default class BoardReadSave extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props);
 
     this.state = {
       currentBoardName: props.localStorageBoards?.length > 0 ? props.localStorageBoards[0].name : ''
     }
-  }
-
-  readSavedLocal(name: string) {
-    const savedBoard = BoardAction.read(name, this.props.board);
-    this.props.setMultipleTiles(savedBoard, true, () => {});
   }
 
   myBoardNames(): Array<string> {
@@ -62,10 +55,6 @@ export default class Board extends React.Component<Props, States> {
     this.props.createNewBoard(newBoardName);
   }
 
-  clearBoards() {
-    window.localStorage.clear();
-  }
-
   renderNewBoardInput() {
     return (
       <div className="columns">
@@ -73,8 +62,7 @@ export default class Board extends React.Component<Props, States> {
           <input id="newboardname" className="input" type="text" placeholder="Create board" />
         </div>
         <div className="control column">
-          <button className="button" onClick={() => this.createNewBoard() }>Create</button>
-          <button className="button ml-1" onClick={() => this.clearBoards() }>Clear</button>
+          <button className="button" onClick={() => this.createNewBoard() }>New board</button>
         </div>
       </div>
     )

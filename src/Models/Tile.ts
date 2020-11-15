@@ -10,6 +10,10 @@ export interface Position {
   column: number,
 }
 
+export interface NewTile extends Position{
+  char: string,
+}
+
 export interface Tile {
   final: boolean;
   special: SpecialTile | null,

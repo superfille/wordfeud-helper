@@ -2,6 +2,7 @@
 
 // Spara brädet i cookies
   // Radera brädet
+    // Are you sure delete message?
   // Spara flera bräden
   // Välj bland bräden
   // Spara brädet i localstorage DONE
@@ -15,6 +16,11 @@
 
 // Visa vilka bokstäver som används i tabellen
 
+
+/////////////////////////////
+//////// DONE ///////////////
+/////////////////////////////
+
 // Gör tester
   // column points
     // Gör så att två ord i en column räknas om de inte är final
@@ -23,10 +29,6 @@
   // row points
   // row solver
   // solver util Done
-
-/////////////////////////////
-//////// DONE ///////////////
-/////////////////////////////
 
 // Gör fler Word.json filer där varje fil innehåller ord med enbart x längd.
 / Detta kommer göra att man hittar ord mycket snabbare eftersom det då inte behövs
