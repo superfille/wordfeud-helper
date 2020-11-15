@@ -19,14 +19,14 @@ export interface ColumnMatch {
  * If we have start: 1
  * and board:
  * [][a][][b][c][]
- * and usersCharsLength: 2 // user has 2 characters
+ * and playerCharsLength: 2 // user has 2 characters
  * we will get
  * constructedWord: a*bc*
  * maxLength: 5 // we start at a and can only go to after b because the board ends
  * @param payload
  */
 const getConstructedWordFromBoard = (payload: {
-  board: Array<Array<Tile>>, start: number, usersCharsLength: number, column: number
+  board: Array<Array<Tile>>, start: number, playerCharsLength: number, column: number
 }): string => {
   let charsUsed = 0;
   let row = payload.start;
@@ -38,9 +38,11 @@ const getConstructedWordFromBoard = (payload: {
       constructedWord += payload.board[row][payload.column].char;
       continue;
     }
-    if (charsUsed < payload.usersCharsLength) {
+  
+    if (charsUsed < payload.playerCharsLength) {
       constructedWord += '*';
     }
+  
     charsUsed += 1;
 
     // The next tile is not the end of the board and is not empty, we can continue
@@ -48,10 +50,11 @@ const getConstructedWordFromBoard = (payload: {
       continue;
     }
 
-    if (charsUsed >= payload.usersCharsLength) {
+    if (charsUsed >= payload.playerCharsLength) {
       break;
     }
   }
+
   const splitted = constructedWord.split('');
   if (splitted.some(c => c !== '*') && splitted.some(c => c === '*')) {
     return constructedWord;
@@ -115,7 +118,7 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, column: number) =
     }
 
     const constructedWord: string = getConstructedWordFromBoard({
-      board, start: row, usersCharsLength: playerChars.length, column
+      board, start: row, column, playerCharsLength: playerChars.length
     })
 
     if (constructedWord !== '') {
@@ -126,7 +129,7 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, column: number) =
         board: board,
         row,
         column
-      })
+      });
 
       result.push(...matches
         .filter(rowWord => wordIsValidInBoard(rowWord, board))
@@ -145,7 +148,7 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, column: number) =
 const setWordInBoard = (columnWord: MatchedWord, board: Array<Array<Tile>>) => {
   for (let i = 0; i < columnWord.word.length; i++) {
     if (board[columnWord.row + i][columnWord.column].final === false) {
-      board[columnWord.row + i][columnWord.column].char = columnWord.word[i]
+      board[columnWord.row + i][columnWord.column].char = columnWord.word[i];
     }
   }
 }
@@ -153,7 +156,7 @@ const setWordInBoard = (columnWord: MatchedWord, board: Array<Array<Tile>>) => {
 const removeWordFromBoard = (columnWord: MatchedWord, board: Array<Array<Tile>>) => {
   for (let i = 0; i < columnWord.word.length; i++) {
     if (board[columnWord.row + i][columnWord.column].final === false) {
-      board[columnWord.row + i][columnWord.column].char = ''
+      board[columnWord.row + i][columnWord.column].char = '';
     }
   }
 }

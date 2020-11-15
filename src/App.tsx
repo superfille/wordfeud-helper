@@ -143,8 +143,8 @@ export default class App extends React.Component<Props, State> {
       setTimeout(() => {
         console.time('Time it took to solve')
         const result = [
-          ...solveColumns(this.state.board, this.state.playerChars),
-          ...solveRows(this.state.board, this.state.playerChars)
+          //...solveColumns(this.state.board, this.state.playerChars), 
+          ...solveRows(this.state.board, this.state.playerChars)// Denna ska vara rätt
         ]
         console.timeEnd('Time it took to solve')
         console.log(this.state.board);

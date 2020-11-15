@@ -22,10 +22,10 @@ describe('ColumnSolver', () => {
         [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
       ]
       const start = 0;
-      const usersCharsLength = 2;
+      const playerCharsLength = 2;
       const column = 1;
 
-      const result: string = getConstructedWordFromBoard({ board, start, usersCharsLength, column })
+      const result: string = getConstructedWordFromBoard({ board, start, playerCharsLength, column })
 
       expect(result).toEqual('*ap*');
     })
@@ -39,10 +39,10 @@ describe('ColumnSolver', () => {
         [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
       ]
       const start = 2;
-      const usersCharsLength = 2;
+      const playerCharsLength = 2;
       const column = 1;
 
-      const result: string = getConstructedWordFromBoard({ board, start, usersCharsLength, column })
+      const result: string = getConstructedWordFromBoard({ board, start, playerCharsLength, column })
 
       expect(result).toEqual('pa*');
     })
@@ -56,10 +56,10 @@ describe('ColumnSolver', () => {
         [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
       ]
       const start = 0;
-      const usersCharsLength = 2;
+      const playerCharsLength = 2;
       const column = 1;
 
-      const result: string = getConstructedWordFromBoard({ board, start, usersCharsLength, column })
+      const result: string = getConstructedWordFromBoard({ board, start, playerCharsLength, column })
 
       expect(result).toEqual('');
     })
@@ -76,6 +76,26 @@ describe('ColumnSolver', () => {
           [finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
         ],
         row: 0,
+        column: 1,
+      } as ColumnMatch;
+      const word = 'apa';
+
+      const result = positionAfterCurrentWordIsEmpty(word, columMatch)
+
+      expect(result).toBeFalsy();
+    });
+
+    it('should return false because the word has another char after last char 2', () => {
+      const columMatch = {
+        board: [
+          [finalTile(), finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+          [finalTile(), finalTile('a'), finalTile(), finalTile(), finalTile(), finalTile()],
+          [finalTile(), finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+          [finalTile(), finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+          [finalTile(), finalTile('f'), finalTile(), finalTile(), finalTile(), finalTile()],
+          [finalTile(), finalTile(), finalTile(), finalTile(), finalTile(), finalTile()],
+        ],
+        row: 1,
         column: 1,
       } as ColumnMatch;
       const word = 'apa';

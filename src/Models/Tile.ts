@@ -47,17 +47,17 @@ export interface MatchedWord extends Position {
 export const AllowedChars: Array<string> = ['backspace', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 export const CharacterPoints: Array<Array<string>> = [
-  [],
-  ['a', 'e', 'i', 'l', 'n', 'o', 'r', 's', 't'],
-  ['d', 'u'],
-  ['g', 'm'],
-  ['b', 'c', 'f', 'h', 'p', 'v', 'w', 'y'],
-  ['k'],
-  [],
-  [],
-  ['x'],
-  [],
-  ['j', 'q', 'z']
+  /* 0*/[],
+  /* 1*/['a', 'e', 'i', 'l', 'n', 'o', 'r', 's', 't'],
+  /* 2*/['d', 'u'],
+  /* 3*/['g', 'm'],
+  /* 4*/['b', 'c', 'f', 'h', 'p', 'v', 'w', 'y'],
+  /* 5*/['k'],
+  /* 6*/[],
+  /* 7*/[],
+  /* 8*/['x'],
+  /* 9*/[],
+  /*10*/['j', 'q', 'z']
 ];
 
 export const StartBoard: Array<Array<Tile>> = [

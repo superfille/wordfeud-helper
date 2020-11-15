@@ -13,7 +13,7 @@ const specials = (currentPoints: number, columnWord: MatchedWord, board: Array<A
 const columnPoints = (matchedWord: MatchedWord, board: Array<Array<Tile>>): number => {
   let points = 0;
   for (let i = 0; i < matchedWord.word.length; i++) {
-    points += countCharPoint(board[matchedWord.row + i][matchedWord.column], matchedWord.word[i])
+    points += countCharPoint(board[matchedWord.row + i][matchedWord.column], matchedWord.word[i]);
   }
 
   return specials(points, matchedWord, board);
@@ -23,9 +23,9 @@ const findColumnWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
   const wordsFound: Array<MatchedWord> = []
 
   for (let column = 0; column < board.length; column++) {
-    const matchedWords: Array<MatchedWord> = [
-      { word: '', points: 0, direction: 'column', column, row: -1, hasNotFinalCharacter: false }
-    ]
+    const matchedWords: Array<MatchedWord> = [{
+      word: '', points: 0, direction: 'column', column, row: -1, hasNotFinalCharacter: false,
+    }];
     
     for (let row = 0; row < board.length; row++) {
       if (board[row][column].char === '') {
@@ -34,7 +34,7 @@ const findColumnWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
         }
       } else {
         if (matchedWords[matchedWords.length - 1].row === -1) {
-          matchedWords[matchedWords.length - 1].row = row
+          matchedWords[matchedWords.length - 1].row = row;
         }
 
         matchedWords[matchedWords.length - 1].word += board[row][column].char;
@@ -51,7 +51,9 @@ const findColumnWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
 
 const countColumnPoints = (board: Array<Array<Tile>>): number => {
   const wordsFound: Array<MatchedWord> = findColumnWords(board)
-
+  if (wordsFound.length > 0) {
+    console.log(wordsFound);
+  }
   return wordsFound.reduce((previous, current) => {
     return previous + columnPoints(current, board)
   }, 0);

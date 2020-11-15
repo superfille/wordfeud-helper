@@ -5,39 +5,39 @@ import { WordHandler } from '../Library/wordHandler';
 import { isWordFine } from './SolverUtil';
 
 interface RowMatch {
-  words: Array<string>;
+  allWords: Array<string>;
   constructedWord: string;
   playerChars: string;
-  tileRow: Array<Tile>;
+  board: Array<Array<Tile>>;
   row: number;
   column: number;
 }
 
 const getConstructedWordFromBoard = (payload: {
-  tileRow: Array<Tile>, start: number, usersCharsLength: number
+  board: Array<Array<Tile>>, start: number, playerCharsLength: number, row: number,
 }): string => {
   let charsUsed = 0;
   let column = payload.start;
+  let constructedWord: string = '';
   let index = 0;
-  let constructedWord = '';
 
-  for (; column < payload.tileRow.length; column++, index++) {
-    if (payload.tileRow[column].char !== '') {
-      constructedWord += payload.tileRow[column].char;
-      continue
+  for (; column < payload.board.length; column++, index++) {
+    if (payload.board[payload.row][column].char !== '') {
+      constructedWord += payload.board[payload.row][column].char;
+      continue;
     }
 
-    if (charsUsed < payload.usersCharsLength) {
+    if (charsUsed < payload.playerCharsLength) {
       constructedWord += '*';
     }
 
     charsUsed += 1;
   
-    if (column + 1 < payload.tileRow.length && payload.tileRow[column + 1].char !== '') {
+    if (column + 1 < payload.board.length && payload.board[payload.row][column + 1].char !== '') {
       continue;
     }
 
-    if (charsUsed >= payload.usersCharsLength) {
+    if (charsUsed >= payload.playerCharsLength) {
       break;
     }
   }
@@ -60,15 +60,15 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, row: number) => {
     }
 
     const constructedWord: string = getConstructedWordFromBoard({
-      tileRow: board[row], start: column, usersCharsLength: playerChars.length
+      board: board, start: column, row: row, playerCharsLength: playerChars.length
     });
 
-    if (constructedWord.length > 0) {
+    if (constructedWord !== '') {
       const matches = wordsThatMatchPositions({
-        words: WordHandler.Instance.getWordsWithAtLeastLength(constructedWord.length),
+        allWords: WordHandler.Instance.getWordsWithAtLeastLength(constructedWord.length),
         constructedWord: constructedWord,
-        playerChars,
-        tileRow: board[row],
+        playerChars: playerChars,
+        board: board,
         row,
         column
       })
@@ -88,21 +88,21 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, row: number) => {
 }
 
 const positionAfterCurrentWordIsNotEmpty = (word: string, rowMatch: RowMatch): boolean => {
-  if (rowMatch.column + word.length + 1 < rowMatch.tileRow.length) {
-    if (rowMatch.tileRow[rowMatch.column + word.length + 1].char === '') {
-      return true;
+  if (rowMatch.column + word.length < rowMatch.board.length) {
+    if (rowMatch.board[rowMatch.row][rowMatch.column + word.length].char !== '') {
+      return false;
     }
   }
-  return false;
+  return true;
 }
 
 const wordsThatMatchPositions = (payload: RowMatch): Array<MatchedWord> => {
-  return payload.words.reduce((accumulated, libraryWord) => {
-    if (libraryWord.length > payload.constructedWord.length) {
+  return payload.allWords.reduce((accumulated, libraryWord) => {
+    if (libraryWord.length <= 1 || libraryWord.length > payload.constructedWord.length) {
       return accumulated
     }
 
-    if (positionAfterCurrentWordIsNotEmpty(libraryWord, payload)) {
+    if (!positionAfterCurrentWordIsNotEmpty(libraryWord, payload)) {
       return accumulated
     }
 
@@ -120,47 +120,47 @@ const wordsThatMatchPositions = (payload: RowMatch): Array<MatchedWord> => {
   }, [] as Array<MatchedWord>)
 }
 
-const countPointsHelper = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
+const setWordInBoard = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
   for (let i = 0; i < rowWord.word.length; i++) {
     if (board[rowWord.row][rowWord.column + i].final === false) {
-      board[rowWord.row][rowWord.column + i].char = rowWord.word[i]
+      board[rowWord.row][rowWord.column + i].char = rowWord.word[i];
     }
   }
+}
 
-  let points = countPoints(board)
-
+const removeWordFromBoard = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
   for (let i = 0; i < rowWord.word.length; i++) {
     if (board[rowWord.row][rowWord.column + i].final === false) {
       board[rowWord.row][rowWord.column + i].char = ''
     }
   }
+}
 
-  return points
+const countPointsHelper = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
+  setWordInBoard(rowWord, board);
+
+  let points = countPoints(board);
+
+  removeWordFromBoard(rowWord, board);
+
+  return points;
 }
 
 const wordIsValidInBoard = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
-  for (let i = 0; i < rowWord.word.length; i++) {
-    if (board[rowWord.row][rowWord.column + i].final === false) {
-      board[rowWord.row][rowWord.column + i].char = rowWord.word[i]
-    }
-  }
+  setWordInBoard(rowWord, board);
 
-  const isValid = boardIsValid(board)
+  const isValid = boardIsValid(board);
 
-  for (let i = 0; i < rowWord.word.length; i++) {
-    if (board[rowWord.row][rowWord.column + i].final === false) {
-      board[rowWord.row][rowWord.column + i].char = ''
-    }
-  }
+  removeWordFromBoard(rowWord, board);
 
-  return isValid
+  return isValid;
 }
 
 const solveRows = (board: Array<Array<Tile>>, chars: string): Array<MatchedWord> => {
-  const list: Array<MatchedWord> = []
+  const list: Array<MatchedWord> = [];
 
   for (let row = 0; row < board.length; row++) {
-    list.push(...solve(chars, board, row))
+    list.push(...solve(chars, board, row));
   }
 
   return list;
