@@ -21,6 +21,8 @@
 //////// DONE ///////////////
 /////////////////////////////
 
+// När man av markerar ett ord i tabellen så ska det försvinna från brädet. DONE
+
 // Gör tester
   // column points
     // Gör så att två ord i en column räknas om de inte är final

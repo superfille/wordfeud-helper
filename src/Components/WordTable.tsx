@@ -3,7 +3,7 @@ import { MatchedWord } from "../Models/Tile";
 
 type Props = {
   matchedWords: Array<MatchedWord>
-  displayWord: (matchedWord: MatchedWord) => void,
+  displayWord: (matchedWord: MatchedWord | null) => void,
   hideWord: (matchedWord: MatchedWord) => void,
   useWord: (matchedWord: MatchedWord) => void
 }
@@ -26,16 +26,17 @@ export default class WordTable extends React.Component<Props, State> {
       this.props.hideWord(matchedWord)
       this.setState({
         selectedMatchedWord: null,
-      })  
+      });
+      this.props.displayWord(null);
     } else {
       if (this.state.selectedMatchedWord !== null) {
-        this.props.hideWord(this.state.selectedMatchedWord)
+        this.props.hideWord(this.state.selectedMatchedWord);
       }
 
-      this.props.displayWord(matchedWord)
       this.setState({
         selectedMatchedWord: matchedWord,
-      })
+      });
+      this.props.displayWord(matchedWord);
     }
   }
 
@@ -54,8 +55,8 @@ export default class WordTable extends React.Component<Props, State> {
             <td>{ matchedWord.points }</td>
             <td colSpan={2}>{ matchedWord.word }</td>
           </tr>
-        )
-      })
+        );
+      });
   }
 
   onUseWord() {

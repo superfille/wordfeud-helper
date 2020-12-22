@@ -50,9 +50,7 @@ const findRowWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
 
 const countRowPoints = (board: Array<Array<Tile>>) => {
   const wordsFound: Array<MatchedWord> = findRowWords(board)
-  if (wordsFound.length > 0) {
-    console.log(wordsFound);
-  }
+
   return wordsFound.reduce((previous, current) => {
     return previous + rowPoints(current, board)
   }, 0)

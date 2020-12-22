@@ -115,12 +115,14 @@ export default class App extends React.Component<Props, State> {
     this.setMultipleTiles(list, func)
   }
 
-  displayWord(matchedWord: MatchedWord) {
+  displayWord(matchedWord: MatchedWord | null) {
     this.cleanBoard(() => {
       this.setState({
         selectedWord: matchedWord
       })
-      if (matchedWord.direction === 'row') {
+      if (matchedWord === null) {
+        return;
+      } else if (matchedWord.direction === 'row') {
        this.displayRow(matchedWord, true, () => countRowPoints(this.state.board))
       } else {
         this.displayColumn(matchedWord, true, () => countRowPoints(this.state.board))
@@ -201,7 +203,7 @@ export default class App extends React.Component<Props, State> {
           <section className="column">
             <WordTable
               matchedWords={ this.state.matchedWords }
-              displayWord={ (matchedWord: MatchedWord) => this.displayWord(matchedWord) }
+              displayWord={ (matchedWord: MatchedWord | null) => this.displayWord(matchedWord) }
               hideWord={ (matchedWord: MatchedWord) => this.hideWord(matchedWord) }
               useWord={ (matchedWord: MatchedWord) => this.useWord(matchedWord) }
             />
