@@ -93,7 +93,7 @@ export default class App extends React.Component<Props, State> {
           row: matchedWord.row,
           column: column,
           char: display ? matchedWord.word[index] : ''
-        })
+        });
       }
     }
     this.setMultipleTiles(list, func)
@@ -109,7 +109,7 @@ export default class App extends React.Component<Props, State> {
           row: row,
           column: matchedWord.column,
           char: display ? matchedWord.word[index] : ''
-        })
+        });
       }
     }
     this.setMultipleTiles(list, func)
@@ -120,6 +120,7 @@ export default class App extends React.Component<Props, State> {
       this.setState({
         selectedWord: matchedWord
       })
+
       if (matchedWord === null) {
         return;
       } else if (matchedWord.direction === 'row') {
@@ -143,13 +144,10 @@ export default class App extends React.Component<Props, State> {
       loading: true,
     }, () => {
       setTimeout(() => {
-        console.time('Time it took to solve')
         const result = [
           ...solveColumns(this.state.board, this.state.playerChars), 
           ...solveRows(this.state.board, this.state.playerChars)
         ]
-        console.timeEnd('Time it took to solve')
-        console.log(this.state.board);
         
         this.setState({
           matchedWords: sortByPoints(result).slice(0,100),

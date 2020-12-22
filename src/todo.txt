@@ -8,18 +8,23 @@
   // Spara brädet i localstorage DONE
   // Läs brädet från localstorage DONE
 
-// Markera bokstäverna när man valt ord
-
 // Hitta på något sätt att spara tiles (sätta till final)
 
 // När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
 
 // Visa vilka bokstäver som används i tabellen
 
+/////////////////////////////
+//////// Ongoing/////////////
+/////////////////////////////
+
+
 
 /////////////////////////////
 //////// DONE ///////////////
 /////////////////////////////
+
+// Markera bokstäverna när man valt ord. DONE
 
 // När man av markerar ett ord i tabellen så ska det försvinna från brädet. DONE
 

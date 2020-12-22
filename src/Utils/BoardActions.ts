@@ -8,10 +8,11 @@ const createBoard = (board: Array<Array<Tile>>, final: boolean, getChar: (row: n
         return {
           final: final,
           char: char,
-          special: column.special
+          special: column.special,
+          playerChar: true,
         };
       }
-      return { ...column };
+      return { ...column, playerChar: false };
     });
   });
 }
@@ -83,10 +84,9 @@ export const deleteBoard = (boardName: string): string => {
 export const setNewTilesToBoard = (newTiles: Array<NewTile>, board: Array<Array<Tile>>) => {
   const getChar = (row: number, column: number) => {
     const tile = newTiles.find(tile => tile.row === row && tile.column === column);
-    if (tile) {
-      return tile.char === 'Backspace' ? '' : tile.char;
-    }
-    return '';
+
+    return !tile || tile.char === 'Backspace' ? '' : tile.char;
   }
+
   return createBoard(board, false, getChar);
 }

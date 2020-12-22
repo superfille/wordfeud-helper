@@ -28,7 +28,8 @@ export default class BoardTile extends React.Component<Props> {
 
   render() {
     const color = this.props.tile.special !== null ? this.props.tile.special : 'black';
-    const className = `board-tile board-tile--color__${ color }`;
+    const final = this.props.tile.playerChar ? 'board-tile--notFinal' : '';
+    const className = `board-tile board-tile--color__${ color } ${final}`;
 
     return (
       <button onClick={this.handleOnSelect} className={ className }>

@@ -51,9 +51,6 @@ const findColumnWords = (board: Array<Array<Tile>>): Array<MatchedWord> => {
 
 const countColumnPoints = (board: Array<Array<Tile>>): number => {
   const wordsFound: Array<MatchedWord> = findColumnWords(board)
-  if (wordsFound.length > 0) {
-    console.log(wordsFound);
-  }
   return wordsFound.reduce((previous, current) => {
     return previous + columnPoints(current, board)
   }, 0);

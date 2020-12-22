@@ -33,6 +33,12 @@ button {
   color: white;
 }
 
+.board-tile--notFinal {
+  /* background: #7E57C2!important; */
+  background: linear-gradient(180deg, rgba(103,58,183,1) 19%, rgba(126,87,194,1) 72%)!important;
+  
+}
+
 .board-tile--color__tl {
   background-color:#1565C0;
 }

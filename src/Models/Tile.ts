@@ -18,6 +18,7 @@ export interface Tile {
   final: boolean;
   special: SpecialTile | null,
   char: string,
+  playerChar?: boolean
 }
 
 export const finalTile = (char: string = ''): Tile => {
@@ -35,7 +36,8 @@ export interface SolveTile extends Position {
 }
 
 /**
- * hasNotFinalCharacter: a character in the word is final: false
+ * "final: false" a character in the word is not final which means
+ * this word is not finished.
  */
 export interface MatchedWord extends Position {
   word: string,
