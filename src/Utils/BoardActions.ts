@@ -56,6 +56,14 @@ export const cleanBoard = (board: Array<Array<Tile>>) => {
   });
 }
 
+export const setAllToFinal = (board: Array<Array<Tile>>) => {
+  return board.map(row => {
+    return row.map(tile => {
+        return { ...tile, final: tile.final || !!tile.playerChar, playerChar: false }
+    })
+  });
+}
+
 export const readLocalStorageBoards = (): Array<{name: string; board: string; }> => {
   const boards: Array<{ name: string, board: string }> = [];
 

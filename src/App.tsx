@@ -165,8 +165,13 @@ export default class App extends React.Component<Props, State> {
     })
   }
 
-  useWord(matchedWord: MatchedWord) {
-    console.log('here', matchedWord);
+  useWord() {
+    this.setState({
+      board: BoardActions.setAllToFinal(this.state.board),
+      matchedWords: [],
+      selectedWord: null,
+      playerChars: '',
+    });
   }
 
   render() {
@@ -203,7 +208,7 @@ export default class App extends React.Component<Props, State> {
               matchedWords={ this.state.matchedWords }
               displayWord={ (matchedWord: MatchedWord | null) => this.displayWord(matchedWord) }
               hideWord={ (matchedWord: MatchedWord) => this.hideWord(matchedWord) }
-              useWord={ (matchedWord: MatchedWord) => this.useWord(matchedWord) }
+              useWord={ () => this.useWord() }
             />
           </section>
         </div>

@@ -8,17 +8,13 @@
   // Spara brädet i localstorage DONE
   // Läs brädet från localstorage DONE
 
-// Hitta på något sätt att spara tiles (sätta till final)
-
 // När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
-
-// Visa vilka bokstäver som används i tabellen
 
 /////////////////////////////
 //////// Ongoing/////////////
 /////////////////////////////
 
-
+// Hitta på något sätt att spara tiles (sätta till final)
 
 /////////////////////////////
 //////// DONE ///////////////

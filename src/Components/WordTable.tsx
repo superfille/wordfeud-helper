@@ -5,7 +5,7 @@ type Props = {
   matchedWords: Array<MatchedWord>
   displayWord: (matchedWord: MatchedWord | null) => void,
   hideWord: (matchedWord: MatchedWord) => void,
-  useWord: (matchedWord: MatchedWord) => void
+  useWord: () => void
 }
 
 type State = {
@@ -18,7 +18,7 @@ export default class WordTable extends React.Component<Props, State> {
 
     this.state = {
       selectedMatchedWord: null,
-    }
+    };
   }
 
   onSelectWord(matchedWord: MatchedWord) {
@@ -61,7 +61,7 @@ export default class WordTable extends React.Component<Props, State> {
 
   onUseWord() {
     if (this.state.selectedMatchedWord) {
-      this.props.useWord(this.state.selectedMatchedWord);
+      this.props.useWord();
     }
   }
 
