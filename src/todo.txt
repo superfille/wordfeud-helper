@@ -1,4 +1,11 @@
 
+// När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
+
+// När man skrivit en bokstav i en ruta så ska nästa ruta markeras
+
+/////////////////////////////
+//////// Ongoing/////////////
+/////////////////////////////
 
 // Spara brädet i cookies
   // Radera brädet
@@ -8,17 +15,11 @@
   // Spara brädet i localstorage DONE
   // Läs brädet från localstorage DONE
 
-// När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
-
-/////////////////////////////
-//////// Ongoing/////////////
-/////////////////////////////
-
-// Hitta på något sätt att spara tiles (sätta till final)
-
 /////////////////////////////
 //////// DONE ///////////////
 /////////////////////////////
+
+// Hitta på något sätt att spara tiles (sätta till final) DONE
 
 // Markera bokstäverna när man valt ord. DONE
 

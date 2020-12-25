@@ -21,20 +21,23 @@ type State = {
   boardIsValid: boolean,
   loading: boolean,
   selectedWord: MatchedWord | null,
+  currentBoardName: string,
   localStorageBoards: Array<{ name: string, board: string }>,
 }
 
 export default class App extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
-
+    let currentBoardName = 'board1';
     const localStorageBoards = BoardActions.readLocalStorageBoards();
     let board = localStorageBoards.length === 0
       ? StartBoard
       : BoardActions.read(localStorageBoards[0].name)
 
     if (localStorageBoards.length === 0) {
-      BoardActions.save('board1', board);
+      BoardActions.save(currentBoardName, board);
+    } else {
+      currentBoardName = localStorageBoards[0].name;
     }
 
     this.state = {
@@ -45,6 +48,7 @@ export default class App extends React.Component<Props, State> {
       loading: false,
       selectedWord: null,
       localStorageBoards: localStorageBoards,
+      currentBoardName: currentBoardName,
     }
   }
 
@@ -52,6 +56,12 @@ export default class App extends React.Component<Props, State> {
     this.setState({
       playerChars: tiles
     }, this.solve)
+  }
+
+  setCurrentBoard(name: string) {
+    this.setState({
+      currentBoardName: name,
+    });
   }
 
   setMultipleTiles(newTiles: Array<NewTile>, func = () => {}) {
@@ -162,16 +172,20 @@ export default class App extends React.Component<Props, State> {
       localStorageBoards: (this.state.localStorageBoards || [])
         .filter(localStorageBoard => localStorageBoard.name !== name)
         .concat({ name, board: '' }),
+      currentBoardName: name,
     })
   }
-
+        
   useWord() {
+    const board = BoardActions.setAllToFinal(this.state.board);
     this.setState({
-      board: BoardActions.setAllToFinal(this.state.board),
+      board: board,
       matchedWords: [],
       selectedWord: null,
       playerChars: '',
     });
+
+    BoardActions.save(this.state.currentBoardName, board);
   }
 
   render() {
@@ -181,7 +195,9 @@ export default class App extends React.Component<Props, State> {
           <BoardReadSave
             board={ this.state.board }
             localStorageBoards={ this.state.localStorageBoards }
+            currentBoardName={ this.state.currentBoardName }
             createNewBoard={ (name: string) => this.createNewBoard(name) }
+            setCurrentBoard= { (name: string) => this.setCurrentBoard(name) }
           />
         </div>
         <hr />
