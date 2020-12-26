@@ -86,7 +86,13 @@ export default class BoardReadSave extends React.Component<Props, States> {
   renderMyBoardDropdown() {
     return (
       <div className="select is-info">
-        <select name="myboards" id="myboards" value={ this.props.currentBoardName || '' } onChange={ (event) => this.handleBoardChange(event) }>
+        <select
+          name="myboards"
+          id="myboards"
+          placeholder="hejsan"
+          value={ this.props.currentBoardName || '' }
+          onChange={ (event) => this.handleBoardChange(event) }
+        >
           { this.renderMyBoardNames() }
         </select>
       </div>

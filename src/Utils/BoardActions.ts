@@ -17,6 +17,24 @@ const createBoard = (board: Array<Array<Tile>>, final: boolean, getChar: (row: n
   });
 }
 
+
+const createLocalStorageBoard = (board: Array<Array<Tile>>, final: boolean, getChar: (row: number, column: number) => string): Array<Array<Tile>> => {
+  return board.map((row, indexRow) => {
+    return row.map((column, indexColumn) => {
+      const char = getChar(indexRow, indexColumn);
+      if (char) {
+        return {
+          final: final,
+          char: char,
+          special: column.special,
+          playerChar: false,
+        };
+      }
+      return { ...column };
+    });
+  });
+}
+
 export const save = (boardName: string, board: Array<Array<Tile>>) => {
   let newSave = '';
   for(let row = 0; row < board.length; row++) {
@@ -41,7 +59,7 @@ export const read = (boardName: string): Array<Array<Tile>> => {
     return savedTile ? savedTile[2] : '';
   }
 
-  return createBoard(StartBoard, true, getChar);
+  return createLocalStorageBoard(StartBoard, true, getChar);
 }
 
 /**

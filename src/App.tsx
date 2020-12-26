@@ -60,6 +60,10 @@ export default class App extends React.Component<Props, State> {
 
   setCurrentBoard(name: string) {
     this.setState({
+      selectedWord: null,
+      matchedWords: [],
+      playerChars: '',
+      board: BoardActions.read(name),
       currentBoardName: name,
     });
   }

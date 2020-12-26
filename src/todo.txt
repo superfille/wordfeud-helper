@@ -3,21 +3,25 @@
 
 // När man skrivit en bokstav i en ruta så ska nästa ruta markeras
 
+// Låt användare lägga till ord. Spara i localstorage
+
 /////////////////////////////
 //////// Ongoing/////////////
 /////////////////////////////
 
-// Spara brädet i cookies
+// Spara brädet i localstorage
   // Radera brädet
     // Are you sure delete message?
-  // Spara flera bräden
-  // Välj bland bräden
-  // Spara brädet i localstorage DONE
-  // Läs brädet från localstorage DONE
+
 
 /////////////////////////////
 //////// DONE ///////////////
 /////////////////////////////
+
+// Spara flera bräden DONE
+// Välj bland bräden DONE
+// Spara brädet i localstorage DONE
+// Läs brädet från localstorage DONE
 
 // Hitta på något sätt att spara tiles (sätta till final) DONE
 
