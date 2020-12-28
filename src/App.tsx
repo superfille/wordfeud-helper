@@ -103,15 +103,15 @@ export default class App extends React.Component<Props, State> {
 
   setTile(tile: Tile | null, char: string) {
     const board = this.state.board.map(row => {
-      return row.map(rowTile => {
-        if (rowTile === tile) {
+      return row.map(column => {
+        if (column === tile) {
           return {
             char: char === 'Backspace' ? '' : char,
             special: tile.special,
             final: char !== 'Backspace',
           }
         }
-        return rowTile;
+        return column;
       })
     });
 

@@ -1,66 +1,32 @@
 import React from "react";
 
 import BoardTile from './BoardTile';
-import { AllowedChars, Tile } from "../Models/Tile";
+import { Tile } from "../Models/Tile";
 
 type Props = {
   board: Array<Array<Tile>>,
   setTile: (tile: Tile |null, char: string) => void
 }
 
-type States = {
-  selectedTile: Tile | null,
-}
-
-export default class Board extends React.Component<Props, States> {
-  constructor(props: any) {
-    super(props);
-    
-    this.state = {
-      selectedTile: null,
-    };
-  };
-
-  charIsAllowed(char: string) {
-    return AllowedChars.indexOf(char.toLowerCase()) >= 0;
-  }
-
-  selectTile(tile: Tile) {
-    this.setState({ selectedTile: tile });
-
-    const keypress = (event: KeyboardEvent) => {
-      if (this.charIsAllowed(event.key)) {
-        this.props.setTile(this.state.selectedTile, event.key)
-      }
-      document.removeEventListener('keyup', keypress, false)
-    }
-    document.addEventListener('keyup', keypress)
-  }
-
-  isSelected(tile: Tile) {
-    return this.state.selectedTile === tile;
-  }
-
+export default class Board extends React.Component<Props> {
   renderTiles(row: Array<Tile>) {
     return row.map((tile, index: number) => {
       return <BoardTile
         key={`tile-${index}`}
         tile={tile}
-        onSelect={(tile: Tile) => this.selectTile(tile)}
-        selected={this.isSelected(tile)}
+        onChange={ (key: string) => this.props.setTile(tile, key) }
         />
     });
   }
 
   renderBoard() {
     return this.props.board.map((row, index) => {
-      return <div key={`row-${index}`} className="my-row">{this.renderTiles(row)}</div>
+      return <div key={`row-${index}`} className="my-row">{ this.renderTiles(row) }</div>
     });
   };
 
   render() {
-    return (
-      <div className="board">{this.renderBoard()}</div>
+    return (<div className="board">{ this.renderBoard() }</div>
     );
   };
 }
