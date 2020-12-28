@@ -68,6 +68,33 @@ export default class App extends React.Component<Props, State> {
     });
   }
 
+  deleteBoard(name: string) {
+    BoardActions.deleteBoard(name);
+    
+    const localStorageBoards = BoardActions.readLocalStorageBoards();
+    if (localStorageBoards.length === 0) {
+      BoardActions.save('board1', StartBoard);
+      this.setState({
+        localStorageBoards: BoardActions.readLocalStorageBoards(),
+        currentBoardName: 'board1',
+        board: StartBoard,
+        playerChars: '',
+        matchedWords: [],
+      });
+    } else {
+      this.setState({
+        board: BoardActions.read(localStorageBoards[0].name),
+        playerChars: '',
+        matchedWords: [],
+        boardIsValid: true,
+        loading: false,
+        selectedWord: null,
+        localStorageBoards: localStorageBoards,
+        currentBoardName: localStorageBoards[0].name,
+      });
+    }
+  }
+
   setMultipleTiles(newTiles: Array<NewTile>, func = () => {}) {
     this.setState({
       board: BoardActions.setNewTilesToBoard(newTiles, this.state.board)
@@ -75,19 +102,22 @@ export default class App extends React.Component<Props, State> {
   }
 
   setTile(tile: Tile | null, char: string) {
-    this.setState({
-      board: this.state.board.map(row => {
-        return row.map(rowTile => {
-          if (rowTile === tile) {
-            return {
-              char: char === 'Backspace' ? '' : char,
-              special: tile.special,
-              final: char !== 'Backspace',
-            }
+    const board = this.state.board.map(row => {
+      return row.map(rowTile => {
+        if (rowTile === tile) {
+          return {
+            char: char === 'Backspace' ? '' : char,
+            special: tile.special,
+            final: char !== 'Backspace',
           }
-          return rowTile;
-        })
+        }
+        return rowTile;
       })
+    });
+
+    BoardActions.save(this.state.currentBoardName, board);
+    this.setState({
+      board: board,
     })
   }
 
@@ -177,7 +207,11 @@ export default class App extends React.Component<Props, State> {
         .filter(localStorageBoard => localStorageBoard.name !== name)
         .concat({ name, board: '' }),
       currentBoardName: name,
-    })
+      board: StartBoard,
+      playerChars: '',
+      matchedWords: [],
+    });
+    BoardActions.save(name, StartBoard);
   }
         
   useWord() {
@@ -202,6 +236,7 @@ export default class App extends React.Component<Props, State> {
             currentBoardName={ this.state.currentBoardName }
             createNewBoard={ (name: string) => this.createNewBoard(name) }
             setCurrentBoard= { (name: string) => this.setCurrentBoard(name) }
+            deleteBoard={ (name: string) => this.deleteBoard(name) }
           />
         </div>
         <hr />

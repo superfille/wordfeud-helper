@@ -99,7 +99,7 @@ export const readLocalStorageBoards = (): Array<{name: string; board: string; }>
 
 export const deleteBoard = (boardName: string): string => {
   const boardExists = window.localStorage.getItem(boardName);
-  if (boardExists) {
+  if (boardExists !== null) {
     window.localStorage.removeItem(boardName);
     return `Removed board ${boardName}`;
   }

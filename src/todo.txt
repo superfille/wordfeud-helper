@@ -1,23 +1,24 @@
 
 // När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
 
-// När man skrivit en bokstav i en ruta så ska nästa ruta markeras
-
 // Låt användare lägga till ord. Spara i localstorage
+
+// Fixa så att skiten ser bra ut på mobiler
 
 /////////////////////////////
 //////// Ongoing/////////////
 /////////////////////////////
 
-// Spara brädet i localstorage
-  // Radera brädet
-    // Are you sure delete message?
+// När man skrivit en bokstav i en ruta så ska nästa ruta markeras
 
+// Säker på att du vill radera?
 
 /////////////////////////////
 //////// DONE ///////////////
 /////////////////////////////
 
+// Radera brädet DONE
+// Spara brädet i localstorage DONE
 // Spara flera bräden DONE
 // Välj bland bräden DONE
 // Spara brädet i localstorage DONE

@@ -7,7 +7,8 @@ type Props = {
   localStorageBoards: Array<{ name: string, board: string } >,
   currentBoardName: string,
   createNewBoard: (name: string) => void,
-  setCurrentBoard: (name: string) => void
+  setCurrentBoard: (name: string) => void,
+  deleteBoard: (name: string) => void,
 }
 
 type States = {
@@ -110,10 +111,9 @@ export default class BoardReadSave extends React.Component<Props, States> {
     return (
       <section>
         { this.addNewBoardModal() }
-        <div className="columns">
-          <div className="column is-one-quarter">
+        <div className="">
             { this.renderMyBoardDropdown() }
-          </div>
+            <button className="button is-secondary is-inline-block ml-2" onClick={() => this.props.deleteBoard(this.props.currentBoardName)}>Delete board</button>
         </div>
       </section>
     );
