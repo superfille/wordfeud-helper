@@ -13,6 +13,7 @@ type Props = {
 
 type States = {
   showModal: boolean,
+  uSure: boolean,
 }
 
 export default class BoardReadSave extends React.Component<Props, States> {
@@ -21,6 +22,7 @@ export default class BoardReadSave extends React.Component<Props, States> {
 
     this.state = {
       showModal: false,
+      uSure: false,
     };
   }
 
@@ -107,13 +109,32 @@ export default class BoardReadSave extends React.Component<Props, States> {
     this.closeModal();
   }
 
+  onDelete() {
+    if (this.state.uSure) {
+      this.props.deleteBoard(this.props.currentBoardName);
+      this.setState({ uSure: false });
+    } else {
+      this.setState({ uSure: true });
+
+      const interval = window.setInterval(() => {
+        this.setState({ uSure: false });
+        window.clearInterval(interval);
+      }, 3000);
+    }
+  }
+
   render() {
     return (
       <section>
         { this.addNewBoardModal() }
         <div className="">
             { this.renderMyBoardDropdown() }
-            <button className="button is-secondary is-inline-block ml-2" onClick={() => this.props.deleteBoard(this.props.currentBoardName)}>Delete board</button>
+            <button
+              className="button is-secondary is-inline-block ml-2"
+              onClick={() => this.onDelete() }
+            >
+              { this.state.uSure ? 'Are you sure?' : 'Delete board' }
+            </button>
         </div>
       </section>
     );
