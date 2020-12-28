@@ -11,12 +11,11 @@
 
 // När man skrivit en bokstav i en ruta så ska nästa ruta markeras
 
-// Säker på att du vill radera?
-
 /////////////////////////////
 //////// DONE ///////////////
 /////////////////////////////
 
+// Säker på att du vill radera? DONE
 // Radera brädet DONE
 // Spara brädet i localstorage DONE
 // Spara flera bräden DONE
