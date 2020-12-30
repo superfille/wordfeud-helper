@@ -9,8 +9,8 @@ import { MatchedWord, NewTile, StartBoard, Tile } from "./Models/Tile";
 import { solveColumns } from "./Solvers/ColumnSolver";
 import { solveRows } from "./Solvers/RowSolver";
 import { sortByPoints } from './Solvers/SolverUtil';
-import { countRowPoints } from "./Solvers/RowPoints";
 import * as BoardActions from "./Utils/BoardActions";
+import { boardIsValid } from "./Confirmers/Confirmer";
 
 type Props = {}
 
@@ -118,7 +118,9 @@ export default class App extends React.Component<Props, State> {
     BoardActions.save(this.state.currentBoardName, board);
     this.setState({
       board: board,
-    })
+    });
+
+    // console.log(boardIsValid(board))
   }
 
   cleanBoard(func = () => {}) {
@@ -127,7 +129,7 @@ export default class App extends React.Component<Props, State> {
     }, func)
   }
 
-  displayRow(matchedWord: MatchedWord, display: boolean, func: () => void) {
+  displayRow(matchedWord: MatchedWord, display: boolean) {
     const list: Array<{ row: number; column: number; char: string }> = []
     let index = 0;
     const wordLengthInBoard = (matchedWord.word.length + matchedWord.column)
@@ -140,10 +142,10 @@ export default class App extends React.Component<Props, State> {
         });
       }
     }
-    this.setMultipleTiles(list, func)
+    this.setMultipleTiles(list);
   }
 
-  displayColumn(matchedWord: MatchedWord, display: boolean, func: () => void) {
+  displayColumn(matchedWord: MatchedWord, display: boolean) {
     const list: Array<{ row: number; column: number; char: string }> = []
     let index = 0;
     const wordLengthInBoard = (matchedWord.word.length + matchedWord.row)
@@ -156,30 +158,30 @@ export default class App extends React.Component<Props, State> {
         });
       }
     }
-    this.setMultipleTiles(list, func)
+    this.setMultipleTiles(list);
   }
 
   displayWord(matchedWord: MatchedWord | null) {
     this.cleanBoard(() => {
       this.setState({
         selectedWord: matchedWord
-      })
+      });
 
       if (matchedWord === null) {
         return;
       } else if (matchedWord.direction === 'row') {
-       this.displayRow(matchedWord, true, () => countRowPoints(this.state.board))
+        this.displayRow(matchedWord, true);
       } else {
-        this.displayColumn(matchedWord, true, () => countRowPoints(this.state.board))
+        this.displayColumn(matchedWord, true);
       }
     })
   }
 
   hideWord(matchedWord: MatchedWord) {
     if (matchedWord.direction === 'row') {
-      this.displayRow(matchedWord, false, () => {})
+      this.displayRow(matchedWord, false);
     } else {
-      this.displayColumn(matchedWord, false, () => {})
+      this.displayColumn(matchedWord, false);
     }
   }
 

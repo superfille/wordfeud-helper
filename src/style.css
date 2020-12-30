@@ -68,6 +68,10 @@ button {
   background-color:#C62828;
 }
 
+.board-tile--error {
+  background-color:#BF360C;
+}
+
 th, td {
   padding: 8px;
   text-align: left;

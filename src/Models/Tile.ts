@@ -19,6 +19,7 @@ export interface Tile {
   special: SpecialTile | null,
   char: string,
   playerChar?: boolean
+  error?: boolean
 }
 
 export const finalTile = (char: string = ''): Tile => {
