@@ -39,29 +39,33 @@ button {
   border: none;
 }
 
-.board-tile--notFinal {
-  background: linear-gradient(180deg, rgba(103,58,183,1) 19%, rgba(126,87,194,1) 72%)!important;
+.board-tile--black {
+  background: rgb(66,66,66);
+  background: linear-gradient(180deg, rgba(66,66,66,1) 19%, rgba(97,97,97,1) 72%);
 }
 
-.board-tile--color__tl {
+.board-tile--test {
+  background: linear-gradient(180deg, rgba(103,58,183,1) 19%, rgba(126,87,194,1) 72%);
+}
+
+.board-tile--final {
+  background-color: #607D8B;
+}
+
+.board-tile--tl {
   background-color:#1565C0;
 }
 
-.board-tile--color__dl {
+.board-tile--dl {
   background-color:#2E7D32;
 }
 
-.board-tile--color__dw {
+.board-tile--dw {
   background-color:#EF6C00;
 }
 
-.board-tile--color__tw {
+.board-tile--tw {
   background-color:#C62828;
-}
-
-.board-tile--color__black {
-  background: rgb(66,66,66);
-  background: linear-gradient(180deg, rgba(66,66,66,1) 19%, rgba(97,97,97,1) 72%);
 }
 
 th, td {

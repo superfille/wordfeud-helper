@@ -41,9 +41,21 @@ export default class BoardTile extends React.Component<Props, State> {
   }
 
   render() {
-    const color = this.props.tile.special !== null ? this.props.tile.special : 'black';
-    const final = this.props.tile.playerChar && (this.props.tile.char !== '') ? 'board-tile--notFinal' : '';
-    const className = `board-tile board-tile--color__${ color } ${final}`;
+    let backgroundColor = 'board-tile--';
+    
+    if (this.props.tile.char && this.props.tile.char.length === 1) {
+      if (this.props.tile.playerChar) {
+        backgroundColor += 'test';
+      } else {
+        backgroundColor += 'final';
+      }
+    } else if (this.props.tile.special) {
+      backgroundColor += this.props.tile.special;
+    } else {
+      backgroundColor += 'black';
+    }
+
+    const className = `board-tile ${backgroundColor}`;
 
     return (
       <input
