@@ -1,23 +1,7 @@
 import { Tile, Position } from '../Models/Tile';
 import englishWords from '../Words.json';
 
-const bsearch = (value: string, items: Array<string>) => {
-  let firstIndex  = 0;
-  let lastIndex   = items.length - 1;
-  let middleIndex = Math.floor((lastIndex + firstIndex) / 2);
-
-  while (items[middleIndex] !== value && firstIndex < lastIndex) {
-    if (value < items[middleIndex]) {
-      lastIndex = middleIndex - 1;
-    }
-    else if (value > items[middleIndex]) {
-      firstIndex = middleIndex + 1;
-    }
-    middleIndex = Math.floor((lastIndex + firstIndex)/2);
-  }
-
- return (items[middleIndex] !== value) ? -1 : middleIndex;
-}
+const words: Array<string> = englishWords as Array<string>;
 
 const isStartOfHorizontalWord = (row: number, column: number, board: Array<Array<Tile>>) => {
   // No char in this tile
@@ -81,9 +65,6 @@ const getHorizontalWord = (row: number, column: number, board: Array<Array<Tile>
   let word = '';
 
   while (lastColumnOfWord < board[0].length && board[row][lastColumnOfWord].char !== '') {
-    if (board[row][lastColumnOfWord] === undefined) {
-      console.log(board, row, lastColumnOfWord)
-    }
     word += board[row][lastColumnOfWord].char;
     lastColumnOfWord += 1;
   }
@@ -177,7 +158,7 @@ const wordsAreConnected = (board: Array<Array<Tile>>) => {
 }
 
 const isWord = (word: string) => {
-  return bsearch(word, englishWords as Array<string>) >= 0;
+  return words.some(item => item === word);
 }
 
 /**
@@ -200,6 +181,7 @@ const boardIsValid = (board: Array<Array<Tile>>) => {
 
       if (isStartOfVerticalWord(row, column, board)) {
         const word = getVerticalWord(row, column, board)
+        
         if (!isWord(word)) {
           invalidWords.push(word)
         }
