@@ -82,5 +82,5 @@ export default class WordTable extends React.Component<Props, State> {
         </table>
       </div>
     );
-  };
+  }
 }

@@ -88,8 +88,8 @@ export const readLocalStorageBoards = (): Array<{name: string; board: string; }>
   for(let i = 0; i < window.localStorage.length; i++) {
     if (window.localStorage.key(i)) {
       boards.push({
-        name: window.localStorage.key(i)!,
-        board: window.localStorage.getItem(window.localStorage.key(i)!)!,
+        name: window.localStorage.key(i) || '',
+        board: window.localStorage.getItem(window.localStorage.key(i) || '') || ''
       });
     }
   }

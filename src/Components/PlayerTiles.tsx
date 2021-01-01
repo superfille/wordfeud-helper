@@ -49,5 +49,5 @@ export default class PlayerTiles extends React.Component<Props> {
         </div>
       </section>
     );
-  };
+  }
 }

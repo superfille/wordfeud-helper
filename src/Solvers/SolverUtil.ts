@@ -46,7 +46,7 @@ const sequenceMatch = (libraryWord: string, constructedWord: string): boolean =>
             return [...prev, constructedWord[index]];
           }
           return prev;
-        }, [] as Array<string>)
+        }, [] as Array<string>);
 
       return allCharactersShouldNotBeStars.some(char => char !== '*');
     }

@@ -6,7 +6,7 @@ import { WordHandler } from "../Library/wordHandler";
 
 export interface ColumnMatch {
   allWords: Array<string>;
-  constructedWord: string // Could be *be*apa  [][b][e][][a][p][a];
+  constructedWord: string; // Could be *be*apa  [][b][e][][a][p][a];
   playerChars: string;
   board: Array<Array<Tile>>;
   row: number;

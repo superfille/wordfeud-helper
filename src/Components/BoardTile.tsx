@@ -68,5 +68,5 @@ export default class BoardTile extends React.Component<Props, State> {
         maxLength={1}
       />
     );
-  };
+  }
 }

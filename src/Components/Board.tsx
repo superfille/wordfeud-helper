@@ -23,10 +23,10 @@ export default class Board extends React.Component<Props> {
     return this.props.board.map((row, index) => {
       return <div key={`row-${index}`} className="my-row">{ this.renderTiles(row) }</div>
     });
-  };
+  }
 
   render() {
     return (<div className="board">{ this.renderBoard() }</div>
     );
-  };
+  }
 }

@@ -18,7 +18,7 @@ export interface Tile {
   final: boolean;
   special: SpecialTile | null,
   char: string,
-  playerChar?: boolean
+  playerChar?: boolean,
   error?: boolean
 }
 
