@@ -6,10 +6,11 @@ import PlayerTiles from './Components/PlayerTiles';
 import WordTable from './Components/WordTable';
 import BoardReadSave from './Components/BoardReadSave';
 import { MatchedWord, NewTile, StartBoard, Tile } from "./Models/Tile";
-import { solveColumns } from "./Solvers/ColumnSolver";
-import { solveRows } from "./Solvers/RowSolver";
 import { sortByPoints } from './Solvers/SolverUtil';
 import * as BoardActions from "./Utils/BoardActions";
+import solverWorker from 'workerize-loader?inline!./Solvers/solver.worker'; // eslint-disable-line import/no-webpack-loader-syntax
+import { solveColumns } from "./Solvers/ColumnSolver";
+import { solveRows } from "./Solvers/RowSolver";
 import { boardIsValid } from "./Confirmers/Confirmer";
 
 type Props = {}
@@ -105,10 +106,12 @@ export default class App extends React.Component<Props, State> {
     const board = this.state.board.map(row => {
       return row.map(column => {
         if (column === tile) {
+          const isBackspace = char === 'Backspace';
+          const isSpecial = char.length === 2;
           return {
-            char: char === 'Backspace' ? '' : char,
+            char: isBackspace || isSpecial ? '' : char,
             special: tile.special,
-            final: char !== 'Backspace',
+            final: !isBackspace && !isSpecial,
           }
         }
         return column;
@@ -120,7 +123,7 @@ export default class App extends React.Component<Props, State> {
       board: board,
     });
 
-    // console.log(boardIsValid(board))
+    console.log(boardIsValid(board))
   }
 
   cleanBoard(func = () => {}) {
@@ -185,7 +188,7 @@ export default class App extends React.Component<Props, State> {
     }
   }
 
-  solve() {
+  solveSync() {
     this.setState({
       loading: true,
     }, () => {
@@ -201,6 +204,30 @@ export default class App extends React.Component<Props, State> {
         });
       }, 0)
     });
+  }
+
+  solveAsync() {
+    this.setState({
+      loading: true,
+    });
+
+    // @ts-ignore
+    const workerInstance = solverWorker();
+    workerInstance.addEventListener('message', (response: any) => {
+      if (Array.isArray(response.data)) {
+        this.setState({
+          matchedWords: sortByPoints(response.data).slice(0,100),
+          loading: false
+        });
+      }
+    });
+
+    workerInstance.solve(this.state.board, this.state.playerChars);
+  }
+
+  solve() {
+    // this.solveSync();
+    this.solveAsync();
   }
 
   createNewBoard(name: string) {

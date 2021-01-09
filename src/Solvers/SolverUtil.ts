@@ -1,4 +1,4 @@
-import { MatchedWord } from "../Models/Tile";
+import { MatchedWord, Tile } from "../Models/Tile";
 
 const createArray = (total: number): Array<number> => {
   return Array.from(Array(total).keys())
@@ -107,12 +107,16 @@ const isWordFine = (libraryWord: string, constructedWord: string, playerChars: s
   return false;
 }
 
+const hasChar = (board: Array<Array<Tile>>, row: number, column: number): boolean => {
+  return board[row][column].char !== '';
+}
+
 export {
   createArray,
   hasJokerAndRemoveJoker,
   sortByPoints,
   matchedWordMatchesWord,
-
+  hasChar,
   sequenceMatch,
   getStartOfMatchingSequence,
   getMissingCharacters,

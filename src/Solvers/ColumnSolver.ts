@@ -1,6 +1,6 @@
 import { MatchedWord, Tile } from "../Models/Tile";
 import { boardIsValid } from "../Confirmers/Confirmer";
-import { isWordFine } from './SolverUtil';
+import { hasChar, isWordFine } from './SolverUtil';
 import { countPoints } from "./CountPoints";
 import { WordHandler } from "../Library/wordHandler";
 
@@ -15,7 +15,7 @@ export interface ColumnMatch {
 
 /**
  * Find the word position in the board.
- * And get position of the characters in the bord
+ * And get position of the characters in the board
  * If we have start: 1
  * and board:
  * [][a][][b][c][]
@@ -34,7 +34,7 @@ const getConstructedWordFromBoard = (payload: {
   let index = 0;
 
   for (; row < payload.board.length; row++, index++) {
-    if (payload.board[row][payload.column].char !== '') {
+    if (hasChar(payload.board, row, payload.column)) {
       constructedWord += payload.board[row][payload.column].char;
       continue;
     }
@@ -46,7 +46,7 @@ const getConstructedWordFromBoard = (payload: {
     charsUsed += 1;
 
     // The next tile is not the end of the board and is not empty, we can continue
-    if (row + 1 < payload.board.length && payload.board[row + 1][payload.column].char !== '') {
+    if (row + 1 < payload.board.length && hasChar(payload.board, row + 1, payload.column)) {
       continue;
     }
 
@@ -71,7 +71,7 @@ const getConstructedWordFromBoard = (payload: {
  */
 const positionAfterCurrentWordIsEmpty = (word: string, columnMatch: ColumnMatch): boolean => {
   if (columnMatch.row + word.length < columnMatch.board.length) {
-    if (columnMatch.board[columnMatch.row + word.length][columnMatch.column].char !== '') {
+    if (hasChar(columnMatch.board, columnMatch.row + word.length, columnMatch.column)) {
       return false;
     }
   }
@@ -112,7 +112,7 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, column: number) =
   const result: Array<MatchedWord> = [];
   
   for (let row = 0; row < board.length; row++) {
-    if (row > 0 && board[row - 1][column].char !== '') {
+    if (row > 0 && hasChar(board, row - 1, column)) {
       // We start words when there is nothing above
       continue
     }

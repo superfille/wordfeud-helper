@@ -2,7 +2,7 @@ import { boardIsValid } from '../Confirmers/Confirmer';
 import { MatchedWord, Tile } from '../Models/Tile';
 import { countPoints } from './CountPoints';
 import { WordHandler } from '../Library/wordHandler';
-import { isWordFine } from './SolverUtil';
+import { hasChar, isWordFine } from './SolverUtil';
 
 interface RowMatch {
   allWords: Array<string>;
@@ -22,7 +22,7 @@ const getConstructedWordFromBoard = (payload: {
   let index = 0;
 
   for (; column < payload.board.length; column++, index++) {
-    if (payload.board[payload.row][column].char !== '') {
+    if (hasChar(payload.board, payload.row, column)) {
       constructedWord += payload.board[payload.row][column].char;
       continue;
     }
@@ -33,7 +33,7 @@ const getConstructedWordFromBoard = (payload: {
 
     charsUsed += 1;
   
-    if (column + 1 < payload.board.length && payload.board[payload.row][column + 1].char !== '') {
+    if (column + 1 < payload.board.length && hasChar(payload.board, payload.row, column + 1)) {
       continue;
     }
 
@@ -54,7 +54,7 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, row: number) => {
   const result: Array<MatchedWord> = [];
   
   for (let column = 0; column < board.length; column++) {
-    if (column > 0 && board[row][column - 1].char !== '') {
+    if (column > 0 && hasChar(board, row, column - 1)) {
       // We start words when there is nothing to the left
       continue
     }
@@ -89,7 +89,7 @@ const solve = (playerChars: string, board: Array<Array<Tile>>, row: number) => {
 
 const positionAfterCurrentWordIsNotEmpty = (word: string, rowMatch: RowMatch): boolean => {
   if (rowMatch.column + word.length < rowMatch.board.length) {
-    if (rowMatch.board[rowMatch.row][rowMatch.column + word.length].char !== '') {
+    if (hasChar(rowMatch.board, rowMatch.row, rowMatch.column + word.length)) {
       return false;
     }
   }
@@ -121,17 +121,24 @@ const wordsThatMatchPositions = (payload: RowMatch): Array<MatchedWord> => {
 }
 
 const setWordInBoard = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
-  for (let i = 0; i < rowWord.word.length; i++) {
-    if (board[rowWord.row][rowWord.column + i].final === false) {
-      board[rowWord.row][rowWord.column + i].char = rowWord.word[i];
+  try {
+    for (let i = 0; i < rowWord.word.length; i++) {
+      if (board[rowWord.row][rowWord.column + i].final === false) {
+        board[rowWord.row][rowWord.column + i].char = rowWord.word[i];
+      }
     }
+  } catch (error) {
+    console.log(rowWord)
+    console.log(board[0][0])
+    console.log(board[5][13])
+    console.error(error)
   }
 }
 
 const removeWordFromBoard = (rowWord: MatchedWord, board: Array<Array<Tile>>) => {
   for (let i = 0; i < rowWord.word.length; i++) {
     if (board[rowWord.row][rowWord.column + i].final === false) {
-      board[rowWord.row][rowWord.column + i].char = ''
+      board[rowWord.row][rowWord.column + i].char = '';
     }
   }
 }
