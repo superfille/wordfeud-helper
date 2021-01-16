@@ -121,9 +121,8 @@ export default class App extends React.Component<Props, State> {
     BoardActions.save(this.state.currentBoardName, board);
     this.setState({
       board: board,
+      boardIsValid: boardIsValid(board),
     });
-
-    console.log(boardIsValid(board))
   }
 
   cleanBoard(func = () => {}) {

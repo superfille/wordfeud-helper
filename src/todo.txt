@@ -1,5 +1,4 @@
 
-// När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
 
 // Låt användare lägga till ord. Spara i localstorage
 
@@ -9,11 +8,13 @@
 //////// Ongoing/////////////
 /////////////////////////////
 
-// När man skrivit en bokstav i en ruta så ska nästa ruta markeras
+// När brädet laddas i början så ska isValidBoard köras inte och inte bara sättas till true
+// Visa vad som är fel
 
 /////////////////////////////
 //////// DONE ///////////////
 /////////////////////////////
+// När man skrivit en bokstav i en ruta så ska nästa ruta markeras DONE
 
 // Säker på att du vill radera? DONE
 // Radera brädet DONE
