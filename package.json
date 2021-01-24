@@ -2,7 +2,7 @@
   "name": "react",
   "version": "0.0.0",
   "private": true,
-  "homepage": "https://superfille.github.io/react-wordfeud-fusk",
+  "homepage": "https://superfille.github.io/wordfeud-helper",
   "dependencies": {
     "bulma": "^0.9.1",
     "react": "^16.13.1",
