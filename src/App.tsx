@@ -29,7 +29,7 @@ type State = {
 export default class App extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
-    let currentBoardName = 'board1';
+    let currentBoardName = 'board2';
     const localStorageBoards = BoardActions.readLocalStorageBoards();
     let board = localStorageBoards.length === 0
       ? StartBoard
